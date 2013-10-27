@@ -31,7 +31,7 @@ namespace BlastZone_Windows
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            windowSize = new Vector2(1080, 720);
+            windowSize = new Vector2(1280, 720);
 
             graphics.PreferredBackBufferWidth = (int)windowSize.X;
             graphics.PreferredBackBufferHeight = (int)windowSize.Y;
