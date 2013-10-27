@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Animation>
+  <Metadata>
+    <FileName>softblocks</FileName>
+  </Metadata>
+  <Images>
+    <Image name="1" loop="false">
+      <Frames>
+        <Frame x="0"  y="0" w="16" h="16"/>
+        <Frame x="16" y="0" w="16" h="16"/>
+        <Frame x="32" y="0" w="16" h="16"/>
+        <Frame x="48" y="0" w="16" h="16"/>
+        <Frame x="64" y="0" w="16" h="16"/>
+        <Frame x="80" y="0" w="16" h="16"/>
+      </Frames>
+    </Image>
+    <Image name="2" loop="false">
+      <Frames>
+        <Frame x="0"  y="16" w="16" h="16"/>
+        <Frame x="16" y="16" w="16" h="16"/>
+        <Frame x="32" y="16" w="16" h="16"/>
+        <Frame x="48" y="16" w="16" h="16"/>
+        <Frame x="64" y="16" w="16" h="16"/>
+        <Frame x="80" y="16" w="16" h="16"/>
+      </Frames>
+    </Image>
+    <Image name="3" loop="false">
+      <Frames>
+        <Frame x="0"  y="32" w="16" h="16"/>
+        <Frame x="16" y="32" w="16" h="16"/>
+        <Frame x="32" y="32" w="16" h="16"/>
+        <Frame x="48" y="32" w="16" h="16"/>
+        <Frame x="64" y="32" w="16" h="16"/>
+        <Frame x="80" y="32" w="16" h="16"/>
+      </Frames>
+    </Image>
+    <Image name="4" loop="false">
+      <Frames>
+        <Frame x="0"  y="48" w="16" h="16"/>
+        <Frame x="16" y="48" w="16" h="16"/>
+        <Frame x="32" y="48" w="16" h="16"/>
+        <Frame x="48" y="48" w="16" h="16"/>
+        <Frame x="64" y="48" w="16" h="16"/>
+        <Frame x="80" y="48" w="16" h="16"/>
+      </Frames>
+    </Image>
+  </Images>
+</Animation>

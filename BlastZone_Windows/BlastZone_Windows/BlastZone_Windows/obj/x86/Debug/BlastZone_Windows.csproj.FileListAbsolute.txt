@@ -1,0 +1,16 @@
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\hardblocks.xnb
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\softblocks.xnb
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\tiles.xnb
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\tiles2.xnb
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\1px.xnb
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\playersprite.xnb
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\player.xml
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\softblocks.xml
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\BlastZone_Windows.exe
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\BlastZone_Windows.pdb
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\obj\x86\Debug\BlastZone_Windows.exe
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\obj\x86\Debug\BlastZone_Windows.pdb
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\game_background.xnb
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Badaboom.xnb
