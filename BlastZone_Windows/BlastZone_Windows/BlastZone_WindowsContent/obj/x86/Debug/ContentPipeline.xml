@@ -73,6 +73,15 @@
       <Output>C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Badaboom.xnb</Output>
       <Time>2013-10-27T22:25:12.2238968+11:00</Time>
     </Item>
+    <Item>
+      <Source>bomb.png</Source>
+      <Name>bomb</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\bomb.xnb</Output>
+      <Time>2013-10-28T00:46:36.8031869+11:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

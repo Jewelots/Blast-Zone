@@ -150,8 +150,9 @@ namespace BlastZone_Windows
                 for (int x = 0; x < (int)gridSize.X; ++x)
                 {
                     TextureTile t = textureTileGrid[x, y];
-                    if (t.tex != null)
-                        spriteBatch.Draw(t.tex, new Vector2((int)(Position.X + x * tileSize * drawRatio - LevelSize.X / 2), (int)(Position.Y + y * tileSize * drawRatio - LevelSize.Y / 2)), new Rectangle(t.x, t.y, tileSize, tileSize), Color.White, 0, new Vector2(), drawRatio, SpriteEffects.None, 1f);
+                    if (t.tex == null) continue;
+                    
+                    spriteBatch.Draw(t.tex, new Vector2((int)(Position.X + x * tileSize * drawRatio - LevelSize.X / 2), (int)(Position.Y + y * tileSize * drawRatio - LevelSize.Y / 2)), new Rectangle(t.x, t.y, tileSize, tileSize), Color.White, 0, new Vector2(), drawRatio, SpriteEffects.None, 1f);
                 }
             }
 

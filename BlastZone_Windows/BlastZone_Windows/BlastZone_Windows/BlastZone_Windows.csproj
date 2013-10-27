@@ -110,6 +110,7 @@
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationSwitcher.cs" />
     <Compile Include="AnimationXMLReader.cs" />
+    <Compile Include="Bomb.cs" />
     <Compile Include="DrawTextExtension.cs" />
     <Compile Include="EventTimer.cs" />
     <Compile Include="Level.cs" />
@@ -120,6 +121,8 @@
     <Compile Include="ScoreRenderer.cs" />
     <Compile Include="ScreenTransition.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="TileObject.cs" />
+    <Compile Include="TileObjectFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

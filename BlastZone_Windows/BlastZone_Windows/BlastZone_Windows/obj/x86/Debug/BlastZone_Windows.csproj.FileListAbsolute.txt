@@ -14,3 +14,4 @@ C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_W
 C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\obj\x86\Debug\BlastZone_Windows.pdb
 C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\game_background.xnb
 C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Badaboom.xnb
+C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\bomb.xnb
