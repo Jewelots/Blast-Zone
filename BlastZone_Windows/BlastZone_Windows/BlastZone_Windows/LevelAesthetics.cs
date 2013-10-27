@@ -21,7 +21,7 @@ namespace BlastZone_Windows
         int tileSize = 16;
         int drawRatio = 3;
 
-        Vector2 gridSize;
+        int gridSizeX, gridSizeY;
 
         struct TextureTile
         {
@@ -49,10 +49,12 @@ namespace BlastZone_Windows
 
         TextureTile[,] textureTileGrid;
 
-        public LevelAesthetics(Vector2 gridSize)
+        public LevelAesthetics(int gridSizeX, int gridSizeY)
         {
-            this.gridSize = gridSize;
-            textureTileGrid = new TextureTile[(int)gridSize.X, (int)gridSize.Y];
+            this.gridSizeX = gridSizeX;
+            this.gridSizeY = gridSizeY;
+
+            textureTileGrid = new TextureTile[gridSizeX, gridSizeY];
 
             TileTypes = new Vector2[Enum.GetNames(typeof(TileType)).Length];
             TileTypes[(int)TileType.Border] = new Vector2(0, 0);
@@ -67,14 +69,14 @@ namespace BlastZone_Windows
 
         bool IsInsideBorder(int x, int y)
         {
-            return (x > 0 && x < (int)gridSize.X - 1 && y > 0 && y < (int)gridSize.Y - 1);
+            return (x > 0 && x < gridSizeX - 1 && y > 0 && y < gridSizeY - 1);
         }
 
         public void GenerateTiles(bool[,] solidArea)
         {
-            for (int y = 0; y < (int)gridSize.Y; ++y)
+            for (int y = 0; y < gridSizeY; ++y)
             {
-                for (int x = 0; x < (int)gridSize.X; ++x)
+                for (int x = 0; x < gridSizeX; ++x)
                 {
                     if (IsInsideBorder(x, y))
                     {
@@ -115,7 +117,7 @@ namespace BlastZone_Windows
                     }
                     else //The border
                     {
-                        if (x == 0 && y != 0 && y != gridSize.Y - 1)
+                        if (x == 0 && y != 0 && y != gridSizeY - 1)
                             textureTileGrid[x, y] = new TextureTile(TileTypes[(int)TileType.LeftBorder], tileTexture);
                         else
                             textureTileGrid[x, y] = new TextureTile(TileTypes[(int)TileType.Border], tileTexture);
@@ -136,7 +138,7 @@ namespace BlastZone_Windows
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Vector2 windowSize)
         {
             Vector2 Position = windowSize / 2;
-            Vector2 LevelSize = new Vector2(gridSize.X * tileSize * drawRatio, gridSize.Y * tileSize * drawRatio);
+            Vector2 LevelSize = new Vector2(gridSizeX * tileSize * drawRatio, gridSizeY * tileSize * drawRatio);
 
             int borderSize = 3;
 
@@ -145,9 +147,9 @@ namespace BlastZone_Windows
             spriteBatch.Draw(rectFillTex, new Rectangle((int)(Position.X - borderSize * 2 - LevelSize.X / 2), (int)(Position.Y - borderSize * 2 - LevelSize.Y / 2), (int)LevelSize.X + borderSize * 4, (int)LevelSize.Y + borderSize * 4), Color.White);
             spriteBatch.Draw(rectFillTex, new Rectangle((int)(Position.X - borderSize - LevelSize.X / 2), (int)(Position.Y - borderSize - LevelSize.Y / 2), (int)LevelSize.X + borderSize * 2, (int)LevelSize.Y + borderSize * 2), Color.Black);
 
-            for (int y = 0; y < (int)gridSize.Y; ++y)
+            for (int y = 0; y < gridSizeY; ++y)
             {
-                for (int x = 0; x < (int)gridSize.X; ++x)
+                for (int x = 0; x < gridSizeX; ++x)
                 {
                     TextureTile t = textureTileGrid[x, y];
                     if (t.tex == null) continue;

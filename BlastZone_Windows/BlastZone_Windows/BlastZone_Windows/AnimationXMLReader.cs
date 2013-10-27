@@ -60,7 +60,7 @@ namespace BlastZone_Windows
             {
                 tex = Content.Load<Texture2D>(doc.Element("Metadata").Element("FileName").Value);
             }
-            catch (ContentLoadException cle)
+            catch (ContentLoadException)
             {
                 Console.Out.WriteLine("ANIMATIONXMLREADER: Texture from animation '" + filename + "' not found.");
                 return aDetailsList;

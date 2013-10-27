@@ -5,7 +5,7 @@ Content\tiles2.xnb
 Content\1px.xnb
 Content\playersprite.xnb
 Content\game_background.xnb
-Content\Badaboom.xnb
 Content\bomb.xnb
+Content\Badaboom.xnb
 Content\player.xml
 Content\softblocks.xml

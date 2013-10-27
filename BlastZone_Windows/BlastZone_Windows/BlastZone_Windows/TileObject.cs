@@ -13,11 +13,25 @@ namespace BlastZone_Windows
 {
     abstract class TileObject
     {
-        public bool Solid { get; protected set; }
-        public Vector2 Position { get; private set; }
-
         protected int tileSize = 16;
         protected int drawRatio = 3;
+
+        protected int tilePositionX, tilePositionY;
+        private TileObjectManager manager;
+
+        public bool Solid { get; protected set; }
+        public Vector2 Position
+        {
+            get
+            {
+                return new Vector2(tilePositionX, tilePositionY);
+            }
+
+            private set
+            {
+                tilePositionX = (int)value.X; tilePositionY = (int)value.Y;
+            }
+        }
 
         protected Vector2 DrawPosition { get { return Position * tileSize * drawRatio; } }
 
@@ -38,9 +52,17 @@ namespace BlastZone_Windows
                 OnFireSpread();
         }
 
-        public TileObject(Vector2 tilePos)
+        public TileObject(TileObjectManager manager, int tilePosX, int tilePosY)
         {
-            Position = tilePos;
+            this.manager = manager;
+
+            tilePositionX = tilePosX;
+            tilePositionY = tilePosY;
+        }
+
+        protected void RemoveThis()
+        {
+            manager.RemoveAt(tilePositionX, tilePositionY);
         }
 
         public abstract void Update(GameTime gameTime);

@@ -24,11 +24,11 @@ namespace BlastZone_Windows
             loaded = true;
         }
 
-        public Bomb CreateBomb(Vector2 tilePos)
+        public Bomb CreateBomb(TileObjectManager manager, int tilePosX, int tilePosY)
         {
             if (!loaded) return null;
 
-            return new Bomb(tilePos, bombTex);
+            return new Bomb(manager, tilePosX, tilePosY, bombTex);
         }
     }
 }

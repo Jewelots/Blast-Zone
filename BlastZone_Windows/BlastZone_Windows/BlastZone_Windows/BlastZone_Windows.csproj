@@ -123,6 +123,7 @@
     <Compile Include="Sprite.cs" />
     <Compile Include="TileObject.cs" />
     <Compile Include="TileObjectFactory.cs" />
+    <Compile Include="TileObjectManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

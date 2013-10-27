@@ -13,26 +13,35 @@ namespace BlastZone_Windows
 {
     class Bomb : TileObject
     {
-        //Animation idleAnimation;
         Texture2D bombTex;
 
-        public Bomb(Vector2 tilePos, Texture2D tex) //replace with Animation
-            : base(tilePos)
+        double life;
+        double maxLife = 5f;
+
+        public Bomb(TileObjectManager manager, int tilePosX, int tilePosY, Texture2D tex) //replace with Animation
+            : base(manager, tilePosX, tilePosY)
         {
             bombTex = tex;
-
             Solid = true;
+            life = 0f;
         }
 
         public override void Update(GameTime gameTime)
         {
-
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime, Vector2 windowSize, Vector2 levelPos)
         {
-            //idleAnimation.Draw(spriteBatch, gameTime, DrawPosition + levelPos, Color.White);
-            spriteBatch.Draw(bombTex, DrawPosition + levelPos, null, Color.White, 0, new Vector2(), drawRatio, SpriteEffects.None, 1f);
+            life += gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (life > maxLife) RemoveThis();
+
+            double ratioAlong = life/maxLife;
+
+            double throbScale = 0;
+            throbScale = Math.Sin(life * 20 * (0.2 + (ratioAlong * ratioAlong) * 0.8)) / 5 * 2 * (0.2 + (ratioAlong) * 0.8);
+
+            spriteBatch.Draw(bombTex, DrawPosition + levelPos, null, Color.White, 0, new Vector2(tileSize / 2 - 0.5f, tileSize / 2 - 0.5f), drawRatio + (float)throbScale, SpriteEffects.None, 1f);
         }
     }
 }
