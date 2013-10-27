@@ -86,7 +86,10 @@ namespace BlastZone_Windows
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            scoreRenderer.SetScore(0, (int)gameTime.TotalGameTime.TotalMilliseconds/100);
+            scoreRenderer.SetScore(0, (int)gameTime.TotalGameTime.TotalMilliseconds / 500);
+            scoreRenderer.SetScore(1, (int)gameTime.TotalGameTime.TotalMilliseconds / 1000);
+            scoreRenderer.SetScore(2, (int)gameTime.TotalGameTime.TotalMilliseconds / 1500);
+            scoreRenderer.SetScore(3, (int)gameTime.TotalGameTime.TotalMilliseconds / 2000);
 
             base.Update(gameTime);
         }
