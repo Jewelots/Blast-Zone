@@ -41,7 +41,6 @@ namespace BlastZone_Windows
         public void LoadContent(ContentManager Content)
         {
             tileObjectFactory.LoadContent(Content);
-            tileObjectGrid[2, 1] = tileObjectFactory.CreateBomb(this, 2, 1);
         }
 
         public void RemoveAt(int x, int y)
@@ -90,6 +89,19 @@ namespace BlastZone_Windows
                     to.Draw(spriteBatch, gameTime);
                 }
             }
+        }
+
+        public void Reset()
+        {
+            for (int y = 0; y < gridSizeY; ++y)
+            {
+                for (int x = 0; x < gridSizeX; ++x)
+                {
+                    tileObjectGrid[x, y] = null;
+                }
+            }
+
+            tileObjectGrid[2, 1] = tileObjectFactory.CreateBomb(this, 2, 1);
         }
     }
 }

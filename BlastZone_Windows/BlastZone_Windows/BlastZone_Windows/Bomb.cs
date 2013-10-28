@@ -46,7 +46,7 @@ namespace BlastZone_Windows
 
             //Calculate throb scale with a sin wave
             double throbScale = 0;
-            throbScale = Math.Sin(gameTime.TotalGameTime.TotalSeconds * 20 * (0.2 + (percentComplete * percentComplete) * 0.8)) / 5 * 2 * (0.2 + (percentComplete) * 0.8);
+            throbScale = Math.Sin(lifeTimer.GetCurrentTime() * 20 * (0.2 + (percentComplete * percentComplete) * 0.8)) / 5 * 2 * (0.2 + (percentComplete) * 0.8);
 
             //Draw offset to center sprite
             Vector2 drawOffset = new Vector2(GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio, GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio);

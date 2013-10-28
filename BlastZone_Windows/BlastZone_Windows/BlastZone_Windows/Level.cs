@@ -42,6 +42,11 @@ namespace BlastZone_Windows
             tileObjectManager.LoadContent(Content);
         }
 
+        public void Reset()
+        {
+            tileObjectManager.Reset();
+        }
+
         public void Update(GameTime gameTime)
         {
             tileObjectManager.Update(gameTime);

@@ -102,9 +102,22 @@ namespace BlastZone_Windows
             isFinished = false;
         }
 
+        /// <summary>
+        /// Get ratio of timer completion
+        /// </summary>
+        /// <returns></returns>
         public double GetRatio()
         {
             return currentTime / maxTime;
+        }
+
+        /// <summary>
+        /// Get current time
+        /// </summary>
+        /// <returns></returns>
+        public double GetCurrentTime()
+        {
+            return currentTime;
         }
     }
 }

@@ -25,7 +25,9 @@ namespace BlastZone_Windows
 
         bool reverse;
 
-        public delegate void TransitionEndHandler();
+        EventArgs args;
+
+        public delegate void TransitionEndHandler(EventArgs e);
         /// <summary>
         /// An Event which is called when transition is finished
         /// </summary>
@@ -47,11 +49,20 @@ namespace BlastZone_Windows
 
             timer = new EventTimer(0, transitionTime);
             timer.OnEnd += TransitionEnd;
+
+            args = EventArgs.Empty;
+        }
+
+        public void SetEventArgs(EventArgs e)
+        {
+            args = e;
         }
 
         public void Reset()
         {
             timer.Reset();
+
+            OnTransitionEnd = null;
         }
 
         public void LoadContent(ContentManager Content)
@@ -62,7 +73,7 @@ namespace BlastZone_Windows
         void TransitionEnd()
         {
             if (OnTransitionEnd != null)
-                OnTransitionEnd();
+                OnTransitionEnd(args);
         }
 
         public void Update(GameTime gameTime)
@@ -110,13 +121,13 @@ namespace BlastZone_Windows
 
         ScreenTransition currentTransition;
 
-        public delegate void TransitionChangeHandler();
+        public delegate void TransitionChangeHandler(EventArgs e);
         /// <summary>
         /// An Event which is called when transition In is finished (screen completely covered)
         /// </summary>
         public event TransitionChangeHandler OnTransition;
 
-        public delegate void TransitionInOutFinishedHandler();
+        public delegate void TransitionInOutFinishedHandler(EventArgs e);
         /// <summary>
         /// An Event which is called when transition Out is finished (screen completely uncovered, both transitions over)
         /// </summary>
@@ -128,15 +139,26 @@ namespace BlastZone_Windows
         /// <param name="tilesX">Horizontal Tile Count</param>
         /// <param name="tilesY">Vertical Tile Count</param>
         /// <param name="transitionTime">Time to complete transition (one way)</param>
-        public ScreenTransitionInOut(int tilesX = 13, int tilesY = 8, double transitionTime = 1)
+        public ScreenTransitionInOut(int tilesX = 13, int tilesY = 8, double transitionTime = 0.75f)
         {
             stIn = new ScreenTransition(tilesX, tilesY, false, transitionTime);
             stOut = new ScreenTransition(tilesX, tilesY, true, transitionTime);
 
+            Init();
+        }
+
+        void Init()
+        {
             stIn.OnTransitionEnd += SwapTransition;
             stOut.OnTransitionEnd += TransitionsFinished;
 
             currentTransition = stIn;
+        }
+
+        public void SetEventArgs(EventArgs e)
+        {
+            stIn.SetEventArgs(e);
+            stOut.SetEventArgs(e);
         }
 
         public void LoadContent(ContentManager Content)
@@ -145,22 +167,33 @@ namespace BlastZone_Windows
             stOut.LoadContent(Content);
         }
 
-        void SwapTransition()
+        void SwapTransition(EventArgs e)
         {
-            TransitionChange();
+            TransitionChange(e);
             currentTransition = stOut;
         }
 
-        void TransitionChange()
+        void TransitionChange(EventArgs e)
         {
             if (OnTransition != null)
-                OnTransition();
+                OnTransition(e);
         }
 
-        void TransitionsFinished()
+        void TransitionsFinished(EventArgs e)
         {
             if (OnTransitionFinished != null)
-                OnTransitionFinished();
+                OnTransitionFinished(e);
+        }
+
+        public void Reset()
+        {
+            stIn.Reset();
+            stOut.Reset();
+
+            OnTransition = null;
+            OnTransitionFinished = null;
+
+            Init();
         }
 
         public void Update(GameTime gameTime)
