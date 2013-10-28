@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Animation>
+  <Metadata>
+    <FileName>playersprite</FileName>
+  </Metadata>
+  <Images>
+    <Image name="walkDown" loop="true">
+      <Frames>
+        <Frame x="8"  y="2" w="15" h="22"/>
+        <Frame x="24" y="2" w="15" h="22"/>
+        <Frame x="8"  y="2" w="15" h="22"/>
+        <Frame x="24" y="2" w="15" h="22" flip="true"/>
+      </Frames>
+    </Image>
+    <Image name="walkLeft" loop="true">
+      <Frames>
+        <Frame x="94" y="3" w="13" h="21"/>
+        <Frame x="109" y="3" w="13" h="21"/>
+        <Frame x="94"  y="3" w="13" h="21"/>
+        <Frame x="124" y="3" w="13" h="21"/>
+      </Frames>
+    </Image>
+    <Image name="walkRight" loop="true">
+      <Frames>
+        <Frame x="94"  y="3" w="13" h="21" flip="true"/>
+        <Frame x="109" y="3" w="13" h="21" flip="true"/>
+        <Frame x="94"  y="3" w="13" h="21" flip="true"/>
+        <Frame x="124" y="3" w="13" h="21" flip="true"/>
+      </Frames>
+    </Image>
+    <Image name="walkUp" loop="true">
+      <Frames>
+        <Frame x="195" y="3" w="15" h="21"/>
+        <Frame x="211" y="3" w="15" h="21"/>
+        <Frame x="195" y="3" w="15" h="21"/>
+        <Frame x="211" y="3" w="15" h="21" flip="true"/>
+      </Frames>
+    </Image>
+  </Images>
+</Animation>

@@ -56,7 +56,7 @@ namespace BlastZone_Windows
 
         public void LoadContent(ContentManager Content)
         {
-            rectTex = Content.Load<Texture2D>("1px");
+            rectTex = Content.Load<Texture2D>("Images/1px");
         }
 
         void TransitionEnd()

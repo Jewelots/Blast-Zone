@@ -29,6 +29,8 @@ namespace BlastZone_Windows
         public float fEmitRate;
         public int iEmitCount;
 
+        BlendState blendState = BlendState.AlphaBlend;
+
         /// <summary>
         /// default entry
         /// </summary>
@@ -115,7 +117,7 @@ namespace BlastZone_Windows
         /// <param name="spriteBatch">the spritebatch used in rendering</param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            spriteBatch.Begin(SpriteSortMode.BackToFront, blendState);
             
             foreach(Particle particle in lParticles)
                 particle.Draw(spriteBatch);

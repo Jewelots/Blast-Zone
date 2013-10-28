@@ -23,7 +23,7 @@ namespace BlastZone_Windows
 
         public void LoadContent(ContentManager Content)
         {
-            bombTex = Content.Load<Texture2D>("bomb");
+            bombTex = Content.Load<Texture2D>("Images/Game/bomb");
             loaded = true;
         }
 

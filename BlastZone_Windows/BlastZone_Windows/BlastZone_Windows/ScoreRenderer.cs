@@ -62,7 +62,7 @@ namespace BlastZone_Windows
 
         public void LoadContent(ContentManager Content)
         {
-            scoreFont = Content.Load<SpriteFont>("Badaboom");
+            scoreFont = Content.Load<SpriteFont>("Fonts/Badaboom");
 
             scoreOffset[0] = scoreFont.MeasureString(text[0]).Y - 10;
             scoreOffset[1] = scoreFont.MeasureString(text[1]).Y - 10;

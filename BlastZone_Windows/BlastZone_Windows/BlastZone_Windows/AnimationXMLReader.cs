@@ -58,7 +58,7 @@ namespace BlastZone_Windows
 
             try
             {
-                tex = Content.Load<Texture2D>(doc.Element("Metadata").Element("FileName").Value);
+                tex = Content.Load<Texture2D>("Images/" + doc.Element("Metadata").Element("FileName").Value);
             }
             catch (ContentLoadException)
             {

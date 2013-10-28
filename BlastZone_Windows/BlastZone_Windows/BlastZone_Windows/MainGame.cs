@@ -77,8 +77,8 @@ namespace BlastZone_Windows
             level.LoadContent(Content);
             scoreRenderer.LoadContent(Content);
 
-            gameBackground = Content.Load<Texture2D>("game_background");
-            rectFillTex = Content.Load<Texture2D>("1px");
+            gameBackground = Content.Load<Texture2D>("Images/Game/game_background");
+            rectFillTex = Content.Load<Texture2D>("Images/1px");
         }
 
         /// <summary>

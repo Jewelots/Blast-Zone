@@ -141,8 +141,8 @@ namespace BlastZone_Windows
 
         public void LoadContent(ContentManager Content)
         {
-            tileTexture = Content.Load<Texture2D>("tiles2");
-            hardBlockTexture = Content.Load<Texture2D>("hardblocks");
+            tileTexture = Content.Load<Texture2D>("Images/Game/tiles2");
+            hardBlockTexture = Content.Load<Texture2D>("Images/Game/hardblocks");
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
