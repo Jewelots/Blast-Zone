@@ -11,8 +11,13 @@ using Microsoft.Xna.Framework.Media;
 
 namespace BlastZone_Windows
 {
+    /// <summary>
+    /// EventTimer counts from a start time to an end time (in seconds) and triggers an event on end.
+    /// </summary>
     class EventTimer
     {
+        double startTime;
+
         double currentTime;
         double maxTime;
 
@@ -24,6 +29,8 @@ namespace BlastZone_Windows
 
         public EventTimer(double startTime, double endTime, bool startPaused = false)
         {
+            this.startTime = startTime;
+
             currentTime = startTime;
             maxTime = endTime;
 
@@ -45,9 +52,17 @@ namespace BlastZone_Windows
             paused = !paused;
         }
 
+        public bool IsFinished()
+        {
+            return isFinished;
+        }
+
+        /// <summary>
+        /// Update EventTimer, triggering OnEnd if timer is complete
+        /// </summary>
         public void Update(GameTime gameTime)
         {
-            if (!paused)
+            if (!paused && !isFinished)
             {
                 if (currentTime < maxTime)
                 {
@@ -78,9 +93,12 @@ namespace BlastZone_Windows
                 OnEnd();
         }
 
+        /// <summary>
+        /// Reset the timer back to original starting time
+        /// </summary>
         public void Reset()
         {
-            currentTime = 0;
+            currentTime = startTime;
             isFinished = false;
         }
 

@@ -15,32 +15,41 @@ namespace BlastZone_Windows
     {
         Texture2D bombTex;
 
-        double life;
-        double maxLife = 5f;
+        EventTimer lifeTimer;
 
         public Bomb(TileObjectManager manager, int tilePosX, int tilePosY, Texture2D tex) //replace with Animation
             : base(manager, tilePosX, tilePosY)
         {
             bombTex = tex;
             Solid = true;
-            life = 0f;
+
+            lifeTimer = new EventTimer(0, 5);
+
+            //Hook to explode when life ends
+            lifeTimer.OnEnd += Explode;
         }
 
         public override void Update(GameTime gameTime)
         {
+            lifeTimer.Update(gameTime);
+        }
+
+        void Explode()
+        {
+            //Just remove for now, create fire + effect later
+            RemoveThis();
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            Vector2 drawOffset = new Vector2(GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio, GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio);
-            life += gameTime.ElapsedGameTime.TotalSeconds;
+            double percentComplete = lifeTimer.GetRatio();
 
-            if (life > maxLife) RemoveThis();
-
-            double ratioAlong = life/maxLife;
-
+            //Calculate throb scale with a sin wave
             double throbScale = 0;
-            throbScale = Math.Sin(life * 20 * (0.2 + (ratioAlong * ratioAlong) * 0.8)) / 5 * 2 * (0.2 + (ratioAlong) * 0.8);
+            throbScale = Math.Sin(gameTime.TotalGameTime.TotalSeconds * 20 * (0.2 + (percentComplete * percentComplete) * 0.8)) / 5 * 2 * (0.2 + (percentComplete) * 0.8);
+
+            //Draw offset to center sprite
+            Vector2 drawOffset = new Vector2(GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio, GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio);
 
             spriteBatch.Draw(
                 bombTex, //Texture

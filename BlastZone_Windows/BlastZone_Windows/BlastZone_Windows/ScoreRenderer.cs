@@ -77,7 +77,6 @@ namespace BlastZone_Windows
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
             //Draw Text
             DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, text[0], backColors[0], frontColors[0], renderPositions[0], 3f);
             DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, text[1], backColors[1], frontColors[1], renderPositions[1], 3f, HorizontalAlign.AlignRight);
@@ -89,7 +88,6 @@ namespace BlastZone_Windows
             DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, scores[1].ToString(), backColors[1], frontColors[1], renderPositions[1] + new Vector2(0, scoreOffset[1]), 3f, HorizontalAlign.AlignRight);
             DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, scores[2].ToString(), backColors[2], frontColors[2], renderPositions[2] + new Vector2(0, scoreOffset[2]), 3f, HorizontalAlign.AlignLeft, VerticalAlign.AlignBottom);
             DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, scores[3].ToString(), backColors[3], frontColors[3], renderPositions[3] + new Vector2(0, scoreOffset[3]), 3f, HorizontalAlign.AlignRight, VerticalAlign.AlignBottom);
-            spriteBatch.End();
         }
     }
 }

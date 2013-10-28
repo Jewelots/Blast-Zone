@@ -11,9 +11,19 @@ using Microsoft.Xna.Framework.Media;
 
 namespace BlastZone_Windows
 {
+    /// <summary>
+    /// A manager to manage TileObjects
+    /// </summary>
     class TileObjectManager
     {
+        /// <summary>
+        /// A grid of TileObject's
+        /// </summary>
         TileObject[,] tileObjectGrid;
+
+        /// <summary>
+        /// A factory to create TileObjects
+        /// </summary>
         TileObjectFactory tileObjectFactory;
 
         int gridSizeX, gridSizeY;
@@ -54,10 +64,22 @@ namespace BlastZone_Windows
             }
         }
 
+        public void Update(GameTime gameTime)
+        {
+            for (int y = 0; y < gridSizeY; ++y)
+            {
+                for (int x = 0; x < gridSizeX; ++x)
+                {
+                    TileObject to = tileObjectGrid[x, y];
+                    if (to == null) continue;
+
+                    to.Update(gameTime);
+                }
+            }
+        }
+
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
-
             for (int y = 0; y < gridSizeY; ++y)
             {
                 for (int x = 0; x < gridSizeX; ++x)
@@ -68,8 +90,6 @@ namespace BlastZone_Windows
                     to.Draw(spriteBatch, gameTime);
                 }
             }
-
-            spriteBatch.End();
         }
     }
 }

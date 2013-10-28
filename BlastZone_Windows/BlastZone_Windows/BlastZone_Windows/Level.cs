@@ -11,10 +11,15 @@ using Microsoft.Xna.Framework.Media;
 
 namespace BlastZone_Windows
 {
+    /// <summary>
+    /// Encapsulates the aesthetic tiles and all entities that interact.
+    /// The game itself.
+    /// </summary>
     class Level
     {
+        //2D array of bools to designate what's solid and what's not
         bool[,] solidArea;
-
+        
         TileObjectManager tileObjectManager;
         LevelAesthetics aesthetics;
 
@@ -37,10 +42,20 @@ namespace BlastZone_Windows
             tileObjectManager.LoadContent(Content);
         }
 
+        public void Update(GameTime gameTime)
+        {
+            tileObjectManager.Update(gameTime);
+        }
+
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            //Begin sprite batch with nearest neighbor interpolation state enabled (no filtering, stops muddy pixels)
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
+
             aesthetics.Draw(spriteBatch, gameTime);
             tileObjectManager.Draw(spriteBatch, gameTime);
+
+            spriteBatch.End();
         }
     }
 }

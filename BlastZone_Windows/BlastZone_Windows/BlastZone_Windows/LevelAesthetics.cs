@@ -12,26 +12,32 @@ using Microsoft.Xna.Framework.Media;
 
 namespace BlastZone_Windows
 {
+    /// <summary>
+    /// Used to generate and display the purely aesthetic tiles of the level
+    /// </summary>
     class LevelAesthetics
     {
         Texture2D tileTexture;
         Texture2D hardBlockTexture;
-        Texture2D rectFillTex;
 
         int gridSizeX, gridSizeY;
 
+        /// <summary>
+        /// A purely aesthetic textured tile that provides a position (in tiles) and a texture
+        /// </summary>
         struct TextureTile
         {
             public int x;
             public int y;
             public Texture2D tex;
-
+            
             public TextureTile(int x, int y, Texture2D tex) { this.x = x; this.y = y; this.tex = tex; }
             public TextureTile(Vector2 o, Texture2D tex) { this.x = (int)o.X; this.y = (int)o.Y; this.tex = tex; }
         }
 
-        Vector2[] TileTypes;
-
+        /// <summary>
+        /// Tile type enumerator to make generating tiles more readable
+        /// </summary>
         enum TileType
         {
             Border,
@@ -44,6 +50,14 @@ namespace BlastZone_Windows
             DiagonalBlockShadow
         }
 
+        /// <summary>
+        /// An array of Vectors to link TileTypes to Texture Positions to easily create TextureTiles
+        /// </summary>
+        Vector2[] TileTypes;
+
+        /// <summary>
+        /// A 2D grid of textured tiles
+        /// </summary>
         TextureTile[,] textureTileGrid;
 
         public LevelAesthetics(int gridSizeX, int gridSizeY)
@@ -129,20 +143,10 @@ namespace BlastZone_Windows
         {
             tileTexture = Content.Load<Texture2D>("tiles2");
             hardBlockTexture = Content.Load<Texture2D>("hardblocks");
-            rectFillTex = Content.Load<Texture2D>("1px");
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            //Vector2 LevelSize = new Vector2(gridSizeX * tileSize * drawRatio, gridSizeY * tileSize * drawRatio);
-
-            //int borderSize = 3;
-
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
-
-            //spriteBatch.Draw(rectFillTex, new Rectangle((int)(Position.X - borderSize * 2 - LevelSize.X / 2), (int)(Position.Y - borderSize * 2 - LevelSize.Y / 2), (int)LevelSize.X + borderSize * 4, (int)LevelSize.Y + borderSize * 4), Color.White);
-            //spriteBatch.Draw(rectFillTex, new Rectangle((int)(Position.X - borderSize - LevelSize.X / 2), (int)(Position.Y - borderSize - LevelSize.Y / 2), (int)LevelSize.X + borderSize * 2, (int)LevelSize.Y + borderSize * 2), Color.Black);
-
             for (int y = 0; y < gridSizeY; ++y)
             {
                 for (int x = 0; x < gridSizeX; ++x)
@@ -167,8 +171,6 @@ namespace BlastZone_Windows
                     );
                 }
             }
-
-            spriteBatch.End();
         }
     }
 }

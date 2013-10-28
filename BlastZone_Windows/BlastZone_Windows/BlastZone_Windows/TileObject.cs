@@ -11,6 +11,9 @@ using Microsoft.Xna.Framework.Media;
 
 namespace BlastZone_Windows
 {
+    /// <summary>
+    /// Abstract class used for objects that snap to the grid and can be solid or not
+    /// </summary>
     abstract class TileObject
     {
         protected int tilePositionX, tilePositionY;
@@ -34,7 +37,13 @@ namespace BlastZone_Windows
 
         public delegate void PlayerCollisionHandler();
         public delegate void FireSpreadHandler();
+        /// <summary>
+        /// Event called when player moves to the tile this TileObject resides in
+        /// </summary>
         public event PlayerCollisionHandler OnPlayerCollision;
+        /// <summary>
+        /// Event called when fire spreads to the tile this TileObject resides in
+        /// </summary>
         public event FireSpreadHandler OnFireSpread;
 
         protected void PlayerCollision()

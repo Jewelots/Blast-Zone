@@ -11,6 +11,10 @@ using Microsoft.Xna.Framework.Media;
 
 namespace BlastZone_Windows
 {
+    /// <summary>
+    /// Class used for transitioning between different screens, covers entire screen, can be reversed to unclear the screen
+    /// Provides an event OnTransitionEnd to change between scenes
+    /// </summary>
     class ScreenTransition
     {
         Texture2D rectTex;
@@ -22,12 +26,22 @@ namespace BlastZone_Windows
         bool reverse;
 
         public delegate void TransitionEndHandler();
+        /// <summary>
+        /// An Event which is called when transition is finished
+        /// </summary>
         public event TransitionEndHandler OnTransitionEnd;
 
-        public ScreenTransition(int tilesX, int tilesY, int screenW, int screenH, bool reverseTransition = false, double transitionTime = 1)
+        /// <summary>
+        /// Create a Screen Transition
+        /// </summary>
+        /// <param name="tilesX">Horizontal Tile Count</param>
+        /// <param name="tilesY">Vertical Tile Count</param>
+        /// <param name="reverseTransition">Bool to specify whether to reverse the transition or not</param>
+        /// <param name="transitionTime">Time to complete transition</param>
+        public ScreenTransition(int tilesX = 13, int tilesY = 8, bool reverseTransition = false, double transitionTime = 1)
         {
             tileCount = new Vector2(tilesX, tilesY);
-            tileSize = new Vector2(screenW / tileCount.X, screenH / tileCount.Y);
+            tileSize = new Vector2(GlobalGameData.windowWidth / tileCount.X, GlobalGameData.windowHeight / tileCount.Y);
 
             reverse = reverseTransition;
 
@@ -45,19 +59,21 @@ namespace BlastZone_Windows
             rectTex = Content.Load<Texture2D>("1px");
         }
 
-        public void Update(GameTime gameTime)
-        {
-            timer.Update(gameTime);
-        }
-
         void TransitionEnd()
         {
             if (OnTransitionEnd != null)
                 OnTransitionEnd();
         }
 
+        public void Update(GameTime gameTime)
+        {
+            timer.Update(gameTime);
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
+            if (timer.IsFinished()) return;
+
             float percentDone = (float)timer.GetRatio();
 
             for (int y = 0; y < tileCount.Y; ++y)
@@ -73,10 +89,88 @@ namespace BlastZone_Windows
                     if (reverse)
                         ratio = 1 - ratio;
 
-                    Rectangle destRect = new Rectangle((int)tilePos.X, (int)tilePos.Y, (int)Math.Round(tileSize.X * ratio), (int)Math.Round(tileSize.Y * ratio));
-                    spriteBatch.Draw(rectTex, destRect, null, Color.White, 0f, new Vector2(0.5f, 0.5f), SpriteEffects.None, 1f);
+                    if (ratio <= 0) continue;
+
+                    Rectangle destRect = new Rectangle((int)tilePos.X, (int)tilePos.Y, (int)Math.Round(tileSize.X * ratio) + 1, (int)Math.Round(tileSize.Y * ratio) + 1);
+                    spriteBatch.Draw(rectTex, destRect, null, Color.Black, 0f, new Vector2(0.5f, 0.5f), SpriteEffects.None, 1f);
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// Class used to provide a wrapper over two ScreenTransitions to transition in then out
+    /// Provides event OnTransition to change screens midway
+    /// Provides event OnTransitionFinished to destroy object with when done
+    /// </summary>
+    class ScreenTransitionInOut
+    {
+        ScreenTransition stIn;
+        ScreenTransition stOut;
+
+        ScreenTransition currentTransition;
+
+        public delegate void TransitionChangeHandler();
+        /// <summary>
+        /// An Event which is called when transition In is finished (screen completely covered)
+        /// </summary>
+        public event TransitionChangeHandler OnTransition;
+
+        public delegate void TransitionInOutFinishedHandler();
+        /// <summary>
+        /// An Event which is called when transition Out is finished (screen completely uncovered, both transitions over)
+        /// </summary>
+        public event TransitionInOutFinishedHandler OnTransitionFinished;
+
+        /// <summary>
+        /// Create a two way Screen Transition
+        /// </summary>
+        /// <param name="tilesX">Horizontal Tile Count</param>
+        /// <param name="tilesY">Vertical Tile Count</param>
+        /// <param name="transitionTime">Time to complete transition (one way)</param>
+        public ScreenTransitionInOut(int tilesX = 13, int tilesY = 8, double transitionTime = 1)
+        {
+            stIn = new ScreenTransition(tilesX, tilesY, false, transitionTime);
+            stOut = new ScreenTransition(tilesX, tilesY, true, transitionTime);
+
+            stIn.OnTransitionEnd += SwapTransition;
+            stOut.OnTransitionEnd += TransitionsFinished;
+
+            currentTransition = stIn;
+        }
+
+        public void LoadContent(ContentManager Content)
+        {
+            stIn.LoadContent(Content);
+            stOut.LoadContent(Content);
+        }
+
+        void SwapTransition()
+        {
+            TransitionChange();
+            currentTransition = stOut;
+        }
+
+        void TransitionChange()
+        {
+            if (OnTransition != null)
+                OnTransition();
+        }
+
+        void TransitionsFinished()
+        {
+            if (OnTransitionFinished != null)
+                OnTransitionFinished();
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            currentTransition.Update(gameTime);
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            currentTransition.Draw(spriteBatch);
         }
     }
 }

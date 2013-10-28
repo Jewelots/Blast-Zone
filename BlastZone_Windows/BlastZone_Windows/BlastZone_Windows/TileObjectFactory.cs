@@ -11,6 +11,9 @@ using Microsoft.Xna.Framework.Media;
 
 namespace BlastZone_Windows
 {
+    /// <summary>
+    /// A factory to create tile objects and keep track of content
+    /// </summary>
     class TileObjectFactory
     {
         Texture2D bombTex;

@@ -21,9 +21,20 @@ namespace BlastZone_Windows
 
         Level level;
 
+        /// <summary>
+        /// Texture to render the background
+        /// </summary>
         Texture2D gameBackground;
+
+        /// <summary>
+        /// Texture to render the borders
+        /// </summary>
+        Texture2D rectFillTex;
         ScoreRenderer scoreRenderer;
 
+        /// <summary>
+        /// Render target to render the level to for later offset
+        /// </summary>
         RenderTarget2D levelRenderTarget;
 
         public MainGame()
@@ -31,6 +42,7 @@ namespace BlastZone_Windows
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
+            //Set window size
             graphics.PreferredBackBufferWidth = GlobalGameData.windowWidth;
             graphics.PreferredBackBufferHeight = GlobalGameData.windowHeight;
         }
@@ -46,7 +58,9 @@ namespace BlastZone_Windows
             level = new Level();
             scoreRenderer = new ScoreRenderer();
 
-            levelRenderTarget = new RenderTarget2D(GraphicsDevice, GlobalGameData.levelSizeX, GlobalGameData.levelSizeY);
+            //Create the render target to the level size
+            //Initialise it with Bgr565 (no need for alpha) and no mipmap or depth buffer
+            levelRenderTarget = new RenderTarget2D(GraphicsDevice, GlobalGameData.levelSizeX, GlobalGameData.levelSizeY, false, SurfaceFormat.Bgr565, DepthFormat.None);
 
             base.Initialize();
         }
@@ -64,6 +78,7 @@ namespace BlastZone_Windows
             scoreRenderer.LoadContent(Content);
 
             gameBackground = Content.Load<Texture2D>("game_background");
+            rectFillTex = Content.Load<Texture2D>("1px");
         }
 
         /// <summary>
@@ -91,6 +106,8 @@ namespace BlastZone_Windows
             scoreRenderer.SetScore(2, (int)gameTime.TotalGameTime.TotalMilliseconds / 1500);
             scoreRenderer.SetScore(3, (int)gameTime.TotalGameTime.TotalMilliseconds / 2000);
 
+            level.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -100,22 +117,32 @@ namespace BlastZone_Windows
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.SetRenderTarget(levelRenderTarget);
-            GraphicsDevice.Clear(Color.Transparent);
-            level.Draw(spriteBatch, gameTime);
-            GraphicsDevice.SetRenderTarget(null);
+            //Render the level to a rendertarget:
+            GraphicsDevice.SetRenderTarget(levelRenderTarget); //Set the render target to the level's render target
+            GraphicsDevice.Clear(Color.Black); //Clear it
+            level.Draw(spriteBatch, gameTime); //Draw the level
+            GraphicsDevice.SetRenderTarget(null); //Revert the target to default to continue drawing
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
+            
+            //Draw the background
             spriteBatch.Draw(gameBackground, new Rectangle(0, 0, GlobalGameData.windowWidth, GlobalGameData.windowHeight), Color.White);
-            spriteBatch.End();
 
-            spriteBatch.Begin();
+            const int borderSize = 3;
+
+            //Draw the borders (White and Black) around the level (aesthetics)
+            spriteBatch.Draw(rectFillTex, new Rectangle((int)(GlobalGameData.windowWidth / 2 - borderSize * 2 - GlobalGameData.levelSizeX / 2), (int)(GlobalGameData.windowHeight / 2 - borderSize * 2 - GlobalGameData.levelSizeY / 2), GlobalGameData.levelSizeX + borderSize * 4, GlobalGameData.levelSizeY + borderSize * 4), Color.White);
+            spriteBatch.Draw(rectFillTex, new Rectangle((int)(GlobalGameData.windowWidth / 2 - borderSize     - GlobalGameData.levelSizeX / 2), (int)(GlobalGameData.windowHeight / 2 - borderSize     - GlobalGameData.levelSizeY / 2), GlobalGameData.levelSizeX + borderSize * 2, GlobalGameData.levelSizeY + borderSize * 2), Color.Black);
+
+            //Draw the level itself
             spriteBatch.Draw(levelRenderTarget, new Vector2(GlobalGameData.windowWidth / 2, GlobalGameData.windowHeight / 2), null, Color.White, 0f, new Vector2(GlobalGameData.levelSizeX / 2, GlobalGameData.levelSizeY / 2), 1f, SpriteEffects.None, 1f);
-            spriteBatch.End();
-
+            
+            //Draw the score
             scoreRenderer.Draw(spriteBatch);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
