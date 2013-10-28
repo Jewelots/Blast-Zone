@@ -23,7 +23,7 @@ namespace BlastZone_Windows
         float[] scoreOffset;
         string[] text;
 
-        public ScoreRenderer(Vector2 windowSize)
+        public ScoreRenderer()
         {
             backColors = new Color[4];
             frontColors = new Color[4];
@@ -55,9 +55,9 @@ namespace BlastZone_Windows
 
             //Strange magic numbers are to account for standard font rendering offsets (padding on actual font characters)
             renderPositions[0] = new Vector2(xOffset, yOffset - 10);
-            renderPositions[1] = new Vector2(windowSize.X - xOffset, yOffset - 10);
-            renderPositions[2] = new Vector2(xOffset, windowSize.Y + yOffset);
-            renderPositions[3] = new Vector2(windowSize.X - xOffset, windowSize.Y + yOffset);
+            renderPositions[1] = new Vector2(GlobalGameData.windowWidth - xOffset, yOffset - 10);
+            renderPositions[2] = new Vector2(xOffset, GlobalGameData.windowHeight + yOffset);
+            renderPositions[3] = new Vector2(GlobalGameData.windowWidth - xOffset, GlobalGameData.windowHeight + yOffset);
         }
 
         public void LoadContent(ContentManager Content)

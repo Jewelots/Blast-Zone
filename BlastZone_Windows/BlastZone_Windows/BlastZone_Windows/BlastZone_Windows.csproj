@@ -113,6 +113,7 @@
     <Compile Include="Bomb.cs" />
     <Compile Include="DrawTextExtension.cs" />
     <Compile Include="EventTimer.cs" />
+    <Compile Include="GlobalGameData.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="LevelAesthetics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

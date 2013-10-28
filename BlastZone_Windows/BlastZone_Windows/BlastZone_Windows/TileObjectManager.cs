@@ -54,15 +54,8 @@ namespace BlastZone_Windows
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Vector2 windowSize)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            int tileSize = 16;
-            int drawRatio = 3;
-
-            Vector2 levelSize = new Vector2();
-            levelSize.X = windowSize.X / 2 - gridSizeX / 2 * tileSize * drawRatio;
-            levelSize.Y = windowSize.Y / 2 - gridSizeY / 2 * tileSize * drawRatio;
-
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
 
             for (int y = 0; y < gridSizeY; ++y)
@@ -72,7 +65,7 @@ namespace BlastZone_Windows
                     TileObject to = tileObjectGrid[x, y];
                     if (to == null) continue;
 
-                    to.Draw(spriteBatch, gameTime, windowSize, levelSize);
+                    to.Draw(spriteBatch, gameTime);
                 }
             }
 

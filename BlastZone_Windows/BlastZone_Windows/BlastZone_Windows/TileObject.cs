@@ -13,9 +13,6 @@ namespace BlastZone_Windows
 {
     abstract class TileObject
     {
-        protected int tileSize = 16;
-        protected int drawRatio = 3;
-
         protected int tilePositionX, tilePositionY;
         private TileObjectManager manager;
 
@@ -33,7 +30,7 @@ namespace BlastZone_Windows
             }
         }
 
-        protected Vector2 DrawPosition { get { return Position * tileSize * drawRatio; } }
+        protected Vector2 DrawPosition { get { return Position * GlobalGameData.tileSize * GlobalGameData.drawRatio; } }
 
         public delegate void PlayerCollisionHandler();
         public delegate void FireSpreadHandler();
@@ -66,6 +63,6 @@ namespace BlastZone_Windows
         }
 
         public abstract void Update(GameTime gameTime);
-        public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime, Vector2 windowSize, Vector2 levelPos);
+        public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
     }
 }

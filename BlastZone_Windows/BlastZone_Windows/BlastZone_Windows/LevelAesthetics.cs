@@ -18,9 +18,6 @@ namespace BlastZone_Windows
         Texture2D hardBlockTexture;
         Texture2D rectFillTex;
 
-        int tileSize = 16;
-        int drawRatio = 3;
-
         int gridSizeX, gridSizeY;
 
         struct TextureTile
@@ -135,17 +132,16 @@ namespace BlastZone_Windows
             rectFillTex = Content.Load<Texture2D>("1px");
         }
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Vector2 windowSize)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            Vector2 Position = windowSize / 2;
-            Vector2 LevelSize = new Vector2(gridSizeX * tileSize * drawRatio, gridSizeY * tileSize * drawRatio);
+            //Vector2 LevelSize = new Vector2(gridSizeX * tileSize * drawRatio, gridSizeY * tileSize * drawRatio);
 
-            int borderSize = 3;
+            //int borderSize = 3;
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
 
-            spriteBatch.Draw(rectFillTex, new Rectangle((int)(Position.X - borderSize * 2 - LevelSize.X / 2), (int)(Position.Y - borderSize * 2 - LevelSize.Y / 2), (int)LevelSize.X + borderSize * 4, (int)LevelSize.Y + borderSize * 4), Color.White);
-            spriteBatch.Draw(rectFillTex, new Rectangle((int)(Position.X - borderSize - LevelSize.X / 2), (int)(Position.Y - borderSize - LevelSize.Y / 2), (int)LevelSize.X + borderSize * 2, (int)LevelSize.Y + borderSize * 2), Color.Black);
+            //spriteBatch.Draw(rectFillTex, new Rectangle((int)(Position.X - borderSize * 2 - LevelSize.X / 2), (int)(Position.Y - borderSize * 2 - LevelSize.Y / 2), (int)LevelSize.X + borderSize * 4, (int)LevelSize.Y + borderSize * 4), Color.White);
+            //spriteBatch.Draw(rectFillTex, new Rectangle((int)(Position.X - borderSize - LevelSize.X / 2), (int)(Position.Y - borderSize - LevelSize.Y / 2), (int)LevelSize.X + borderSize * 2, (int)LevelSize.Y + borderSize * 2), Color.Black);
 
             for (int y = 0; y < gridSizeY; ++y)
             {
@@ -153,8 +149,22 @@ namespace BlastZone_Windows
                 {
                     TextureTile t = textureTileGrid[x, y];
                     if (t.tex == null) continue;
-                    
-                    spriteBatch.Draw(t.tex, new Vector2((int)(Position.X + x * tileSize * drawRatio - LevelSize.X / 2), (int)(Position.Y + y * tileSize * drawRatio - LevelSize.Y / 2)), new Rectangle(t.x, t.y, tileSize, tileSize), Color.White, 0, new Vector2(), drawRatio, SpriteEffects.None, 1f);
+
+                    Vector2 drawPos = new Vector2();
+                    drawPos.X = x * GlobalGameData.tileSize * GlobalGameData.drawRatio;
+                    drawPos.Y = y * GlobalGameData.tileSize * GlobalGameData.drawRatio;
+
+                    spriteBatch.Draw(
+                        t.tex, //Texture
+                        drawPos, //Position
+                        new Rectangle(t.x, t.y, GlobalGameData.tileSize, GlobalGameData.tileSize), //Source
+                        Color.White, //Color
+                        0, //Rotation
+                        new Vector2(), //Offset
+                        GlobalGameData.drawRatio, //Scale
+                        SpriteEffects.None, //Sprite Effect (Flip)
+                        1f //Layer Depth
+                    );
                 }
             }
 

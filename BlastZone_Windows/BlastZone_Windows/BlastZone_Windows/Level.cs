@@ -13,9 +13,6 @@ namespace BlastZone_Windows
 {
     class Level
     {
-        const int gridSizeX = 15;
-        const int gridSizeY = 11;
-
         bool[,] solidArea;
 
         TileObjectManager tileObjectManager;
@@ -23,6 +20,9 @@ namespace BlastZone_Windows
 
         public Level()
         {
+            int gridSizeX = GlobalGameData.gridSizeX;
+            int gridSizeY = GlobalGameData.gridSizeY;
+
             aesthetics = new LevelAesthetics(gridSizeX, gridSizeY);
 
             solidArea = new bool[gridSizeX, gridSizeY];
@@ -37,11 +37,10 @@ namespace BlastZone_Windows
             tileObjectManager.LoadContent(Content);
         }
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Vector2 windowSize)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            aesthetics.Draw(spriteBatch, gameTime, windowSize);
-
-            tileObjectManager.Draw(spriteBatch, gameTime, windowSize);
+            aesthetics.Draw(spriteBatch, gameTime);
+            tileObjectManager.Draw(spriteBatch, gameTime);
         }
     }
 }
