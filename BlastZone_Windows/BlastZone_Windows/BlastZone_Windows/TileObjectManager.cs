@@ -120,7 +120,11 @@ namespace BlastZone_Windows
 
         public void FireSpreadTo(int gx, int gy)
         {
-            tileObjectGrid[gx, gy].FireSpread();
+            TileObject t = tileObjectGrid[gx, gy];
+
+            if (t == null) return;
+
+            t.FireSpread();
         }
     }
 }

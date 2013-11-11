@@ -116,10 +116,15 @@ namespace BlastZone_Windows
         {
             if (!GlobalGameData.IsInBounds(gx, gy)) return false;
             if (IsTileSolid(gx, gy)) return false;
+
             if (tileObjectManager.SolidAt(gx, gy))
             {
                 tileObjectManager.FireSpreadTo(gx, gy);
                 return false;
+            }
+            else
+            {
+                tileObjectManager.FireSpreadTo(gx, gy);
             }
 
             fireArea[gx, gy] = 1;
