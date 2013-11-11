@@ -107,28 +107,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Drawing\Animation.cs" />
-    <Compile Include="Drawing\AnimationSwitcher.cs" />
-    <Compile Include="Drawing\AnimationXMLReader.cs" />
+    <Compile Include="Animation.cs" />
+    <Compile Include="AnimationSwitcher.cs" />
+    <Compile Include="AnimationXMLReader.cs" />
     <Compile Include="Bomb.cs" />
-    <Compile Include="Drawing\DrawTextExtension.cs" />
+    <Compile Include="DrawTextExtension.cs" />
     <Compile Include="EventTimer.cs" />
     <Compile Include="FireManager.cs" />
-    <Compile Include="States\GameplayState.cs" />
     <Compile Include="GlobalGameData.cs" />
-    <Compile Include="States\GameState.cs" />
     <Compile Include="Level\Level.cs" />
     <Compile Include="Level\LevelAesthetics.cs" />
-    <Compile Include="States\MenuState.cs" />
     <Compile Include="Particles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="ScoreRenderer.cs" />
-    <Compile Include="Drawing\ScreenTransition.cs" />
-    <Compile Include="Drawing\Sprite.cs" />
+    <Compile Include="ScreenTransition.cs" />
+    <Compile Include="Sprite.cs" />
+    <Compile Include="TiledTexture.cs" />
+    <Compile Include="States\GameplayState.cs" />
+    <Compile Include="States\GameState.cs" />
     <Compile Include="States\GameStateManager.cs" />
-    <Compile Include="Drawing\TiledTexture.cs" />
+    <Compile Include="States\MenuState.cs" />
     <Compile Include="TileObject.cs" />
     <Compile Include="TileObjectFactory.cs" />
     <Compile Include="TileObjectManager.cs" />
@@ -170,7 +170,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Drawing\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--
