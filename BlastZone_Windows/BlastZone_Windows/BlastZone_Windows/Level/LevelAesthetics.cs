@@ -9,8 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-
-namespace BlastZone_Windows
+namespace BlastZone_Windows.Level
 {
     /// <summary>
     /// Used to generate and display the purely aesthetic tiles of the level

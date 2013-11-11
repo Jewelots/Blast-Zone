@@ -9,11 +9,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace BlastZone_Windows
+namespace BlastZone_Windows.States
 {
     class GameplayState : GameState
     {
-        Level level;
+        Level.Level level;
 
         /// <summary>
         /// Texture to render the background
@@ -52,7 +52,7 @@ namespace BlastZone_Windows
         public GameplayState(GameStateManager gameStateManager, GraphicsDevice graphicsDevice)
             : base(gameStateManager)
         {
-            level = new Level();
+            level = new Level.Level();
             scoreRenderer = new ScoreRenderer();
 
             //Create the render target to the level size

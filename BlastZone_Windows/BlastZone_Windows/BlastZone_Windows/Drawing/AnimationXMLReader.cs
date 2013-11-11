@@ -12,7 +12,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.IO;
 
-namespace BlastZone_Windows
+namespace BlastZone_Windows.Drawing
 {
     struct AnimationFrameDetails
     {

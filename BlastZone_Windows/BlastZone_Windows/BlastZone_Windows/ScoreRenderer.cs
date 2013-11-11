@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using BlastZone_Windows.Drawing;
+
 namespace BlastZone_Windows
 {
     class ScoreRenderer

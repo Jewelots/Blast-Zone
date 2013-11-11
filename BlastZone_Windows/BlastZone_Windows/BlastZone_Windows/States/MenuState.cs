@@ -9,7 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace BlastZone_Windows
+using BlastZone_Windows.Drawing;
+
+namespace BlastZone_Windows.States
 {
     class MenuState : GameState
     {

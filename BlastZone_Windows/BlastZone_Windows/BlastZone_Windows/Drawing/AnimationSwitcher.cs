@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BlastZone_Windows
+namespace BlastZone_Windows.Drawing
 {
     class AnimationSwitcher
     {

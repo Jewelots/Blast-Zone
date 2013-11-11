@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace BlastZone_Windows
+namespace BlastZone_Windows.Level
 {
     /// <summary>
     /// Encapsulates the aesthetic tiles and all entities that interact.
@@ -17,10 +17,14 @@ namespace BlastZone_Windows
     /// </summary>
     class Level
     {
-        //2D array of bools to designate what's solid and what's not
+        /// <summary>
+        /// 2D array of bools to designate what's solid and what's not
+        /// </summary>
         bool[,] solidArea;
-        
+
         TileObjectManager tileObjectManager;
+        FireManager fireManager;
+
         LevelAesthetics aesthetics;
 
         public Level()
@@ -30,8 +34,10 @@ namespace BlastZone_Windows
 
             aesthetics = new LevelAesthetics(gridSizeX, gridSizeY);
 
-            solidArea = new bool[gridSizeX, gridSizeY];
             tileObjectManager = new TileObjectManager(gridSizeX, gridSizeY);
+            fireManager = new FireManager(gridSizeX, gridSizeY);
+
+            solidArea = new bool[gridSizeX, gridSizeY];
         }
 
         public void LoadContent(ContentManager Content)
@@ -40,6 +46,11 @@ namespace BlastZone_Windows
             aesthetics.GenerateTiles(solidArea);
 
             tileObjectManager.LoadContent(Content);
+            ///////////////////////////////////////
+            fireManager.LoadContent(Content); /////REPLACE LATER
+            ///////////////////////////////////////
+
+            fireManager.SetSolidArea(solidArea);
         }
 
         public void Reset()
@@ -50,6 +61,8 @@ namespace BlastZone_Windows
         public void Update(GameTime gameTime)
         {
             tileObjectManager.Update(gameTime);
+
+            fireManager.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -59,6 +72,10 @@ namespace BlastZone_Windows
 
             aesthetics.Draw(spriteBatch, gameTime);
             tileObjectManager.Draw(spriteBatch, gameTime);
+
+            /////////////////////////
+            fireManager.Draw(spriteBatch, gameTime); /////REPLACE LATER
+            /////////////////////////
 
             spriteBatch.End();
         }

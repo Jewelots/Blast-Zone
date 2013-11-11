@@ -27,5 +27,10 @@ namespace BlastZone_Windows
         //Calculate physical level width/height in pixels for easy use later
         public const int levelSizeX = GlobalGameData.gridSizeX * GlobalGameData.tileSize * GlobalGameData.drawRatio;
         public const int levelSizeY = GlobalGameData.gridSizeY * GlobalGameData.tileSize * GlobalGameData.drawRatio;
+
+        public static bool IsInBounds(int gx, int gy)
+        {
+            return (gx >= 0 && gy >= 0 && gx < gridSizeX && gy < gridSizeY);
+        }
     }
 }

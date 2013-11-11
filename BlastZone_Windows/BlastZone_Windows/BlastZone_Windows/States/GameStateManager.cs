@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace BlastZone_Windows
+namespace BlastZone_Windows.States
 {
     public enum StateType
     {
@@ -33,7 +33,7 @@ namespace BlastZone_Windows
 
         GameState currentState;
 
-        ScreenTransitionInOut screenTransition;
+        Drawing.ScreenTransitionInOut screenTransition;
 
         MainGame mainGame;
 
@@ -47,7 +47,7 @@ namespace BlastZone_Windows
 
             SwapState(StateType.MENU);
 
-            screenTransition = new ScreenTransitionInOut();
+            screenTransition = new Drawing.ScreenTransitionInOut();
 
             this.mainGame = mainGame;
         }

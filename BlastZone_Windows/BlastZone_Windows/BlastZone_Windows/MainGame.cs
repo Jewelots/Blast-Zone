@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using BlastZone_Windows.States;
+
 namespace BlastZone_Windows
 {
     /// <summary>
@@ -29,6 +31,8 @@ namespace BlastZone_Windows
             //Set window size
             graphics.PreferredBackBufferWidth = GlobalGameData.windowWidth;
             graphics.PreferredBackBufferHeight = GlobalGameData.windowHeight;
+
+            IsMouseVisible = true;
         }
 
         /// <summary>

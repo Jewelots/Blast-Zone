@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace BlastZone_Windows
+namespace BlastZone_Windows.Drawing
 {
     class Sprite
     {
