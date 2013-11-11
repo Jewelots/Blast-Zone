@@ -17,7 +17,9 @@ namespace BlastZone_Windows
 
         EventTimer lifeTimer;
 
-        public Bomb(TileObjectManager manager, int tilePosX, int tilePosY, Texture2D tex) //replace with Animation
+        int power;
+
+        public Bomb(TileObjectManager manager, int tilePosX, int tilePosY, Texture2D tex, int power) //replace with Animation
             : base(manager, tilePosX, tilePosY)
         {
             bombTex = tex;
@@ -25,8 +27,11 @@ namespace BlastZone_Windows
 
             lifeTimer = new EventTimer(0, 5);
 
+            this.power = power;
+
             //Hook to explode when life ends
             lifeTimer.OnEnd += Explode;
+            OnFireSpread += Explode;
         }
 
         public override void Update(GameTime gameTime)
@@ -36,8 +41,8 @@ namespace BlastZone_Windows
 
         void Explode()
         {
-            //Just remove for now, create fire + effect later
             RemoveThis();
+            manager.level.fireManager.ExplodeFrom(tilePositionX, tilePositionY, power);
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)

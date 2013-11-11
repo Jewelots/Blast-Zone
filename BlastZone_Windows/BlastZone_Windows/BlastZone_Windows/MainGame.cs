@@ -80,6 +80,7 @@ namespace BlastZone_Windows
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            MouseManager.Update();
             gameStateManager.Update(gameTime);
 
             base.Update(gameTime);

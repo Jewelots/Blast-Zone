@@ -17,7 +17,7 @@ namespace BlastZone_Windows
     abstract class TileObject
     {
         protected int tilePositionX, tilePositionY;
-        private TileObjectManager manager;
+        protected TileObjectManager manager;
 
         public bool Solid { get; protected set; }
         public Vector2 Position
@@ -52,7 +52,7 @@ namespace BlastZone_Windows
                 OnPlayerCollision();
         }
 
-        protected void FireSpread()
+        public void FireSpread()
         {
             if (OnFireSpread != null)
                 OnFireSpread();

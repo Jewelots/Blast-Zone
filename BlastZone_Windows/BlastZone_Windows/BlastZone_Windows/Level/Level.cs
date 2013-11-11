@@ -23,7 +23,7 @@ namespace BlastZone_Windows.Level
         bool[,] solidArea;
 
         TileObjectManager tileObjectManager;
-        FireManager fireManager;
+        public FireManager fireManager;
 
         LevelAesthetics aesthetics;
 
@@ -34,8 +34,8 @@ namespace BlastZone_Windows.Level
 
             aesthetics = new LevelAesthetics(gridSizeX, gridSizeY);
 
-            tileObjectManager = new TileObjectManager(gridSizeX, gridSizeY);
-            fireManager = new FireManager(gridSizeX, gridSizeY);
+            tileObjectManager = new TileObjectManager(gridSizeX, gridSizeY, this);
+            fireManager = new FireManager(gridSizeX, gridSizeY, tileObjectManager);
 
             solidArea = new bool[gridSizeX, gridSizeY];
         }

@@ -26,9 +26,11 @@ namespace BlastZone_Windows
         /// </summary>
         TileObjectFactory tileObjectFactory;
 
+        public Level.Level level;
+
         int gridSizeX, gridSizeY;
 
-        public TileObjectManager(int gridSizeX, int gridSizeY)
+        public TileObjectManager(int gridSizeX, int gridSizeY, Level.Level level)
         {
             tileObjectGrid = new TileObject[gridSizeX, gridSizeY];
 
@@ -36,6 +38,8 @@ namespace BlastZone_Windows
 
             this.gridSizeX = gridSizeX;
             this.gridSizeY = gridSizeY;
+
+            this.level = level;
         }
 
         public void LoadContent(ContentManager Content)
@@ -101,7 +105,22 @@ namespace BlastZone_Windows
                 }
             }
 
-            tileObjectGrid[2, 1] = tileObjectFactory.CreateBomb(this, 2, 1);
+            tileObjectGrid[3, 1] = tileObjectFactory.CreateBomb(this, 3, 1, 5);
+            tileObjectGrid[3, 5] = tileObjectFactory.CreateBomb(this, 3, 5, 2);
+        }
+
+        public bool SolidAt(int gx, int gy)
+        {
+            TileObject t = tileObjectGrid[gx, gy];
+
+            if (t == null) return false;
+
+            return t.Solid;
+        }
+
+        public void FireSpreadTo(int gx, int gy)
+        {
+            tileObjectGrid[gx, gy].FireSpread();
         }
     }
 }

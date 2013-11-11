@@ -21,16 +21,20 @@ namespace BlastZone_Windows
         /// </summary>
         float[,] fireArea;
 
+        TileObjectManager tileObjectManager;
+
         //Reference to level's solid area
         bool[,] solidArea;
 
         Texture2D px; ///TEMP
 
-        public FireManager(int gridSizeX, int gridSizeY)
+        public FireManager(int gridSizeX, int gridSizeY, TileObjectManager tileObjectManager)
         {
             fireArea = new float[gridSizeX, gridSizeY];
 
-            fireArea[5, 5] = 1;
+            fireArea[5, 5] = 1; ///TEMP
+
+            this.tileObjectManager = tileObjectManager;
         }
 
         public void LoadContent(ContentManager Content)
@@ -61,7 +65,8 @@ namespace BlastZone_Windows
 
             MouseState mState = Mouse.GetState();
 
-            if (mState.LeftButton == ButtonState.Pressed)
+            //if (mState.LeftButton == ButtonState.Pressed)
+            if (MouseManager.ButtonPressed(MouseButton.LEFT))
             {
                 int factor = GlobalGameData.tileSize * GlobalGameData.drawRatio;
 
@@ -71,46 +76,32 @@ namespace BlastZone_Windows
                 gy = (mState.Y - offsetY) / factor;
 
                 //SetTileOnFire(gx, gy);
-                ExplodeFrom(gx, gy);
+                ExplodeFrom(gx, gy, 1);
             }
         }
 
-        void ExplodeFrom(int gx, int gy, int explodeSize = 3)
+        public void ExplodeFrom(int gx, int gy, int explodeSize = 3)
         {
-            if (IsTileSolid(gx, gy)) return;
-
-            SetTileOnFire(gx, gy);
+            if (!SetTileOnFire(gx, gy)) return;
 
             for (int i = 1; i <= explodeSize; ++i)
             {
-                int newgx = gx - i;
-
-                if (IsTileSolid(newgx, gy)) break;
-                SetTileOnFire(newgx, gy);
+                if (!SetTileOnFire(gx - i, gy)) break;
             }
 
             for (int i = 1; i <= explodeSize; ++i)
             {
-                int newgx = gx + i;
-
-                if (IsTileSolid(newgx, gy)) break;
-                SetTileOnFire(newgx, gy);
+                if (!SetTileOnFire(gx + i, gy)) break;
             }
 
             for (int i = 1; i <= explodeSize; ++i)
             {
-                int newgy = gy - i;
-
-                if (IsTileSolid(gx, newgy)) break;
-                SetTileOnFire(gx, newgy);
+                if (!SetTileOnFire(gx, gy - i)) break;
             }
 
             for (int i = 1; i <= explodeSize; ++i)
             {
-                int newgy = gy + i;
-
-                if (IsTileSolid(gx, newgy)) break;
-                SetTileOnFire(gx, newgy);
+                if (!SetTileOnFire(gx, gy + i)) break;
             }
         }
 
@@ -121,11 +112,19 @@ namespace BlastZone_Windows
             return solidArea[gx, gy];
         }
 
-        void SetTileOnFire(int gx, int gy)
+        bool SetTileOnFire(int gx, int gy)
         {
-            if (!GlobalGameData.IsInBounds(gx, gy)) return;
+            if (!GlobalGameData.IsInBounds(gx, gy)) return false;
+            if (IsTileSolid(gx, gy)) return false;
+            if (tileObjectManager.SolidAt(gx, gy))
+            {
+                tileObjectManager.FireSpreadTo(gx, gy);
+                return false;
+            }
 
             fireArea[gx, gy] = 1;
+
+            return true;
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -134,13 +133,16 @@ namespace BlastZone_Windows
             {
                 for (int x = 0; x < GlobalGameData.gridSizeX; ++x)
                 {
-                    int factor = GlobalGameData.tileSize * GlobalGameData.drawRatio;
-                    Color color = new Color(fireArea[x, y] / 1, 0, 0) * 0.5f;
+                    if (!solidArea[x, y])
+                    {
+                        int factor = GlobalGameData.tileSize * GlobalGameData.drawRatio;
+                        Color color = new Color(fireArea[x, y] / 1, 0, 0) * 0.8f;
 
-                    int border = 20;
-
-                    Rectangle destrect = new Rectangle(x * factor + border, y * factor + border, factor - border * 2, factor - border * 2);
-                    spriteBatch.Draw(px, destrect, color);
+                        int border = 5;
+                    
+                        Rectangle destrect = new Rectangle(x * factor + border, y * factor + border, factor - border * 2, factor - border * 2);
+                        spriteBatch.Draw(px, destrect, color);
+                    }
                 }
             }
         }
