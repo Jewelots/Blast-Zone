@@ -135,9 +135,9 @@ namespace BlastZone_Windows
                 for (int x = 0; x < GlobalGameData.gridSizeX; ++x)
                 {
                     int factor = GlobalGameData.tileSize * GlobalGameData.drawRatio;
-                    Color color = new Color(fireArea[x, y] / 1, 0, 0);
+                    Color color = new Color(fireArea[x, y] / 1, 0, 0) * 0.5f;
 
-                    int border = 10;
+                    int border = 20;
 
                     Rectangle destrect = new Rectangle(x * factor + border, y * factor + border, factor - border * 2, factor - border * 2);
                     spriteBatch.Draw(px, destrect, color);
