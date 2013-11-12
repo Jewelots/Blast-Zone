@@ -29,15 +29,31 @@ namespace BlastZone_Windows.Level
 
         public Level()
         {
-            int gridSizeX = GlobalGameData.gridSizeX;
-            int gridSizeY = GlobalGameData.gridSizeY;
+            aesthetics = new LevelAesthetics();
 
-            aesthetics = new LevelAesthetics(gridSizeX, gridSizeY);
+            tileObjectManager = new TileObjectManager(this);
+            fireManager = new FireManager(tileObjectManager);
 
-            tileObjectManager = new TileObjectManager(gridSizeX, gridSizeY, this);
-            fireManager = new FireManager(gridSizeX, gridSizeY, tileObjectManager);
+            solidArea = new bool[GlobalGameData.gridSizeX, GlobalGameData.gridSizeY];
+        }
 
-            solidArea = new bool[gridSizeX, gridSizeY];
+        /// <summary>
+        /// Returns a compilation of Always-Solid walls and solid TileObjects
+        /// </summary>
+        /// <returns>A 2D array of booleans representing solid (true) or not solid.</returns>
+        public bool[,] GetSolid()
+        {
+            bool[,] solid = new bool[GlobalGameData.gridSizeX, GlobalGameData.gridSizeY];
+
+            for (int y = 0; y < GlobalGameData.gridSizeY; ++y)
+            {
+                for (int x = 0; x < GlobalGameData.gridSizeX; ++x)
+                {
+                    solid[x, y] = solidArea[x, y] || tileObjectManager.SolidAt(x, y);
+                }
+            }
+
+            return solid;
         }
 
         public void LoadContent(ContentManager Content)

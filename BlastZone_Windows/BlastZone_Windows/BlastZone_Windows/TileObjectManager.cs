@@ -30,14 +30,14 @@ namespace BlastZone_Windows
 
         int gridSizeX, gridSizeY;
 
-        public TileObjectManager(int gridSizeX, int gridSizeY, Level.Level level)
+        public TileObjectManager(Level.Level level)
         {
+            this.gridSizeX = GlobalGameData.gridSizeX;
+            this.gridSizeY = GlobalGameData.gridSizeY;
+
             tileObjectGrid = new TileObject[gridSizeX, gridSizeY];
 
             tileObjectFactory = new TileObjectFactory();
-
-            this.gridSizeX = gridSizeX;
-            this.gridSizeY = gridSizeY;
 
             this.level = level;
         }

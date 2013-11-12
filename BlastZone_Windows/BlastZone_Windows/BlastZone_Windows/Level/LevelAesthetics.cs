@@ -59,10 +59,10 @@ namespace BlastZone_Windows.Level
         /// </summary>
         TextureTile[,] textureTileGrid;
 
-        public LevelAesthetics(int gridSizeX, int gridSizeY)
+        public LevelAesthetics()
         {
-            this.gridSizeX = gridSizeX;
-            this.gridSizeY = gridSizeY;
+            this.gridSizeX = GlobalGameData.gridSizeX;
+            this.gridSizeY = GlobalGameData.gridSizeY;
 
             textureTileGrid = new TextureTile[gridSizeX, gridSizeY];
 

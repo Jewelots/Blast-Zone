@@ -28,9 +28,9 @@ namespace BlastZone_Windows
 
         Texture2D px; ///TEMP
 
-        public FireManager(int gridSizeX, int gridSizeY, TileObjectManager tileObjectManager)
+        public FireManager(TileObjectManager tileObjectManager)
         {
-            fireArea = new float[gridSizeX, gridSizeY];
+            fireArea = new float[GlobalGameData.gridSizeX, GlobalGameData.gridSizeY];
 
             fireArea[5, 5] = 1; ///TEMP
 
