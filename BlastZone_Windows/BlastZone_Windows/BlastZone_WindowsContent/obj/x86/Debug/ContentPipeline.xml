@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\1px.xnb</Output>
-      <Time>2013-11-11T13:49:28.348375+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\1px.xnb</Output>
+      <Time>2013-10-28T14:29:40.7097405+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Game\bomb.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\bomb.xnb</Output>
-      <Time>2013-11-11T13:49:28.3493751+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\bomb.xnb</Output>
+      <Time>2013-10-28T14:29:40.7107406+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Game\game_background.jpg</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\game_background.xnb</Output>
-      <Time>2013-11-11T13:49:28.3703763+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\game_background.xnb</Output>
+      <Time>2013-10-28T14:29:40.770744+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Game\hardblocks.png</Source>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\hardblocks.xnb</Output>
-      <Time>2013-11-11T13:49:28.3703763+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\hardblocks.xnb</Output>
+      <Time>2013-10-28T14:29:40.771744+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Game\playersprite.png</Source>
@@ -43,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\playersprite.xnb</Output>
-      <Time>2013-11-11T13:49:28.3723764+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\playersprite.xnb</Output>
+      <Time>2013-10-28T14:29:40.7747442+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Game\softblocks.png</Source>
@@ -52,8 +52,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\softblocks.xnb</Output>
-      <Time>2013-11-11T13:49:28.3723764+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\softblocks.xnb</Output>
+      <Time>2013-10-28T14:29:40.7757443+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Game\tiles.png</Source>
@@ -61,8 +61,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\tiles.xnb</Output>
-      <Time>2013-11-11T13:49:28.3733765+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\tiles.xnb</Output>
+      <Time>2013-10-28T14:29:40.7767443+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Game\tiles2.png</Source>
@@ -70,8 +70,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\tiles2.xnb</Output>
-      <Time>2013-11-11T13:49:28.539386+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Game\tiles2.xnb</Output>
+      <Time>2013-10-28T14:29:40.7777444+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Logo\Blast_Orange.png</Source>
@@ -79,8 +79,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Blast_Orange.xnb</Output>
-      <Time>2013-11-11T13:49:28.540386+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Blast_Orange.xnb</Output>
+      <Time>2013-10-28T14:29:40.7797445+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Logo\Blast_Shadow.png</Source>
@@ -88,8 +88,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Blast_Shadow.xnb</Output>
-      <Time>2013-11-11T13:49:28.540386+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Blast_Shadow.xnb</Output>
+      <Time>2013-10-28T14:29:40.7797445+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Logo\Blast_Text.png</Source>
@@ -97,8 +97,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Blast_Text.xnb</Output>
-      <Time>2013-11-11T13:49:28.5413861+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Blast_Text.xnb</Output>
+      <Time>2013-10-28T14:29:40.7807446+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Logo\Blast_Yellow.png</Source>
@@ -106,8 +106,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Blast_Yellow.xnb</Output>
-      <Time>2013-11-11T13:49:28.5423861+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Blast_Yellow.xnb</Output>
+      <Time>2013-10-28T14:29:40.7817446+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Logo\Zone_Orange.png</Source>
@@ -115,8 +115,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Zone_Orange.xnb</Output>
-      <Time>2013-11-11T13:49:28.5423861+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Zone_Orange.xnb</Output>
+      <Time>2013-10-28T14:29:40.7897451+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Logo\Zone_Shadow.png</Source>
@@ -124,8 +124,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Zone_Shadow.xnb</Output>
-      <Time>2013-11-11T13:49:28.5433862+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Zone_Shadow.xnb</Output>
+      <Time>2013-10-28T14:29:40.7907451+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Logo\Zone_Text.png</Source>
@@ -133,8 +133,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Zone_Text.xnb</Output>
-      <Time>2013-11-11T13:49:28.5433862+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Zone_Text.xnb</Output>
+      <Time>2013-10-28T14:29:40.7907451+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Logo\Zone_Yellow.png</Source>
@@ -142,8 +142,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Zone_Yellow.xnb</Output>
-      <Time>2013-11-11T13:49:28.5443862+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Logo\Zone_Yellow.xnb</Output>
+      <Time>2013-10-28T14:29:40.7917452+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Menu\bg.png</Source>
@@ -151,8 +151,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Menu\bg.xnb</Output>
-      <Time>2013-11-11T13:49:28.5453863+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Menu\bg.xnb</Output>
+      <Time>2013-10-28T14:29:40.7927452+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Menu\text.png</Source>
@@ -160,8 +160,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Menu\text.xnb</Output>
-      <Time>2013-11-11T13:49:28.5453863+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Menu\text.xnb</Output>
+      <Time>2013-10-28T14:29:40.7937453+11:00</Time>
     </Item>
     <Item>
       <Source>Fonts\Badaboom.spritefont</Source>
@@ -169,8 +169,35 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Fonts\Badaboom.xnb</Output>
-      <Time>2013-11-11T13:49:28.348375+11:00</Time>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Fonts\Badaboom.xnb</Output>
+      <Time>2013-10-28T14:29:40.7097405+11:00</Time>
+    </Item>
+    <Item>
+      <Source>Effects\SmokeTex.png</Source>
+      <Name>Effects\SmokeTex</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Effects\SmokeTex.xnb</Output>
+      <Time>2013-11-11T08:29:56.3404634+11:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\player1.png</Source>
+      <Name>SpriteSheets\player1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\SpriteSheets\player1.xnb</Output>
+      <Time>2013-11-12T12:27:46.5042441+11:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\softblocks.png</Source>
+      <Name>SpriteSheets\softblocks</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\SpriteSheets\softblocks.xnb</Output>
+      <Time>2013-10-21T15:41:50.0572181+11:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -178,10 +205,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_WindowsContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_WindowsContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_WindowsContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_WindowsContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>

@@ -17,5 +17,11 @@ Content\Images\Logo\Zone_Yellow.xnb
 Content\Images\Menu\bg.xnb
 Content\Images\Menu\text.xnb
 Content\Fonts\Badaboom.xnb
+Content\Effects\SmokeTex.xnb
+Content\SpriteSheets\player1.xnb
+Content\SpriteSheets\softblocks.xnb
+Content\Effects\Explosion.xml
+Content\Spritesheets\player1.xml
+Content\Spritesheets\softblocks.xml
 Content\XML\player.xml
 Content\XML\softblocks.xml

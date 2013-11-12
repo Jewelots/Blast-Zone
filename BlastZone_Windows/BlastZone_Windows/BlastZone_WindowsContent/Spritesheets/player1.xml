@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<player1>
+  <Mesh x="4" y="2"/>
+	<Framerate default="4.0"/>
+	<Size x="51" y="66"/>
+	<Animations>
+		<StandDown>
+			<Frame x="0" y="0"/>
+			<End return="StandDown"/>
+		</StandDown>
+		<WalkDown>
+			<Frame x="0"  y="0"/>
+			<Frame x="1" y="0"/>
+			<Frame x="0"  y="0"/>
+			<Frame x="1" y="0" flip="H"/>
+			<End return="StandDown"/>
+		</WalkDown>
+		<StandLeft>
+			<Frame x="0" y="1"/>
+			<End return="StandLeft"/>
+		</StandLeft>
+		<WalkLeft>
+			<Frame x="0"  y="1"/>
+			<Frame x="1" y="1"/>
+			<Frame x="0"  y="1"/>
+			<Frame x="1" y="1"/>
+			<End return="StandLeft"/>
+		</WalkLeft>
+		<StandRight>
+			<Frame x="0"  y="1" flip="H"/>
+			<End return="StandRight"/>
+		</StandRight>
+		<WalkRight>
+			<Frame x="0"  y="1" flip="H"/>
+			<Frame x="1" y="1" flip="H"/>
+			<Frame x="0"  y="1" flip="H"/>
+			<Frame x="2" y="1" flip="H"/>
+			<End return="StandRight"/>
+		</WalkRight>
+		<StandUp>
+			<Frame x="2" y="0"/>
+			<End return="StandUp"/>
+		</StandUp>
+		<WalkUp>
+			<Frame x="2" y="0"/>
+			<Frame x="3" y="0"/>
+			<Frame x="2" y="0"/>
+			<Frame x="3" y="0" flip="H"/>
+			<End return="StandUp"/>
+		</WalkUp>
+		<Win>
+			<Frame x="3" y="1"/>
+			<End return="Win"/>
+		</Win>
+	</Animations>
+</player1>

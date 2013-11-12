@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<softblocks>
+	<Mesh x="6" y="4"/>
+	<Framerate default="10.0"/>
+	<Size x="100" y="100"/>
+	<Animations>
+		<Block1>
+			<Frame x="0" y="0"/>
+			<Frame x="1" y="0"/>
+			<Frame x="2" y="0"/>
+			<Frame x="3" y="0"/>
+			<Frame x="4" y="0"/>
+			<Frame x="5" y="0"/>
+			<End return="Block2"/>
+		</Block1>
+		<Block2>
+			<Frame x="0" y="1"/>
+			<Frame x="1" y="1"/>
+			<Frame x="2" y="1"/>
+			<Frame x="3" y="1"/>
+			<Frame x="4" y="1"/>
+			<Frame x="5" y="1"/>
+			<End return="Block1"/>
+		</Block2>
+		<Block3>
+			<Frame x="0" y="2"/>
+			<Frame x="1" y="2"/>
+			<Frame x="2" y="2"/>
+			<Frame x="3" y="2"/>
+			<Frame x="4" y="2"/>
+			<Frame x="5" y="2"/>
+			<End return=""/>
+		</Block3>
+		<Block4>
+			<Frame x="0" y="3"/>
+			<Frame x="1" y="3"/>
+			<Frame x="2" y="3"/>
+			<Frame x="3" y="3"/>
+			<Frame x="4" y="3"/>
+			<Frame x="5" y="3"/>
+			<End return="Block4"/>
+		</Block4>
+	</Animations>
+</softblocks>

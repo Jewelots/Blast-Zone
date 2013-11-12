@@ -114,7 +114,10 @@
     <Compile Include="Drawing\DrawTextExtension.cs" />
     <Compile Include="Drawing\ScreenTransition.cs" />
     <Compile Include="Drawing\Sprite.cs" />
+    <Compile Include="Drawing\SpritesheetAnimation.cs" />
     <Compile Include="Drawing\TiledTexture.cs" />
+    <Compile Include="Effects\Particles.cs" />
+    <Compile Include="Effects\VectorGraphs.cs" />
     <Compile Include="EventTimer.cs" />
     <Compile Include="FireManager.cs" />
     <Compile Include="GlobalGameData.cs" />
