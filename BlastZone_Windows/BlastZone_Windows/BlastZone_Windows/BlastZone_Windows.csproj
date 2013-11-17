@@ -108,12 +108,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bomb.cs" />
-    <Compile Include="Drawing\Animation.cs" />
-    <Compile Include="Drawing\AnimationSwitcher.cs" />
-    <Compile Include="Drawing\AnimationXMLReader.cs" />
     <Compile Include="Drawing\DrawTextExtension.cs" />
     <Compile Include="Drawing\ScreenTransition.cs" />
-    <Compile Include="Drawing\Sprite.cs" />
     <Compile Include="Drawing\SpritesheetAnimation.cs" />
     <Compile Include="Drawing\TiledTexture.cs" />
     <Compile Include="Effects\Particles.cs" />
