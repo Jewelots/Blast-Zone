@@ -1,3 +1,4 @@
+Content\Effects\SmokeTex.xnb
 Content\Images\1px.xnb
 Content\Images\Game\bomb.xnb
 Content\Images\Game\game_background.xnb
@@ -16,10 +17,9 @@ Content\Images\Logo\Zone_Text.xnb
 Content\Images\Logo\Zone_Yellow.xnb
 Content\Images\Menu\bg.xnb
 Content\Images\Menu\text.xnb
+Content\Spritesheets\player1.xnb
+Content\Spritesheets\softblocks.xnb
 Content\Fonts\Badaboom.xnb
-Content\Effects\SmokeTex.xnb
-Content\SpriteSheets\player1.xnb
-Content\SpriteSheets\softblocks.xnb
 Content\Effects\Explosion.xml
 Content\Spritesheets\player1.xml
 Content\Spritesheets\softblocks.xml
