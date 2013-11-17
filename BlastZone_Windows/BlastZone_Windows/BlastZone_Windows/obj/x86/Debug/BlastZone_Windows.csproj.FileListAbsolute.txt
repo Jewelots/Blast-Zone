@@ -91,3 +91,9 @@ C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_W
 C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Spritesheets\softblocks.xml
 C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\XML\player.xml
 C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\XML\softblocks.xml
+C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Effects\SmokeTex.xnb
+C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Spritesheets\player1.xnb
+C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Spritesheets\softblocks.xnb
+C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Effects\Explosion.xml
+C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Spritesheets\player1.xml
+C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Spritesheets\softblocks.xml

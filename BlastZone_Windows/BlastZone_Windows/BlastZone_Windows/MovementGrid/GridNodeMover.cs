@@ -9,36 +9,36 @@ using Microsoft.Xna.Framework.Content;
 
 namespace BlastZone_Windows.MovementGrid
 {
+    class MoveEvent
+    {
+        public enum MoveEventType
+        {
+            MOVE_NONE,
+            MOVE_UP,
+            MOVE_LEFT,
+            MOVE_RIGHT,
+            MOVE_DOWN
+        }
+
+        public MoveEventType moveEvent;
+        public float speed;
+
+
+        public static MoveEvent MakeEvent(MoveEventType moveEventType, float speed = 150)
+        {
+            MoveEvent me = new MoveEvent();
+            me.moveEvent = moveEventType;
+            me.speed = speed;
+            return me;
+        }
+    }
+
     class GridNodeMover
     {
         Vector2 position;
         GridNodeMap map;
 
         bool movingHorizontal = false;
-
-        class MoveEvent
-        {
-            public enum MoveEventType
-            {
-                MOVE_NONE,
-                MOVE_UP,
-                MOVE_LEFT,
-                MOVE_RIGHT,
-                MOVE_DOWN
-            }
-
-            public MoveEventType moveEvent;
-            public float speed;
-
-       
-            public static MoveEvent MakeMoveEvent(MoveEventType moveEventType, float speed = 150)
-            {
-                MoveEvent me = new MoveEvent();
-                me.moveEvent = moveEventType;
-                me.speed = speed;
-                return me;
-            }
-        }
 
         Queue<MoveEvent> moveEventQueue;
 
@@ -57,27 +57,14 @@ namespace BlastZone_Windows.MovementGrid
             moveEventQueue = new Queue<MoveEvent>();
         }
 
-        public void GetInput(KeyboardState k)
+        public void QueueEvent(MoveEvent moveEvent)
         {
-            if (k.IsKeyDown(Keys.W) || k.IsKeyDown(Keys.Up))
-            {
-                moveEventQueue.Enqueue(MoveEvent.MakeMoveEvent(MoveEvent.MoveEventType.MOVE_UP));
-            }
+            moveEventQueue.Enqueue(moveEvent);
+        }
 
-            if (k.IsKeyDown(Keys.S) || k.IsKeyDown(Keys.Down))
-            {
-                moveEventQueue.Enqueue(MoveEvent.MakeMoveEvent(MoveEvent.MoveEventType.MOVE_DOWN));
-            }
-
-            if (k.IsKeyDown(Keys.A) || k.IsKeyDown(Keys.Left))
-            {
-                moveEventQueue.Enqueue(MoveEvent.MakeMoveEvent(MoveEvent.MoveEventType.MOVE_LEFT));
-            }
-
-            if (k.IsKeyDown(Keys.D) || k.IsKeyDown(Keys.Right))
-            {
-                moveEventQueue.Enqueue(MoveEvent.MakeMoveEvent(MoveEvent.MoveEventType.MOVE_RIGHT));
-            }
+        public Vector2 GetPosition()
+        {
+            return position;
         }
 
         public void Update(GameTime gameTime)
@@ -291,20 +278,6 @@ namespace BlastZone_Windows.MovementGrid
                     }
                 }
             }
-        }
-
-        //temp below this point
-
-        Texture2D playerTex; //replace with animation
-
-        public void LoadContent(ContentManager Content)
-        {
-            playerTex = Content.Load<Texture2D>("Images/Game/bomb");
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(playerTex, position, null, Color.White, 0f, new Vector2(GlobalGameData.tileSize / 2 - 0.5f, GlobalGameData.tileSize / 2 - 0.5f), GlobalGameData.drawRatio, SpriteEffects.None, 1f);
         }
     }
 }

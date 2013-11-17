@@ -30,7 +30,12 @@ namespace BlastZone_Windows.Level
         LevelAesthetics aesthetics;
 
         GridNodeMap gridNodeMap;
-        GridNodeMover gridNodeMover;
+        //GridNodeMover gridNodeMover;
+
+        Player[] players;
+        PlayerInputController[] playerInputControllers;
+
+        int playerCount = 1;
 
         public Level()
         {
@@ -42,7 +47,15 @@ namespace BlastZone_Windows.Level
             solidArea = new bool[GlobalGameData.gridSizeX, GlobalGameData.gridSizeY];
 
             gridNodeMap = new GridNodeMap();
-            gridNodeMover = new GridNodeMover(gridNodeMap, 5, 3);
+
+            players = new Player[playerCount];
+            players[0] = new Player(gridNodeMap, 5, 3);
+
+            playerInputControllers = new PlayerInputController[playerCount];
+            for (int i = 0; i < playerCount; ++i)
+            {
+                playerInputControllers[i] = new PlayerInputController(players[i]);
+            }
         }
 
         /// <summary>
@@ -73,8 +86,12 @@ namespace BlastZone_Windows.Level
 
             ///////////////REPLACE LATER/////////////
             fireManager.LoadContent(Content);
-            gridNodeMover.LoadContent(Content);
             /////////////////////////////////////////
+
+            for (int i = 0; i < playerCount; ++i)
+            {
+                players[i].LoadContent(Content);
+            }
 
             fireManager.SetSolidArea(solidArea);
         }
@@ -92,8 +109,12 @@ namespace BlastZone_Windows.Level
 
             gridNodeMap.SetSolid(GetSolid());
 
-            gridNodeMover.GetInput(Keyboard.GetState());
-            gridNodeMover.Update(gameTime);
+            playerInputControllers[0].GetInput(Keyboard.GetState());
+
+            for (int i = 0; i < playerCount; ++i)
+            {
+                players[i].Update(gameTime);
+            }
 
             ///////////////REPLACE LATER/////////////
             int offsetX, offsetY;
@@ -108,15 +129,17 @@ namespace BlastZone_Windows.Level
             gx = (mState.X - offsetX) / factor;
             gy = (mState.Y - offsetY) / factor;
 
-            //if (mState.LeftButton == ButtonState.Pressed)
-            if (MouseManager.ButtonPressed(MouseButton.LEFT))
+            if (GlobalGameData.IsInBounds(gx, gy) && solidArea[gx, gy] == false) //Area not solid
             {
-                fireManager.ExplodeFrom(gx, gy, 2);
-            }
+                if (MouseManager.ButtonPressed(MouseButton.LEFT))
+                {
+                    fireManager.ExplodeFrom(gx, gy, 2);
+                }
 
-            if (MouseManager.ButtonPressed(MouseButton.RIGHT))
-            {
-                tileObjectManager.CreateBomb(gx, gy);
+                if (MouseManager.ButtonDown(MouseButton.RIGHT))
+                {
+                    tileObjectManager.CreateBomb(gx, gy);
+                }
             }
             /////////////////////////////////////////
         }
@@ -131,8 +154,12 @@ namespace BlastZone_Windows.Level
 
             ///////////////REPLACE LATER/////////////
             fireManager.Draw(spriteBatch, gameTime);
-            gridNodeMover.Draw(spriteBatch);
             /////////////////////////////////////////
+
+            for (int i = 0; i < playerCount; ++i)
+            {
+                players[i].Draw(spriteBatch, gameTime);
+            }
 
             spriteBatch.End();
         }

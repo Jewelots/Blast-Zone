@@ -114,6 +114,7 @@ namespace BlastZone_Windows
         public void CreateBomb(int gx, int gy, int power = 3)
         {
             if (!GlobalGameData.IsInBounds(gx, gy)) return;
+            if (tileObjectGrid[gx, gy] != null) return; //Spot already occupied, can't place bomb here
 
             tileObjectGrid[gx, gy] = tileObjectFactory.CreateBomb(this, gx, gy, power);
         }
