@@ -35,7 +35,7 @@ namespace BlastZone_Windows.Level
         Player[] players;
         PlayerInputController[] playerInputControllers;
 
-        int playerCount = 1;
+        int playerCount = 2;
 
         public Level()
         {
@@ -49,12 +49,53 @@ namespace BlastZone_Windows.Level
             gridNodeMap = new GridNodeMap();
 
             players = new Player[playerCount];
-            players[0] = new Player(gridNodeMap, 5, 3);
+
+            //1 or more players
+            players[0] = new Player(gridNodeMap, 1, 1);
+
+            //2 or more players
+            if (playerCount > 1)
+            {
+                players[1] = new Player(gridNodeMap, GlobalGameData.gridSizeX - 2, 1);
+            }
+
+            //3 or more players
+            if (playerCount > 2)
+            {
+                players[2] = new Player(gridNodeMap, 1, GlobalGameData.gridSizeY - 2);
+            }
+
+            //4 players
+            if (playerCount > 3)
+            {
+                players[3] = new Player(gridNodeMap, GlobalGameData.gridSizeX - 2, GlobalGameData.gridSizeY - 2);
+            }
 
             playerInputControllers = new PlayerInputController[playerCount];
             for (int i = 0; i < playerCount; ++i)
             {
                 playerInputControllers[i] = new PlayerInputController(players[i]);
+            }
+
+            //1 or more players
+            playerInputControllers[0].SetKeyIdentifiers(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Space);
+
+            //2 or more players
+            if (playerCount > 1)
+            {
+                playerInputControllers[1].SetKeyIdentifiers(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Enter);
+            }
+
+            //3 or more players
+            if (playerCount > 2)
+            {
+                //
+            }
+
+            //4 players
+            if (playerCount > 3)
+            {
+                //
             }
         }
 
@@ -109,10 +150,9 @@ namespace BlastZone_Windows.Level
 
             gridNodeMap.SetSolid(GetSolid());
 
-            playerInputControllers[0].GetInput(Keyboard.GetState());
-
             for (int i = 0; i < playerCount; ++i)
             {
+                playerInputControllers[i].GetInput(Keyboard.GetState());
                 players[i].Update(gameTime);
             }
 

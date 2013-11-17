@@ -13,33 +13,64 @@ namespace BlastZone_Windows
         Player controlling;
 
         Dictionary<string, Keys> keyIdentifiers;
+        Dictionary<string, GamePadButtons> joyIdentifiers;
+
+        bool useKey = true;
 
         public PlayerInputController(Player ply)
         {
             controlling = ply;
+            keyIdentifiers = null;
+            joyIdentifiers = null;
+        }
+
+        public void SetKeyIdentifiers(Keys up, Keys down, Keys left, Keys right, Keys bomb)
+        {
             keyIdentifiers = new Dictionary<string, Keys>();
+            keyIdentifiers["up"] = up;
+            keyIdentifiers["down"] = down;
+            keyIdentifiers["left"] = left;
+            keyIdentifiers["right"] = right;
+            keyIdentifiers["bomb"] = bomb;
+        }
+
+        public void SetJoyIdentifiers(GamePadButtons up, GamePadButtons down, GamePadButtons left, GamePadButtons right, GamePadButtons bomb)
+        {
+            joyIdentifiers = new Dictionary<string, GamePadButtons>();
+            joyIdentifiers["up"] = up;
+            joyIdentifiers["down"] = down;
+            joyIdentifiers["left"] = left;
+            joyIdentifiers["right"] = right;
+            joyIdentifiers["bomb"] = bomb;
+
+            useKey = false;
         }
 
         public void GetInput(KeyboardState k)
         {
-            if (k.IsKeyDown(Keys.W) || k.IsKeyDown(Keys.Up))
+            if (useKey)
             {
-                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_UP));
-            }
+                if (keyIdentifiers == null) return; //No keys set
 
-            if (k.IsKeyDown(Keys.S) || k.IsKeyDown(Keys.Down))
-            {
-                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_DOWN));
-            }
+                if (k.IsKeyDown(keyIdentifiers["up"]))
+                {
+                    controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_UP));
+                }
 
-            if (k.IsKeyDown(Keys.A) || k.IsKeyDown(Keys.Left))
-            {
-                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_LEFT));
-            }
+                if (k.IsKeyDown(keyIdentifiers["down"]))
+                {
+                    controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_DOWN));
+                }
 
-            if (k.IsKeyDown(Keys.D) || k.IsKeyDown(Keys.Right))
-            {
-                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_RIGHT));
+                if (k.IsKeyDown(keyIdentifiers["left"]))
+                {
+                    controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_LEFT));
+                }
+
+                if (k.IsKeyDown(keyIdentifiers["right"]))
+                {
+                    controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_RIGHT));
+                }
             }
         }
     }
