@@ -139,7 +139,7 @@ namespace Particles
 
                 //read through attributes
 
-                double angle;
+                //double angle;
                 double length;
                 double scale;
                 int r, g, b, a;

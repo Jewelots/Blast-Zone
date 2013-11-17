@@ -13,7 +13,11 @@ namespace BlastZone_Windows
         Player controlling;
 
         Dictionary<string, Keys> keyIdentifiers;
-        Dictionary<string, GamePadButtons> joyIdentifiers;
+
+        Buttons padBombButton;
+
+        KeyboardState lastKeyState;
+        GamePadState lastPadState;
 
         bool useKey = true;
 
@@ -21,7 +25,6 @@ namespace BlastZone_Windows
         {
             controlling = ply;
             keyIdentifiers = null;
-            joyIdentifiers = null;
         }
 
         public void SetKeyIdentifiers(Keys up, Keys down, Keys left, Keys right, Keys bomb)
@@ -34,44 +37,87 @@ namespace BlastZone_Windows
             keyIdentifiers["bomb"] = bomb;
         }
 
-        public void SetJoyIdentifiers(GamePadButtons up, GamePadButtons down, GamePadButtons left, GamePadButtons right, GamePadButtons bomb)
+        public void SetJoyIdentifiers(Buttons bomb)
         {
-            joyIdentifiers = new Dictionary<string, GamePadButtons>();
-            joyIdentifiers["up"] = up;
-            joyIdentifiers["down"] = down;
-            joyIdentifiers["left"] = left;
-            joyIdentifiers["right"] = right;
-            joyIdentifiers["bomb"] = bomb;
+            padBombButton = bomb;
 
             useKey = false;
         }
 
-        public void GetInput(KeyboardState k)
+        public void GetKeyInput(KeyboardState k)
         {
-            if (useKey)
+            if (!useKey) return;
+
+            if (keyIdentifiers == null) return; //No keys set
+
+            if (k.IsKeyDown(keyIdentifiers["up"]))
             {
-                if (keyIdentifiers == null) return; //No keys set
-
-                if (k.IsKeyDown(keyIdentifiers["up"]))
-                {
-                    controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_UP));
-                }
-
-                if (k.IsKeyDown(keyIdentifiers["down"]))
-                {
-                    controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_DOWN));
-                }
-
-                if (k.IsKeyDown(keyIdentifiers["left"]))
-                {
-                    controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_LEFT));
-                }
-
-                if (k.IsKeyDown(keyIdentifiers["right"]))
-                {
-                    controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_RIGHT));
-                }
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_UP));
             }
+
+            if (k.IsKeyDown(keyIdentifiers["down"]))
+            {
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_DOWN));
+            }
+
+            if (k.IsKeyDown(keyIdentifiers["left"]))
+            {
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_LEFT));
+            }
+
+            if (k.IsKeyDown(keyIdentifiers["right"]))
+            {
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_RIGHT));
+            }
+
+            if (KeyJustPressed(keyIdentifiers["bomb"], k))
+            {
+                controlling.PlaceBomb();
+            }
+
+            lastKeyState = k;
+        }
+
+        public bool KeyJustPressed(Keys key, KeyboardState k)
+        {
+            return k.IsKeyDown(key) && lastKeyState.IsKeyUp(key);
+        }
+
+        public void GetPadInput(GamePadState g)
+        {
+            if (useKey) return;
+
+            if (g.DPad.Up == ButtonState.Pressed || g.ThumbSticks.Left.Y < 0)
+            {
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_UP));
+            }
+
+            if (g.DPad.Down == ButtonState.Pressed || g.ThumbSticks.Left.Y > 0)
+            {
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_DOWN));
+            }
+
+            if (g.DPad.Left == ButtonState.Pressed || g.ThumbSticks.Left.X < 0)
+            {
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_LEFT));
+            }
+
+            if (g.DPad.Right == ButtonState.Pressed || g.ThumbSticks.Left.X > 0)
+            {
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_RIGHT));
+            }
+
+            if (ButtonJustPressed(Buttons.A, g))
+            {
+                controlling.PlaceBomb();
+            }
+
+            lastPadState = g;
+        }
+
+        public bool ButtonJustPressed(Buttons button, GamePadState g)
+        {
+            return g.IsButtonDown(button) && lastPadState.IsButtonUp(button);
         }
     }
 }

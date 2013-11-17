@@ -21,7 +21,7 @@ Content\Spritesheets\player1.xnb
 Content\Spritesheets\softblocks.xnb
 Content\Fonts\Badaboom.xnb
 Content\Effects\Explosion.xml
-Content\Spritesheets\player1.xml
-Content\Spritesheets\softblocks.xml
 Content\XML\player.xml
 Content\XML\softblocks.xml
+Content\Spritesheets\player1.xml
+Content\Spritesheets\softblocks.xml

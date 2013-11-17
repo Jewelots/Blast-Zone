@@ -15,9 +15,14 @@ namespace BlastZone_Windows
         GridNodeMover movement;
         Texture2D playerTex; //replace with animation
 
-        public Player(GridNodeMap map, int gx, int gy)
+        Action<int, int, int> placeBombFunc;
+
+        int power = 1;
+
+        public Player(GridNodeMap map, int gx, int gy, Action<int, int, int> placeBombFunc)
         {
             movement = new GridNodeMover(map, gx, gy);
+            this.placeBombFunc = placeBombFunc;
         }
 
         public void Move(MoveEvent moveEvent)
@@ -33,6 +38,15 @@ namespace BlastZone_Windows
         public void Update(GameTime gameTime)
         {
             movement.Update(gameTime);
+        }
+
+        public void PlaceBomb()
+        {
+            int gx, gy;
+
+            movement.GetGridPosition(out gx, out gy);
+
+            placeBombFunc(gx, gy, this.power); //x, y, power
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)

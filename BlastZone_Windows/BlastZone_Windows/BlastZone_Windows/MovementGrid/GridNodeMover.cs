@@ -97,16 +97,16 @@ namespace BlastZone_Windows.MovementGrid
 
         private GridNodeMap.TileContents GetCurrentNode()
         {
-            int currentX = (int)Math.Floor(position.X / map.nodeSize);
-            int currentY = (int)Math.Floor(position.Y / map.nodeSize);
+            int currentX, currentY;
+            GetGridPosition(out currentX, out currentY);
 
             return map.GetNode(currentX, currentY);
         }
 
         private GridNodeMap.TileContents GetNodeOffset(int x, int y)
         {
-            int currentX = (int)Math.Floor(position.X / map.nodeSize);
-            int currentY = (int)Math.Floor(position.Y / map.nodeSize);
+            int currentX, currentY;
+            GetGridPosition(out currentX, out currentY);
 
             return map.GetNode(currentX + x, currentY + y);
         }
@@ -278,6 +278,12 @@ namespace BlastZone_Windows.MovementGrid
                     }
                 }
             }
+        }
+
+        internal void GetGridPosition(out int gx, out int gy)
+        {
+            gx = (int)Math.Floor(position.X / map.nodeSize);
+            gy = (int)Math.Floor(position.Y / map.nodeSize);
         }
     }
 }

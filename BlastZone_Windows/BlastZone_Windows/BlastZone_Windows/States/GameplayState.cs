@@ -78,7 +78,7 @@ namespace BlastZone_Windows.States
                 startTime = gameTime.TotalGameTime.TotalMilliseconds;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 manager.SwapStateWithTransition(StateType.MENU);
             }
