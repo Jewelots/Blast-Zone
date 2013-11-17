@@ -47,7 +47,7 @@ namespace BlastZone_Windows.Drawing
         /// <param name="thickness">Thickness of the outline</param>
         /// <param name="hAlign">Horizontal Align</param>
         /// <param name="vAlign">Vertical Align</param>
-        public static void DrawTextOutline(SpriteBatch spriteBatch, SpriteFont font, string text, Color backColor, Color frontColor, Vector2 position, float thickness, HorizontalAlign hAlign = HorizontalAlign.AlignLeft, VerticalAlign vAlign = VerticalAlign.AlignTop)
+        public static void DrawTextOutline(SpriteBatch spriteBatch, SpriteFont font, string text, Color backColor, Color frontColor, Vector2 position, float thickness, HorizontalAlign hAlign, VerticalAlign vAlign)
         {
             //Get the size of the text for offsetting
             Vector2 fullSize = font.MeasureString(text);
@@ -91,6 +91,38 @@ namespace BlastZone_Windows.Drawing
 
             //Draw the main text in the center
             spriteBatch.DrawString(font, text, position - alignOffset, frontColor);
+        }
+
+
+        /// <summary>
+        /// Renders a string from a specified SpriteFont with an outline of specified colors into a SpriteBatch.
+        /// </summary>
+        /// <param name="spriteBatch">SpriteBatch to render to</param>
+        /// <param name="font">SpriteFont to render with</param>
+        /// <param name="text">String to render</param>
+        /// <param name="backColor">Outline Color</param>
+        /// <param name="frontColor">Main Text Color</param>
+        /// <param name="position">Position to render to</param>
+        /// <param name="thickness">Thickness of the outline</param>
+        /// <param name="hAlign">Horizontal Align</param>
+        public static void DrawTextOutline(SpriteBatch spriteBatch, SpriteFont font, string text, Color backColor, Color frontColor, Vector2 position, float thickness, HorizontalAlign hAlign)
+        {
+            DrawTextOutline(spriteBatch, font, text, backColor, frontColor, position, thickness, hAlign, VerticalAlign.AlignTop);
+        }
+
+        /// <summary>
+        /// Renders a string from a specified SpriteFont with an outline of specified colors into a SpriteBatch.
+        /// </summary>
+        /// <param name="spriteBatch">SpriteBatch to render to</param>
+        /// <param name="font">SpriteFont to render with</param>
+        /// <param name="text">String to render</param>
+        /// <param name="backColor">Outline Color</param>
+        /// <param name="frontColor">Main Text Color</param>
+        /// <param name="position">Position to render to</param>
+        /// <param name="thickness">Thickness of the outline</param>
+        public static void DrawTextOutline(SpriteBatch spriteBatch, SpriteFont font, string text, Color backColor, Color frontColor, Vector2 position, float thickness)
+        {
+            DrawTextOutline(spriteBatch,font,text,backColor,frontColor,position,thickness,HorizontalAlign.AlignLeft,VerticalAlign.AlignTop);
         }
     }
 }
