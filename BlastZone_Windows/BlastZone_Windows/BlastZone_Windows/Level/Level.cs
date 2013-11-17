@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using BlastZone_Windows.MovementGrid;
+
 namespace BlastZone_Windows.Level
 {
     /// <summary>
@@ -27,6 +29,9 @@ namespace BlastZone_Windows.Level
 
         LevelAesthetics aesthetics;
 
+        GridNodeMap gridNodeMap;
+        GridNodeMover gridNodeMover;
+
         public Level()
         {
             aesthetics = new LevelAesthetics();
@@ -35,6 +40,9 @@ namespace BlastZone_Windows.Level
             fireManager = new FireManager(tileObjectManager);
 
             solidArea = new bool[GlobalGameData.gridSizeX, GlobalGameData.gridSizeY];
+
+            gridNodeMap = new GridNodeMap();
+            gridNodeMover = new GridNodeMover(gridNodeMap, 5, 3);
         }
 
         /// <summary>
@@ -62,9 +70,11 @@ namespace BlastZone_Windows.Level
             aesthetics.GenerateTiles(solidArea);
 
             tileObjectManager.LoadContent(Content);
-            ///////////////////////////////////////
-            fireManager.LoadContent(Content); /////REPLACE LATER
-            ///////////////////////////////////////
+
+            ///////////////REPLACE LATER/////////////
+            fireManager.LoadContent(Content);
+            gridNodeMover.LoadContent(Content);
+            /////////////////////////////////////////
 
             fireManager.SetSolidArea(solidArea);
         }
@@ -79,6 +89,36 @@ namespace BlastZone_Windows.Level
             tileObjectManager.Update(gameTime);
 
             fireManager.Update(gameTime);
+
+            gridNodeMap.SetSolid(GetSolid());
+
+            gridNodeMover.GetInput(Keyboard.GetState());
+            gridNodeMover.Update(gameTime);
+
+            ///////////////REPLACE LATER/////////////
+            int offsetX, offsetY;
+            offsetX = GlobalGameData.windowWidth / 2 - GlobalGameData.levelSizeX / 2;
+            offsetY = GlobalGameData.windowHeight / 2 - GlobalGameData.levelSizeY / 2;
+
+            MouseState mState = Mouse.GetState();
+
+            int factor = GlobalGameData.tileSize * GlobalGameData.drawRatio;
+
+            int gx, gy;
+            gx = (mState.X - offsetX) / factor;
+            gy = (mState.Y - offsetY) / factor;
+
+            //if (mState.LeftButton == ButtonState.Pressed)
+            if (MouseManager.ButtonPressed(MouseButton.LEFT))
+            {
+                fireManager.ExplodeFrom(gx, gy, 2);
+            }
+
+            if (MouseManager.ButtonPressed(MouseButton.RIGHT))
+            {
+                tileObjectManager.CreateBomb(gx, gy);
+            }
+            /////////////////////////////////////////
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -89,9 +129,10 @@ namespace BlastZone_Windows.Level
             aesthetics.Draw(spriteBatch, gameTime);
             tileObjectManager.Draw(spriteBatch, gameTime);
 
-            /////////////////////////
-            fireManager.Draw(spriteBatch, gameTime); /////REPLACE LATER
-            /////////////////////////
+            ///////////////REPLACE LATER/////////////
+            fireManager.Draw(spriteBatch, gameTime);
+            gridNodeMover.Draw(spriteBatch);
+            /////////////////////////////////////////
 
             spriteBatch.End();
         }

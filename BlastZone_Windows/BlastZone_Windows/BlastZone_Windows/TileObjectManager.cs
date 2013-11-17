@@ -49,6 +49,8 @@ namespace BlastZone_Windows
 
         public void RemoveAt(int x, int y)
         {
+            if (!GlobalGameData.IsInBounds(x, y)) return;
+
             tileObjectGrid[x, y] = null;
         }
 
@@ -105,12 +107,21 @@ namespace BlastZone_Windows
                 }
             }
 
-            tileObjectGrid[3, 1] = tileObjectFactory.CreateBomb(this, 3, 1, 5);
-            tileObjectGrid[3, 5] = tileObjectFactory.CreateBomb(this, 3, 5, 2);
+            CreateBomb(3, 1, 5);
+            CreateBomb(3, 5, 2);
+        }
+
+        public void CreateBomb(int gx, int gy, int power = 3)
+        {
+            if (!GlobalGameData.IsInBounds(gx, gy)) return;
+
+            tileObjectGrid[gx, gy] = tileObjectFactory.CreateBomb(this, gx, gy, power);
         }
 
         public bool SolidAt(int gx, int gy)
         {
+            if (!GlobalGameData.IsInBounds(gx, gy)) return true;
+
             TileObject t = tileObjectGrid[gx, gy];
 
             if (t == null) return false;
@@ -120,6 +131,8 @@ namespace BlastZone_Windows
 
         public void FireSpreadTo(int gx, int gy)
         {
+            if (!GlobalGameData.IsInBounds(gx, gy)) return;
+
             TileObject t = tileObjectGrid[gx, gy];
 
             if (t == null) return;

@@ -55,29 +55,6 @@ namespace BlastZone_Windows
                     }
                 }
             }
-
-
-            ///Debug:
-
-            int offsetX, offsetY;
-            offsetX = GlobalGameData.windowWidth  / 2 - GlobalGameData.levelSizeX / 2;
-            offsetY = GlobalGameData.windowHeight / 2 - GlobalGameData.levelSizeY / 2;
-
-            MouseState mState = Mouse.GetState();
-
-            //if (mState.LeftButton == ButtonState.Pressed)
-            if (MouseManager.ButtonPressed(MouseButton.LEFT))
-            {
-                int factor = GlobalGameData.tileSize * GlobalGameData.drawRatio;
-
-                int gx, gy;
-
-                gx = (mState.X - offsetX) / factor;
-                gy = (mState.Y - offsetY) / factor;
-
-                //SetTileOnFire(gx, gy);
-                ExplodeFrom(gx, gy, 1);
-            }
         }
 
         public void ExplodeFrom(int gx, int gy, int explodeSize = 3)
