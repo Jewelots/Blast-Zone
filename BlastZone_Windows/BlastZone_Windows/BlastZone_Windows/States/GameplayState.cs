@@ -83,7 +83,21 @@ namespace BlastZone_Windows.States
                 startTime = gameTime.TotalGameTime.TotalMilliseconds;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //Check if quit
+            bool gamePadPressedBack = false;
+            for (int i = 0; i < 4; ++i)
+            {
+                GamePadState gps = GamePad.GetState((PlayerIndex)i);
+
+                if (!gps.IsConnected) continue;
+
+                if (gps.IsButtonDown(Buttons.Back))
+                {
+                    gamePadPressedBack = true;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || gamePadPressedBack)
             {
                 manager.SwapStateWithTransition(StateType.MENU);
             }

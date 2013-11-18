@@ -98,6 +98,25 @@ namespace BlastZone_Windows.States
 
         public override void Update(GameTime gameTime)
         {
+            //Check if quit
+            bool gamePadPressedBack = false;
+            for (int i = 0; i < 4; ++i)
+            {
+                GamePadState gps = GamePad.GetState((PlayerIndex)i);
+
+                if (!gps.IsConnected) continue;
+
+                if (gps.IsButtonDown(Buttons.Back))
+                {
+                    gamePadPressedBack = true;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || gamePadPressedBack)
+            {
+                manager.SwapStateWithTransition(StateType.MENU);
+            }
+
             bgtex.ShiftOffset(new Vector2(50f * (float)gameTime.ElapsedGameTime.TotalSeconds, 50f * (float)gameTime.ElapsedGameTime.TotalSeconds));
 
             CheckForPlayerInput();

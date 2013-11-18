@@ -78,7 +78,7 @@ namespace BlastZone_Windows.States
 
             KeyboardState newState = Keyboard.GetState();
 
-            if (newState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
+            if (newState.IsKeyDown(Keys.Enter) || newState.IsKeyDown(Keys.Space))
             {
                 switch (curSelected)
                 {
@@ -86,6 +86,7 @@ namespace BlastZone_Windows.States
                         OnSelectStartGame();
                         break;
                     case 1: //Options button
+                        OnSelectOptions();
                         break;
                     case 2: //Quit Button
                         manager.QuitGame();
@@ -143,6 +144,11 @@ namespace BlastZone_Windows.States
         void OnSelectStartGame()
         {
             manager.SwapStateWithTransition(StateType.LOBBY);
+        }
+
+        void OnSelectOptions()
+        {
+            manager.SwapStateWithTransition(StateType.CONTROLS); //Change to options
         }
     }
 }

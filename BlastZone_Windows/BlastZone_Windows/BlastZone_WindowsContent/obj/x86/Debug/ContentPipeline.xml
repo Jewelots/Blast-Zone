@@ -253,6 +253,24 @@
       <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Lobby\ControllerBGReady.xnb</Output>
       <Time>2013-11-18T11:52:30.9585227+11:00</Time>
     </Item>
+    <Item>
+      <Source>Images\Controls\KeyboardControls.png</Source>
+      <Name>Images\Controls\KeyboardControls</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Controls\KeyboardControls.xnb</Output>
+      <Time>2013-11-18T15:30:00.1298926+11:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\Controls\GamepadControls.png</Source>
+      <Name>Images\Controls\GamepadControls</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Controls\GamepadControls.xnb</Output>
+      <Time>2013-11-18T15:31:23.9396863+11:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

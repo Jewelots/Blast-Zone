@@ -26,6 +26,8 @@ Content\Images\Lobby\ControllerGamepad.xnb
 Content\Images\Lobby\ControllerKeyboard.xnb
 Content\Fonts\BadaboomSmall.xnb
 Content\Images\Lobby\ControllerBGReady.xnb
+Content\Images\Controls\KeyboardControls.xnb
+Content\Images\Controls\GamepadControls.xnb
 Content\Effects\Explosion.xml
 Content\XML\player.xml
 Content\XML\softblocks.xml
