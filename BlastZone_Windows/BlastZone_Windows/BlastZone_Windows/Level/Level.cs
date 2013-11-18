@@ -193,7 +193,8 @@ namespace BlastZone_Windows.Level
 
             tileObjectManager.Reset();
 
-            players[0].Reset(2, 1);
+            //Reset players to positions
+            players[0].Reset(1, 1);
             players[1].Reset(GlobalGameData.gridSizeX - 2, 1);
             players[2].Reset(1, GlobalGameData.gridSizeY - 2);
             players[3].Reset(GlobalGameData.gridSizeX - 2, GlobalGameData.gridSizeY - 2);
@@ -207,10 +208,12 @@ namespace BlastZone_Windows.Level
 
             fireManager.Update(gameTime);
 
+            //Set what's solid for collision
             gridNodeMap.SetSolid(GetSolid());
 
             for (int i = 0; i < playerCount; ++i)
             {
+                //Update input
                 if (playerToController[i] == -1)
                 {
                     playerInputControllers[i].GetKeyInput(Keyboard.GetState());
@@ -219,7 +222,25 @@ namespace BlastZone_Windows.Level
                 {
                     playerInputControllers[i].GetPadInput(GamePad.GetState((PlayerIndex)playerToController[i]));
                 }
+
+                //Update players
                 players[i].Update(gameTime);
+                
+                //Check if player is in fire and kill them if so
+                //int gx, gy;
+                //players[i].GetGridPosition(out gx, out gy);
+                int[] tx, ty;
+                players[i].GetAllOccupiedPositions(out tx, out ty);
+
+                for (int t = 0; t < tx.Length; ++t)
+                {
+                    if (fireManager.IsOnFire(tx[t], ty[t]))
+                    {
+                        players[i].IsDead = true;
+                        //Spawn effect of player dying
+                        break;
+                    }
+                }
             }
         }
 

@@ -44,6 +44,20 @@ namespace BlastZone_Windows
 
             this.level = level;
 
+            //activeBombs = new int[4];
+            //playerOwnedBombs = new Dictionary<TileObject, int>();
+        }
+
+        public void Reset()
+        {
+            for (int y = 0; y < gridSizeY; ++y)
+            {
+                for (int x = 0; x < gridSizeX; ++x)
+                {
+                    tileObjectGrid[x, y] = null;
+                }
+            }
+
             activeBombs = new int[4];
             playerOwnedBombs = new Dictionary<TileObject, int>();
         }
@@ -107,17 +121,6 @@ namespace BlastZone_Windows
                     if (to == null) continue;
 
                     to.Draw(spriteBatch, gameTime);
-                }
-            }
-        }
-
-        public void Reset()
-        {
-            for (int y = 0; y < gridSizeY; ++y)
-            {
-                for (int x = 0; x < gridSizeX; ++x)
-                {
-                    tileObjectGrid[x, y] = null;
                 }
             }
         }

@@ -139,8 +139,10 @@ namespace BlastZone_Windows.MovementGrid
         private void MoveHorizontal(float speed)
         {
             float distToNearest = DistToNearestGridSquare();
+            float percToNearest = PercentToNearestGridSquare();
 
-            float snap = Math.Min(Math.Abs(speed) * 5, map.nodeSize / 2);
+            //float snap = Math.Min(Math.Abs(speed) * 5, map.nodeSize / 2);
+            float snap = 0.2f;
 
             GridNodeMap.TileContents rightNode = GetNodeOffset(1, 0);
             GridNodeMap.TileContents leftNode = GetNodeOffset(-1, 0);
@@ -148,7 +150,7 @@ namespace BlastZone_Windows.MovementGrid
             //Check if was moving vertical, and snap to grid square before moving if close enough
             if (movingHorizontal == false)
             {
-                if (Math.Abs(distToNearest) < snap)
+                if (Math.Abs(percToNearest) < snap)
                 {
                     if (!((speed < 0 && leftNode != null && leftNode.solid) || (speed > 0 && rightNode != null && rightNode.solid)))
                     {
@@ -190,8 +192,10 @@ namespace BlastZone_Windows.MovementGrid
         private void MoveVertical(float speed)
         {
             float distToNearest = DistToNearestGridSquare();
+            float percToNearest = PercentToNearestGridSquare();
 
-            float snap = Math.Min(Math.Abs(speed) * 5, map.nodeSize / 2);
+            //float snap = Math.Min(Math.Abs(speed) * 5, map.nodeSize / 2);
+            float snap = 0.2f;
 
             GridNodeMap.TileContents belowNode = GetNodeOffset(0, 1);
             GridNodeMap.TileContents aboveNode = GetNodeOffset(0, -1);
@@ -199,7 +203,7 @@ namespace BlastZone_Windows.MovementGrid
             //Check if was moving horizontal, and snap to grid square before moving if close enough
             if (movingHorizontal == true)
             {
-                if (Math.Abs(distToNearest) < snap)
+                if (Math.Abs(percToNearest) < snap)
                 {
                     if (!((speed < 0 && aboveNode != null && aboveNode.solid) || (speed > 0 && belowNode != null && belowNode.solid)))
                     {
@@ -236,11 +240,39 @@ namespace BlastZone_Windows.MovementGrid
             }
         }
 
+        private bool HasMoveHorizontalEvent(Queue<MoveEvent> moveEventQueue)
+        {
+            for (int i = 0; i < moveEventQueue.Count; ++i)
+            {
+                MoveEvent me = moveEventQueue.ElementAt(i);
+                if (me.moveEvent == MoveEvent.MoveEventType.MOVE_LEFT || me.moveEvent == MoveEvent.MoveEventType.MOVE_RIGHT)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool HasMoveVerticalEvent(Queue<MoveEvent> moveEventQueue)
+        {
+            for (int i = 0; i < moveEventQueue.Count; ++i)
+            {
+                MoveEvent me = moveEventQueue.ElementAt(i);
+                if (me.moveEvent == MoveEvent.MoveEventType.MOVE_UP || me.moveEvent == MoveEvent.MoveEventType.MOVE_DOWN)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private void HandleMoveEventQueue(GameTime gameTime)
         {
             //Check if event queue contains any events to move horizontally or vertically
-            bool hasMoveHorizontalEvent = moveEventQueue.Any(x => x.moveEvent == MoveEvent.MoveEventType.MOVE_LEFT || x.moveEvent == MoveEvent.MoveEventType.MOVE_RIGHT);
-            bool hasMoveVerticalEvent = moveEventQueue.Any(x => x.moveEvent == MoveEvent.MoveEventType.MOVE_UP || x.moveEvent == MoveEvent.MoveEventType.MOVE_DOWN);
+            bool hasMoveHorizontalEvent = HasMoveHorizontalEvent(moveEventQueue);
+            bool hasMoveVerticalEvent = HasMoveVerticalEvent(moveEventQueue);
 
             while (moveEventQueue.Count > 0)
             {
@@ -280,13 +312,57 @@ namespace BlastZone_Windows.MovementGrid
             }
         }
 
-        internal void GetGridPosition(out int gx, out int gy)
+        public void GetGridPosition(out int gx, out int gy)
         {
             gx = (int)Math.Floor(position.X / map.nodeSize);
             gy = (int)Math.Floor(position.Y / map.nodeSize);
         }
 
-        internal void SetPosition(int gx, int gy)
+        public void GetAllOccupiedPositions(out int[] tx, out int[] ty)
+        {
+            List<int> tempTilesX = new List<int>();
+            List<int> tempTilesY = new List<int>();
+
+            int curX, curY;
+            GetGridPosition(out curX, out curY);
+
+            tempTilesX.Add(curX);
+            tempTilesY.Add(curY);
+
+            float distToNearest = DistToNearestGridSquare();
+
+            if (movingHorizontal)
+            {
+                if (distToNearest < 0)
+                {
+                    tempTilesX.Add(curX - 1);
+                    tempTilesY.Add(curY);
+                }
+                else if (distToNearest > 0)
+                {
+                    tempTilesX.Add(curX + 1);
+                    tempTilesY.Add(curY);
+                }
+            }
+            else
+            {
+                if (distToNearest < 0)
+                {
+                    tempTilesX.Add(curX);
+                    tempTilesY.Add(curY - 1);
+                }
+                else if (distToNearest > 0)
+                {
+                    tempTilesX.Add(curX);
+                    tempTilesY.Add(curY + 1);
+                }
+            }
+
+            tx = tempTilesX.ToArray();
+            ty = tempTilesY.ToArray();
+        }
+
+        public void SetPosition(int gx, int gy)
         {
             position.X = gx * map.nodeSize + map.nodeSize / 2;
             position.Y = gy * map.nodeSize + map.nodeSize / 2;

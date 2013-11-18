@@ -113,10 +113,11 @@ namespace BlastZone_Windows
             {
                 for (int x = 0; x < GlobalGameData.gridSizeX; ++x)
                 {
-                    if (!solidArea[x, y])
+                    if (!solidArea[x, y] && IsOnFire(x, y))
                     {
                         int factor = GlobalGameData.tileSize * GlobalGameData.drawRatio;
-                        Color color = new Color(fireArea[x, y] / 1, 0, 0) * 0.8f;
+                        //Color color = new Color(fireArea[x, y] / 1, 0, 0) * 0.8f;
+                        Color color = new Color(255, 0, 0) * fireArea[x, y];
 
                         int border = 5;
                     
@@ -130,6 +131,11 @@ namespace BlastZone_Windows
         public void SetSolidArea(bool[,] solidArea)
         {
             this.solidArea = solidArea;
+        }
+
+        internal bool IsOnFire(int gx, int gy)
+        {
+            return fireArea[gx, gy] > 0;
         }
     }
 }

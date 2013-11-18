@@ -21,6 +21,8 @@ namespace BlastZone_Windows
         int playerIndex;
         int bombCount;
 
+        public bool IsDead;
+
         public Player(GridNodeMap map, int playerIndex, Action<int, int, int, int> placeBombFunc)
         {
             movement = new GridNodeMover(map);
@@ -33,6 +35,7 @@ namespace BlastZone_Windows
             movement.SetPosition(gx, gy);
             bombCount = 1;
             power = 1;
+            IsDead = false;
         }
 
         public void Move(MoveEvent moveEvent)
@@ -50,6 +53,11 @@ namespace BlastZone_Windows
             movement.Update(gameTime);
         }
 
+        public void GetGridPosition(out int gx, out int gy)
+        {
+            movement.GetGridPosition(out gx, out gy);
+        }
+
         public void PlaceBomb()
         {
             int gx, gy;
@@ -61,12 +69,20 @@ namespace BlastZone_Windows
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            //Don't draw if dead
+            if (IsDead) return;
+
             spriteBatch.Draw(playerTex, movement.GetPosition(), null, Color.White, 0f, new Vector2(GlobalGameData.tileSize / 2 - 0.5f, GlobalGameData.tileSize / 2 - 0.5f), GlobalGameData.drawRatio, SpriteEffects.None, 1f);
         }
 
         public int GetMaxBombs()
         {
             return bombCount;
+        }
+
+        public void GetAllOccupiedPositions(out int[] tx, out int[] ty)
+        {
+            movement.GetAllOccupiedPositions(out tx, out ty);
         }
     }
 }
