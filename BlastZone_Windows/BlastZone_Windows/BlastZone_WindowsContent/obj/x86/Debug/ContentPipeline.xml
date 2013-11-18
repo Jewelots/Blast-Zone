@@ -199,6 +199,51 @@
       <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Fonts\Badaboom.xnb</Output>
       <Time>2013-11-18T09:03:54.6619036+11:00</Time>
     </Item>
+    <Item>
+      <Source>Images\Lobby\ControllerBG.png</Source>
+      <Name>Images\Lobby\ControllerBG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Lobby\ControllerBG.xnb</Output>
+      <Time>2013-11-18T11:42:01.7035314+11:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\Lobby\ControllerBorder.png</Source>
+      <Name>Images\Lobby\ControllerBorder</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Lobby\ControllerBorder.xnb</Output>
+      <Time>2013-11-18T11:32:55.3522819+11:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\Lobby\ControllerGamepad.png</Source>
+      <Name>Images\Lobby\ControllerGamepad</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Lobby\ControllerGamepad.xnb</Output>
+      <Time>2013-11-18T11:42:10.8690556+11:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\Lobby\ControllerKeyboard.png</Source>
+      <Name>Images\Lobby\ControllerKeyboard</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Lobby\ControllerKeyboard.xnb</Output>
+      <Time>2013-11-18T11:42:16.6223847+11:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\BadaboomSmall.spritefont</Source>
+      <Name>Fonts\BadaboomSmall</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Fonts\BadaboomSmall.xnb</Output>
+      <Time>2013-11-18T11:44:16.7152536+11:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

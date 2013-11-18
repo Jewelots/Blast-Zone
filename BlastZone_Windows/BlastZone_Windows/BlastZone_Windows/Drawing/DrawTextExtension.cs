@@ -79,18 +79,22 @@ namespace BlastZone_Windows.Drawing
                     break;
             }
 
+            Vector2 drawPos = position - alignOffset;
+            drawPos.X = (int)Math.Round(drawPos.X);
+            drawPos.Y = (int)Math.Round(drawPos.Y);
+
             //Draw text in all 8 directions for hacky outline. Handled fine by sprite batching however so not a problem.
-            spriteBatch.DrawString(font, text, position - alignOffset + new Vector2(1 * thickness, 1 * thickness), backColor);
-            spriteBatch.DrawString(font, text, position - alignOffset + new Vector2(-1 * thickness, -1 * thickness), backColor);
-            spriteBatch.DrawString(font, text, position - alignOffset + new Vector2(-1 * thickness, 1 * thickness), backColor);
-            spriteBatch.DrawString(font, text, position - alignOffset + new Vector2(1 * thickness, -1 * thickness), backColor);
-            spriteBatch.DrawString(font, text, position - alignOffset + new Vector2(1 * thickness, 0), backColor);
-            spriteBatch.DrawString(font, text, position - alignOffset + new Vector2(-1 * thickness, 0), backColor);
-            spriteBatch.DrawString(font, text, position - alignOffset + new Vector2(0, 1 * thickness), backColor);
-            spriteBatch.DrawString(font, text, position - alignOffset + new Vector2(0, -1 * thickness), backColor);
+            spriteBatch.DrawString(font, text, drawPos + new Vector2(1 * thickness, 1 * thickness), backColor);
+            spriteBatch.DrawString(font, text, drawPos + new Vector2(-1 * thickness, -1 * thickness), backColor);
+            spriteBatch.DrawString(font, text, drawPos + new Vector2(-1 * thickness, 1 * thickness), backColor);
+            spriteBatch.DrawString(font, text, drawPos + new Vector2(1 * thickness, -1 * thickness), backColor);
+            spriteBatch.DrawString(font, text, drawPos + new Vector2(1 * thickness, 0), backColor);
+            spriteBatch.DrawString(font, text, drawPos + new Vector2(-1 * thickness, 0), backColor);
+            spriteBatch.DrawString(font, text, drawPos + new Vector2(0, 1 * thickness), backColor);
+            spriteBatch.DrawString(font, text, drawPos + new Vector2(0, -1 * thickness), backColor);
 
             //Draw the main text in the center
-            spriteBatch.DrawString(font, text, position - alignOffset, frontColor);
+            spriteBatch.DrawString(font, text, drawPos, frontColor);
         }
 
 
@@ -122,7 +126,70 @@ namespace BlastZone_Windows.Drawing
         /// <param name="thickness">Thickness of the outline</param>
         public static void DrawTextOutline(SpriteBatch spriteBatch, SpriteFont font, string text, Color backColor, Color frontColor, Vector2 position, float thickness)
         {
-            DrawTextOutline(spriteBatch,font,text,backColor,frontColor,position,thickness,HorizontalAlign.AlignLeft,VerticalAlign.AlignTop);
+            DrawTextOutline(spriteBatch, font, text, backColor, frontColor, position, thickness, HorizontalAlign.AlignLeft, VerticalAlign.AlignTop);
+        }
+
+        /// <summary>
+        /// Renders a string from a specified SpriteFont
+        /// </summary>
+        /// <param name="spriteBatch">SpriteBatch to render to</param>
+        /// <param name="font">SpriteFont to render with</param>
+        /// <param name="text">String to render</param>
+        /// <param name="color">Text Color</param>
+        /// <param name="position">Position to render to</param>
+        /// <param name="hAlign">Horizontal Align</param>
+        /// <param name="vAlign">Vertical Align</param>
+        public static void DrawText(SpriteBatch spriteBatch, SpriteFont font, string text, Color color, Vector2 position, HorizontalAlign hAlign, VerticalAlign vAlign)
+        {
+            //Get the size of the text for offsetting
+            Vector2 fullSize = font.MeasureString(text);
+
+            //Offset Horizontal and Vertical aligns based on the specified enum value
+            Vector2 alignOffset = new Vector2();
+
+            switch (hAlign)
+            {
+                case HorizontalAlign.AlignCenter:
+                    alignOffset.X = fullSize.X / 2;
+                    break;
+                case HorizontalAlign.AlignRight:
+                    alignOffset.X = fullSize.X;
+                    break;
+                default:
+                    break;
+            }
+
+            switch (vAlign)
+            {
+                case VerticalAlign.AlignCenter:
+                    alignOffset.Y = fullSize.Y / 2;
+                    break;
+                case VerticalAlign.AlignBottom:
+                    alignOffset.Y = fullSize.Y;
+                    break;
+                default:
+                    break;
+            }
+
+            Vector2 drawPos = position - alignOffset;
+            drawPos.X = (int)Math.Round(drawPos.X);
+            drawPos.Y = (int)Math.Round(drawPos.Y);
+
+            spriteBatch.DrawString(font, text, drawPos, color);
+        }
+
+        /// <summary>
+        /// Renders a string from a specified SpriteFont
+        /// </summary>
+        /// <param name="spriteBatch">SpriteBatch to render to</param>
+        /// <param name="font">SpriteFont to render with</param>
+        /// <param name="text">String to render</param>
+        /// <param name="color">Text Color</param>
+        /// <param name="position">Position to render to</param>
+        /// <param name="hAlign">Horizontal Align</param>
+        public static void DrawText(SpriteBatch spriteBatch, SpriteFont font, string text, Color color, Vector2 position, HorizontalAlign hAlign)
+        {
+            DrawText(spriteBatch, font, text, color, position, hAlign, VerticalAlign.AlignTop);
         }
     }
 }

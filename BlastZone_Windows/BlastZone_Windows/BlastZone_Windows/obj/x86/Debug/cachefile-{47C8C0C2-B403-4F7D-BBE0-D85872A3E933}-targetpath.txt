@@ -20,6 +20,11 @@ Content\Images\Menu\text.xnb
 Content\Spritesheets\player1.xnb
 Content\Spritesheets\softblocks.xnb
 Content\Fonts\Badaboom.xnb
+Content\Images\Lobby\ControllerBG.xnb
+Content\Images\Lobby\ControllerBorder.xnb
+Content\Images\Lobby\ControllerGamepad.xnb
+Content\Images\Lobby\ControllerKeyboard.xnb
+Content\Fonts\BadaboomSmall.xnb
 Content\Effects\Explosion.xml
 Content\XML\player.xml
 Content\XML\softblocks.xml
