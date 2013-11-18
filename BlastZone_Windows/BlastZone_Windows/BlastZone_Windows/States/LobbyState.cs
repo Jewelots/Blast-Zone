@@ -27,9 +27,34 @@ namespace BlastZone_Windows.States
 
         int playerCount;
 
+        Vector2[] iconPos;
+        int[] controller;
+        bool[] ready;
+
+        int keyboardCount;
+
+        KeyboardState lastKeyboardState;
+        GamePadState[] lastGamepadState;
+
         public override void Enter()
         {
-            playerCount = 1;
+            playerCount = 0;
+            for (int i = 0; i < 4; ++i)
+            {
+                ready[i] = false;
+            }
+
+            keyboardCount = 0;
+
+            ///
+            //playerCount = 3;
+
+            //ready[0] = true;
+            //ready[2] = true;
+
+            //controller[0] = -1;
+            //controller[1] = -1;
+            //controller[2] = 0;
         }
 
         public override void Exit()
@@ -40,6 +65,21 @@ namespace BlastZone_Windows.States
             : base(gameStateManager)
         {
             bgtex = new TiledTexture(new Rectangle(0, 0, GlobalGameData.windowWidth, GlobalGameData.windowHeight));
+
+            iconPos = new Vector2[4];
+            controller = new int[4];
+            ready = new bool[4];
+
+            lastGamepadState = new GamePadState[4];
+
+            int spacing = 20;
+            int iconVerticalPos = GlobalGameData.windowHeight / 2 - 128;
+            float icon2Offset = -256 - spacing / 2;
+            float icon3Offset = spacing / 2;
+            iconPos[0] = new Vector2(GlobalGameData.windowWidth / 2 + icon2Offset - 256 - spacing, iconVerticalPos);
+            iconPos[1] = new Vector2(GlobalGameData.windowWidth / 2 + icon2Offset, iconVerticalPos);
+            iconPos[2] = new Vector2(GlobalGameData.windowWidth / 2 + icon3Offset, iconVerticalPos);
+            iconPos[3] = new Vector2(GlobalGameData.windowWidth / 2 + icon3Offset + 256 + spacing, iconVerticalPos);
         }
 
         public override void LoadContent(ContentManager Content)
@@ -59,12 +99,36 @@ namespace BlastZone_Windows.States
         public override void Update(GameTime gameTime)
         {
             bgtex.ShiftOffset(new Vector2(50f * (float)gameTime.ElapsedGameTime.TotalSeconds, 50f * (float)gameTime.ElapsedGameTime.TotalSeconds));
-            if (Keyboard.GetState().IsKeyDown(Keys.Z))
+
+            CheckForPlayerInput();
+
+            //Check if everyone's ready and start game if so
+            int totalReady = 0;
+            for (int i = 0; i < playerCount; ++i)
+            {
+                if (ready[i])
+                {
+                    totalReady += 1;
+                }
+            }
+
+            if (totalReady >= 2 && totalReady == playerCount)
             {
                 GameplayState gps = manager.GetState(StateType.GAME) as GameplayState;
-                gps.SetLevelData(2, -1, -1, 0, 1); //Temp, makes p1 and p2 use keyboard
+                gps.SetLevelData(playerCount, controller[0], controller[1], controller[2], controller[3]);
 
                 manager.SwapStateWithTransition(StateType.GAME);
+            }
+
+            //Set last states
+            lastKeyboardState = Keyboard.GetState();
+
+            for (int i = 0; i < 4; ++i)
+            {
+                GamePadState gps = GamePad.GetState((PlayerIndex)i);
+                if (!gps.IsConnected) continue;
+
+                lastGamepadState[i] = gps;
             }
         }
 
@@ -97,26 +161,151 @@ namespace BlastZone_Windows.States
 
             spriteBatch.Begin();
 
-            int spacing = 20;
-            int iconVerticalPos = GlobalGameData.windowHeight / 2 - 128;
+            for (int i = 0; i < 4; ++i)
+            {
+                int controllerType;
 
-            float icon2Offset = -256 - spacing / 2;
-            float icon3Offset = spacing / 2;
-            DrawController(spriteBatch, new Vector2(GlobalGameData.windowWidth / 2 + icon2Offset - 256 - spacing, iconVerticalPos), 0, true);
-            DrawController(spriteBatch, new Vector2(GlobalGameData.windowWidth / 2 + icon2Offset, iconVerticalPos), 0, false);
-            DrawController(spriteBatch, new Vector2(GlobalGameData.windowWidth / 2 + icon3Offset, iconVerticalPos), 1, true);
-            DrawController(spriteBatch, new Vector2(GlobalGameData.windowWidth / 2 + icon3Offset + 256 + spacing, iconVerticalPos), -1, false);
+                if (i > playerCount - 1)
+                {
+                    controllerType = -1; //No controller
+                }
+                else
+                {
+                    if (controller[i] == -1)
+                    {
+                        controllerType = 0; //Keyboard
+                    }
+                    else
+                    {
+                        controllerType = 1; //Gamepad
+                    }
+                }
+
+                DrawController(spriteBatch, iconPos[i], controllerType, ready[i]);
+            }
 
             Vector2 playerCountPos = new Vector2(GlobalGameData.windowWidth / 2, 75);
-            Vector2 startGamePos = new Vector2(GlobalGameData.windowWidth / 2, GlobalGameData.windowHeight - 75);
             Vector2 resetInfoPos = new Vector2(GlobalGameData.windowWidth / 2, 125);
-            Vector2 buttonInfoPos = new Vector2(GlobalGameData.windowWidth / 2, GlobalGameData.windowHeight - 200);
+            Vector2 buttonInfoPos = new Vector2(GlobalGameData.windowWidth / 2, GlobalGameData.windowHeight - 210);
             DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFont, "Player Count: " + playerCount, Color.Black, Color.White, playerCountPos, 3f, HorizontalAlign.AlignCenter, VerticalAlign.AlignCenter);
+
             DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFontSmall, "Press R (Keyboard) or Back (GamePad) to reset", Color.Black, Color.White, resetInfoPos, 3f, HorizontalAlign.AlignCenter);
             DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFontSmall, "Press space to add one keyboard", Color.Black, Color.White, buttonInfoPos, 3f, HorizontalAlign.AlignCenter);
-            DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFontSmall, "Press enter to add second keyboard", Color.Black, Color.White, buttonInfoPos + new Vector2(0, 32), 3f, HorizontalAlign.AlignCenter);
-            DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFont, "Press Bomb on all controllers to begin", Color.Black, Color.White, startGamePos, 3f, HorizontalAlign.AlignCenter, VerticalAlign.AlignCenter);
+            DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFontSmall, "Press enter to add second keyboard", Color.Black, Color.White, buttonInfoPos + new Vector2(0, 50), 3f, HorizontalAlign.AlignCenter);
+            DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFontSmall, "Press Enter/Space, or the A button, to ready!", Color.Black, Color.White, buttonInfoPos + new Vector2(0, 100), 3f, HorizontalAlign.AlignCenter);
+            DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFontSmall, "Game will begin when all players ready (minimum two)!", Color.Black, Color.White, buttonInfoPos + new Vector2(0, 150), 3f, HorizontalAlign.AlignCenter);
             spriteBatch.End();
+        }
+
+        void CheckForPlayerInput()
+        {
+            KeyboardState k = Keyboard.GetState();
+
+            //Reset if any player has pressed Back, or key R is down
+            for (int i = 0; i < 4; ++i)
+            {
+                GamePadState gps = GamePad.GetState((PlayerIndex)i);
+                if (!gps.IsConnected) continue;
+
+                if (gps.IsButtonDown(Buttons.Back))
+                {
+                    Enter(); //Reset
+                }
+            }
+
+            if (k.IsKeyDown(Keys.R) && lastKeyboardState.IsKeyUp(Keys.R))
+            {
+                Enter(); //Reset
+            }
+
+            if (playerCount > 0)
+            {
+                HandleReadyInput(k);
+            }
+
+            if (playerCount == 4) return; //Break out if 4 players reached
+
+            //If Space is pressed and no keyboards; add one
+            //If Enter pressed and one keyboard; add a second one
+            if ((k.IsKeyDown(Keys.Space) && keyboardCount == 0) || (k.IsKeyDown(Keys.Enter) && keyboardCount == 1))
+            {
+                controller[playerCount] = -1;
+                playerCount += 1;
+                keyboardCount += 1;
+            }
+
+            //Check all 4 gamepads
+            for (int i = 0; i < 4; ++i)
+            {
+                GamePadState gps = GamePad.GetState((PlayerIndex)i);
+                if (!gps.IsConnected) continue;
+
+                //Controller A button is pressed
+                if (gps.IsButtonDown(Buttons.A))
+                {
+                    bool isFound = false;
+
+                    //Check if controller unused
+                    for (int p = 0; p < playerCount; ++p)
+                    {
+                        if (controller[playerCount] == i)
+                        {
+                            isFound = true;
+                        }
+                    }
+
+                    //If controller is found to already be a player, skip it
+                    if (isFound) continue;
+
+                    controller[playerCount] = i;
+                    playerCount += 1;
+                }
+            }
+        }
+
+        void HandleReadyInput(KeyboardState k)
+        {
+            int foundKeyboards = 0;
+            int[] keyboardIndices = new int[2];
+
+            //Loop through players
+            for (int i = 0; i < playerCount; ++i)
+            {
+                //Player is using a keyboard
+                if (controller[i] == -1)
+                {
+                    keyboardIndices[foundKeyboards] = i;
+                    foundKeyboards += 1;
+                }
+                else //Player is using a gamepad
+                {
+                    //Get gamepad state for that player's controller
+                    GamePadState gps = GamePad.GetState((PlayerIndex)controller[i]);
+
+                    //Check if A just pressed
+                    if (gps.IsButtonDown(Buttons.A) && lastGamepadState[controller[i]].IsButtonUp(Buttons.A))
+                    {
+                        //Ready controller
+                        ready[i] = !ready[i];
+                    }
+                }
+            }
+
+            if (foundKeyboards > 0)
+            {
+                if (k.IsKeyDown(Keys.Space) && lastKeyboardState.IsKeyUp(Keys.Space))
+                {
+                    ready[keyboardIndices[0]] = !ready[keyboardIndices[0]];
+                }
+            }
+
+            if (foundKeyboards > 1)
+            {
+                if (k.IsKeyDown(Keys.Enter) && lastKeyboardState.IsKeyUp(Keys.Enter))
+                {
+                    ready[keyboardIndices[1]] = !ready[keyboardIndices[1]];
+                }
+            }
         }
     }
 }

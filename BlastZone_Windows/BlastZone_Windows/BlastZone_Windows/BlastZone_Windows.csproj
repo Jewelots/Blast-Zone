@@ -107,7 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bomb.cs" />
+    <Compile Include="TileObjects\Bomb.cs" />
     <Compile Include="Drawing\DrawTextExtension.cs" />
     <Compile Include="Drawing\ScreenTransition.cs" />
     <Compile Include="Drawing\SpritesheetAnimation.cs" />
@@ -115,13 +115,13 @@
     <Compile Include="Effects\Particles.cs" />
     <Compile Include="Effects\VectorGraphs.cs" />
     <Compile Include="EventTimer.cs" />
-    <Compile Include="FireManager.cs" />
+    <Compile Include="Managers\FireManager.cs" />
     <Compile Include="GlobalGameData.cs" />
     <Compile Include="MovementGrid\GridNodeMap.cs" />
     <Compile Include="MovementGrid\GridNodeMover.cs" />
     <Compile Include="Level\Level.cs" />
     <Compile Include="Level\LevelAesthetics.cs" />
-    <Compile Include="MouseManager.cs" />
+    <Compile Include="Managers\MouseManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerInputController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -133,9 +133,9 @@
     <Compile Include="States\GameStateManager.cs" />
     <Compile Include="States\LobbyState.cs" />
     <Compile Include="States\MenuState.cs" />
-    <Compile Include="TileObject.cs" />
-    <Compile Include="TileObjectFactory.cs" />
-    <Compile Include="TileObjectManager.cs" />
+    <Compile Include="TileObjects\TileObject.cs" />
+    <Compile Include="TileObjects\TileObjectFactory.cs" />
+    <Compile Include="Managers\TileObjectManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
