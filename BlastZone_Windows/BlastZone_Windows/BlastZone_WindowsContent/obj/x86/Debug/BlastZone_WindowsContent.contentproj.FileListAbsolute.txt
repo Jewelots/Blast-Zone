@@ -1,2 +1,0 @@
-C:\Users\Jewel\Perforce\Home-JewelPC\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_WindowsContent\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\paul.hancock\Perforce\paul.hancock.GORDONFREEMAN\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_WindowsContent\obj\x86\Debug\BlastZone_WindowsContent.contentprojResolveAssemblyReference.cache
