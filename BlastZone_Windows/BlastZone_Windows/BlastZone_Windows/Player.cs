@@ -33,7 +33,7 @@ namespace BlastZone_Windows
         public void Reset(int gx, int gy)
         {
             movement.SetPosition(gx, gy);
-            bombCount = 2;
+            bombCount = 1;
             power = 1;
             IsDead = false;
         }

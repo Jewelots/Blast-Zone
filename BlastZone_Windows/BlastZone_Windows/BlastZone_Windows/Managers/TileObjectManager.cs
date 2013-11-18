@@ -47,14 +47,38 @@ namespace BlastZone_Windows
 
         public void Reset()
         {
+            //Clear grid and spawn soft blocks
             for (int y = 0; y < gridSizeY; ++y)
             {
                 for (int x = 0; x < gridSizeX; ++x)
                 {
                     tileObjectGrid[x, y] = null;
+
+                    //Spawn soft blocks in a checker pattern
+                    if (x > 0 && x < GlobalGameData.gridSizeX - 1 && y > 0 && y < GlobalGameData.gridSizeY - 1)
+                    {
+                        if (x % 2 != y % 2)
+                        {
+                            tileObjectGrid[x, y] = tileObjectFactory.CreateSoftBlock(this, x, y);
+                        }
+                    }
+
+                    //Clear blocks near players
+                    tileObjectGrid[2, 1] = null;
+                    tileObjectGrid[1, 2] = null;
+
+                    tileObjectGrid[GlobalGameData.gridSizeX - 3, 1] = null;
+                    tileObjectGrid[GlobalGameData.gridSizeX - 2, 2] = null;
+
+                    tileObjectGrid[2, GlobalGameData.gridSizeY - 2] = null;
+                    tileObjectGrid[1, GlobalGameData.gridSizeY - 3] = null;
+
+                    tileObjectGrid[GlobalGameData.gridSizeX - 3, GlobalGameData.gridSizeY - 2] = null;
+                    tileObjectGrid[GlobalGameData.gridSizeX - 2, GlobalGameData.gridSizeY - 3] = null;
                 }
             }
 
+            //Reset active bombs
             activeBombs = new int[4];
             playerOwnedBombs = new Dictionary<TileObject, int>();
         }

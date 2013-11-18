@@ -135,6 +135,7 @@
     <Compile Include="States\LobbyState.cs" />
     <Compile Include="States\MenuState.cs" />
     <Compile Include="TileObjects\Bomb.cs" />
+    <Compile Include="TileObjects\SoftBlock.cs" />
     <Compile Include="TileObjects\TileObject.cs" />
     <Compile Include="TileObjects\TileObjectFactory.cs" />
   </ItemGroup>

@@ -16,14 +16,14 @@ namespace BlastZone_Windows
     /// </summary>
     class TileObjectFactory
     {
-        Texture2D bombTex;
-        //Animation bombIdleAnimation;
+        Texture2D bombTex, blockTex;
 
         bool loaded = false;
 
         public void LoadContent(ContentManager Content)
         {
             bombTex = Content.Load<Texture2D>("Images/Game/bomb");
+            blockTex = Content.Load<Texture2D>("Images/Game/softblock");
             loaded = true;
         }
 
@@ -32,6 +32,13 @@ namespace BlastZone_Windows
             if (!loaded) return null;
 
             return new Bomb(manager, tilePosX, tilePosY, bombTex, power);
+        }
+
+        public SoftBlock CreateSoftBlock(TileObjectManager manager, int tilePosX, int tilePosY)
+        {
+            if (!loaded) return null;
+
+            return new SoftBlock(manager, tilePosX, tilePosY, blockTex);
         }
     }
 }
