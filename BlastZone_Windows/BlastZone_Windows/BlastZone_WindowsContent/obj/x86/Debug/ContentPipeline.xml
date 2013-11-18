@@ -206,7 +206,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Lobby\ControllerBG.xnb</Output>
-      <Time>2013-11-18T11:42:01.7035314+11:00</Time>
+      <Time>2013-11-18T11:51:32.0811551+11:00</Time>
     </Item>
     <Item>
       <Source>Images\Lobby\ControllerBorder.png</Source>
@@ -243,6 +243,15 @@
       <Options>None</Options>
       <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Fonts\BadaboomSmall.xnb</Output>
       <Time>2013-11-18T11:44:16.7152536+11:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\Lobby\ControllerBGReady.png</Source>
+      <Name>Images\Lobby\ControllerBGReady</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\jordan.leffley\jordan.leffley_MARCUSFENIX_1431\jordan.leffley_MARCUSFENIX_1431\assignments\xyzzy\Projects\Main\BlastZone_Windows\BlastZone_Windows\BlastZone_Windows\bin\x86\Debug\Content\Images\Lobby\ControllerBGReady.xnb</Output>
+      <Time>2013-11-18T11:52:30.9585227+11:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
