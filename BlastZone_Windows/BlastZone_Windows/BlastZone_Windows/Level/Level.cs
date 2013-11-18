@@ -37,7 +37,7 @@ namespace BlastZone_Windows.Level
 
         Dictionary<int, int> playerToController; //-1 = keyboard, 0-3 is gamepads
 
-        int playerCount = 2;
+        int playerCount = 1;
 
         public Level()
         {
@@ -52,60 +52,28 @@ namespace BlastZone_Windows.Level
 
             playerToController = new Dictionary<int, int>();
 
-            playerToController[0] = -1; //Player 1 on keyboard
-            playerToController[1] = -1; //Player 2 on keyboard
-            playerToController[2] = 0; //Player 3 on joypad 2
-            playerToController[3] = 1; //Player 4 on joypad 3
+            players = new Player[4];
 
-            players = new Player[playerCount];
-
-            //1 or more players
-            players[0] = new Player(gridNodeMap, 1, 1, tileObjectManager.CreateBomb);
-
-            //2 or more players
-            if (playerCount > 1)
+            for (int i = 0; i < 4; ++i)
             {
-                players[1] = new Player(gridNodeMap, GlobalGameData.gridSizeX - 2, 1, tileObjectManager.CreateBomb);
+                players[i] = new Player(gridNodeMap, tileObjectManager.CreateBomb);
             }
 
-            //3 or more players
-            if (playerCount > 2)
-            {
-                players[2] = new Player(gridNodeMap, 1, GlobalGameData.gridSizeY - 2, tileObjectManager.CreateBomb);
-            }
-
-            //4 players
-            if (playerCount > 3)
-            {
-                players[3] = new Player(gridNodeMap, GlobalGameData.gridSizeX - 2, GlobalGameData.gridSizeY - 2, tileObjectManager.CreateBomb);
-            }
-
-            playerInputControllers = new PlayerInputController[playerCount];
-            for (int i = 0; i < playerCount; ++i)
+            playerInputControllers = new PlayerInputController[4];
+            for (int i = 0; i < 4; ++i)
             {
                 playerInputControllers[i] = new PlayerInputController(players[i]);
             }
+        }
 
-            //1 or more players
-            playerInputControllers[0].SetKeyIdentifiers(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Space);
+        void SetKeyType1(PlayerInputController controller)
+        {
+            controller.SetKeyIdentifiers(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Space);
+        }
 
-            //2 or more players
-            if (playerCount > 1)
-            {
-                playerInputControllers[1].SetKeyIdentifiers(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Enter);
-            }
-
-            //3 or more players
-            if (playerCount > 2)
-            {
-                //
-            }
-
-            //4 players
-            if (playerCount > 3)
-            {
-                //
-            }
+        void SetKeyType2(PlayerInputController controller)
+        {
+            controller.SetKeyIdentifiers(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Enter);
         }
 
         /// <summary>
@@ -138,7 +106,7 @@ namespace BlastZone_Windows.Level
             fireManager.LoadContent(Content);
             /////////////////////////////////////////
 
-            for (int i = 0; i < playerCount; ++i)
+            for (int i = 0; i < 4; ++i)
             {
                 players[i].LoadContent(Content);
             }
@@ -146,9 +114,85 @@ namespace BlastZone_Windows.Level
             fireManager.SetSolidArea(solidArea);
         }
 
-        public void Reset()
+        void InitialisePlayerToKeyboard(int playerIndex, ref int currentKeyboards)
         {
+            playerToController[playerIndex] = -1;
+
+            if (currentKeyboards == 0)
+            {
+                SetKeyType1(playerInputControllers[playerIndex]);
+            }
+            else if (currentKeyboards == 1)
+            {
+                SetKeyType2(playerInputControllers[playerIndex]);
+            }
+            else
+            {
+                throw new Exception("Cannot initialise more than two players with a keyboard!");
+            }
+
+            currentKeyboards += 1;
+        }
+
+        public void SetPlayerControlIdentifiers(int playerCount, int p1, int p2, int p3, int p4)
+        {
+            int currentKeyboards = 0;
+
+            if (p1 == -1)
+            {
+                InitialisePlayerToKeyboard(0, ref currentKeyboards);
+            }
+            else
+            {
+                playerToController[0] = p1;
+            }
+
+            if (playerCount < 2) return;
+
+            if (p2 == -1)
+            {
+                InitialisePlayerToKeyboard(1, ref currentKeyboards);
+            }
+            else
+            {
+                playerToController[1] = p2;
+            }
+
+            if (playerCount < 3) return;
+
+            if (p3 == -1)
+            {
+                InitialisePlayerToKeyboard(2, ref currentKeyboards);
+            }
+            else
+            {
+                playerToController[2] = p3;
+            }
+
+            if (playerCount < 4) return;
+
+            if (p4 == -1)
+            {
+                InitialisePlayerToKeyboard(3, ref currentKeyboards);
+            }
+            else
+            {
+                playerToController[4] = p4;
+            }
+        }
+
+        public void Reset(int playerCount, int p1ControlType, int p2ControlType, int p3ControlType, int p4ControlType)
+        {
+            this.playerCount = playerCount;
+
             tileObjectManager.Reset();
+
+            players[0].Reset(2, 1);
+            players[1].Reset(GlobalGameData.gridSizeX - 2, 1);
+            players[2].Reset(1, GlobalGameData.gridSizeY - 2);
+            players[3].Reset(GlobalGameData.gridSizeX - 2, GlobalGameData.gridSizeY - 2);
+
+            SetPlayerControlIdentifiers(playerCount, p1ControlType, p2ControlType, p3ControlType, p4ControlType);
         }
 
         public void Update(GameTime gameTime)
@@ -171,33 +215,6 @@ namespace BlastZone_Windows.Level
                 }
                 players[i].Update(gameTime);
             }
-
-            ///////////////REPLACE LATER/////////////
-            int offsetX, offsetY;
-            offsetX = GlobalGameData.windowWidth / 2 - GlobalGameData.levelSizeX / 2;
-            offsetY = GlobalGameData.windowHeight / 2 - GlobalGameData.levelSizeY / 2;
-
-            MouseState mState = Mouse.GetState();
-
-            int factor = GlobalGameData.tileSize * GlobalGameData.drawRatio;
-
-            int gx, gy;
-            gx = (mState.X - offsetX) / factor;
-            gy = (mState.Y - offsetY) / factor;
-
-            if (GlobalGameData.IsInBounds(gx, gy) && solidArea[gx, gy] == false) //Area not solid
-            {
-                if (MouseManager.ButtonPressed(MouseButton.LEFT))
-                {
-                    fireManager.ExplodeFrom(gx, gy, 2);
-                }
-
-                if (MouseManager.ButtonDown(MouseButton.RIGHT))
-                {
-                    tileObjectManager.CreateBomb(gx, gy);
-                }
-            }
-            /////////////////////////////////////////
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)

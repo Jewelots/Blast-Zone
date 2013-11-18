@@ -19,10 +19,15 @@ namespace BlastZone_Windows
 
         int power = 1;
 
-        public Player(GridNodeMap map, int gx, int gy, Action<int, int, int> placeBombFunc)
+        public Player(GridNodeMap map, Action<int, int, int> placeBombFunc)
         {
-            movement = new GridNodeMover(map, gx, gy);
+            movement = new GridNodeMover(map);
             this.placeBombFunc = placeBombFunc;
+        }
+
+        public void Reset(int gx, int gy)
+        {
+            movement.SetPosition(gx, gy);
         }
 
         public void Move(MoveEvent moveEvent)

@@ -285,5 +285,11 @@ namespace BlastZone_Windows.MovementGrid
             gx = (int)Math.Floor(position.X / map.nodeSize);
             gy = (int)Math.Floor(position.Y / map.nodeSize);
         }
+
+        internal void SetPosition(int gx, int gy)
+        {
+            position.X = gx * map.nodeSize + map.nodeSize / 2;
+            position.Y = gy * map.nodeSize + map.nodeSize / 2;
+        }
     }
 }

@@ -142,7 +142,7 @@ namespace BlastZone_Windows.States
 
         void OnSelectStartGame()
         {
-            manager.SwapStateWithTransition(StateType.GAME);
+            manager.SwapStateWithTransition(StateType.LOBBY);
         }
     }
 }

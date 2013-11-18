@@ -14,6 +14,7 @@ namespace BlastZone_Windows.States
     public enum StateType
     {
         MENU,
+        LOBBY,
         GAME
     }
 
@@ -43,6 +44,7 @@ namespace BlastZone_Windows.States
         {
             gameStates = new Dictionary<StateType, GameState>();
             gameStates[StateType.MENU] = new MenuState(this);
+            gameStates[StateType.LOBBY] = new LobbyState(this);
             gameStates[StateType.GAME] = new GameplayState(this, graphicsDevice);
 
             SwapState(StateType.MENU);
@@ -110,6 +112,11 @@ namespace BlastZone_Windows.States
             {
                 screenTransition.Update(gameTime);
             }
+        }
+
+        public GameState GetState(StateType state)
+        {
+            return gameStates[state];
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)

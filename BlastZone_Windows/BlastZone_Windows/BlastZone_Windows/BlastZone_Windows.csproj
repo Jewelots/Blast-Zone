@@ -131,6 +131,7 @@
     <Compile Include="States\GameplayState.cs" />
     <Compile Include="States\GameState.cs" />
     <Compile Include="States\GameStateManager.cs" />
+    <Compile Include="States\LobbyState.cs" />
     <Compile Include="States\MenuState.cs" />
     <Compile Include="TileObject.cs" />
     <Compile Include="TileObjectFactory.cs" />

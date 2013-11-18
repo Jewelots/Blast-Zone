@@ -36,13 +36,16 @@ namespace BlastZone_Windows.States
         /// </summary>
         GraphicsDevice graphicsDevice;
 
+        int playerCount = 1;
+        int[] playerInputTypes;
+
         double startTime;
 
         public override void Enter()
         {
             startTime = -1;
 
-            level.Reset();
+            level.Reset(playerCount, playerInputTypes[0], playerInputTypes[1], playerInputTypes[2], playerInputTypes[3]);
         }
 
         public override void Exit()
@@ -60,6 +63,8 @@ namespace BlastZone_Windows.States
             levelRenderTarget = new RenderTarget2D(graphicsDevice, GlobalGameData.levelSizeX, GlobalGameData.levelSizeY, false, SurfaceFormat.Bgr565, DepthFormat.None);
 
             this.graphicsDevice = graphicsDevice;
+
+            playerInputTypes = new int[4];
         }
 
         public override void LoadContent(ContentManager Content)
@@ -117,6 +122,15 @@ namespace BlastZone_Windows.States
             scoreRenderer.Draw(spriteBatch);
 
             spriteBatch.End();
+        }
+
+        public void SetLevelData(int playerCount, int p1ControlType, int p2ControlType, int p3ControlType, int p4ControlType)
+        {
+            this.playerCount = playerCount;
+            this.playerInputTypes[0] = p1ControlType;
+            this.playerInputTypes[1] = p2ControlType;
+            this.playerInputTypes[2] = p3ControlType;
+            this.playerInputTypes[3] = p4ControlType;
         }
     }
 }
