@@ -14,8 +14,6 @@ namespace BlastZone_Windows
 
         Dictionary<string, Keys> keyIdentifiers;
 
-        Buttons padBombButton;
-
         KeyboardState lastKeyState;
         GamePadState lastPadState;
 
@@ -37,10 +35,8 @@ namespace BlastZone_Windows
             keyIdentifiers["bomb"] = bomb;
         }
 
-        public void SetJoyIdentifiers(Buttons bomb)
+        public void SetJoyIdentifiers()
         {
-            padBombButton = bomb;
-
             useKey = false;
         }
 
@@ -87,12 +83,12 @@ namespace BlastZone_Windows
         {
             if (useKey) return;
 
-            if (g.DPad.Up == ButtonState.Pressed || g.ThumbSticks.Left.Y < 0)
+            if (g.DPad.Up == ButtonState.Pressed || g.ThumbSticks.Left.Y > 0)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_UP));
             }
 
-            if (g.DPad.Down == ButtonState.Pressed || g.ThumbSticks.Left.Y > 0)
+            if (g.DPad.Down == ButtonState.Pressed || g.ThumbSticks.Left.Y < 0)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_DOWN));
             }

@@ -134,6 +134,12 @@ namespace BlastZone_Windows.Level
             currentKeyboards += 1;
         }
 
+        void InitialisePlayerToJoystick(int playerIndex, int joystickIndex)
+        {
+            playerToController[playerIndex] = joystickIndex;
+            playerInputControllers[playerIndex].SetJoyIdentifiers();
+        }
+
         public void SetPlayerControlIdentifiers(int playerCount, int p1, int p2, int p3, int p4)
         {
             int currentKeyboards = 0;
@@ -144,7 +150,7 @@ namespace BlastZone_Windows.Level
             }
             else
             {
-                playerToController[0] = p1;
+                InitialisePlayerToJoystick(0, p1);
             }
 
             if (playerCount < 2) return;
@@ -155,7 +161,7 @@ namespace BlastZone_Windows.Level
             }
             else
             {
-                playerToController[1] = p2;
+                InitialisePlayerToJoystick(1, p2);
             }
 
             if (playerCount < 3) return;
@@ -166,7 +172,7 @@ namespace BlastZone_Windows.Level
             }
             else
             {
-                playerToController[2] = p3;
+                InitialisePlayerToJoystick(2, p3);
             }
 
             if (playerCount < 4) return;
@@ -177,7 +183,7 @@ namespace BlastZone_Windows.Level
             }
             else
             {
-                playerToController[4] = p4;
+                InitialisePlayerToJoystick(4, p4);
             }
         }
 

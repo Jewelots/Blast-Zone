@@ -28,6 +28,7 @@ namespace BlastZone_Windows.States
         int menuOffset;
 
         KeyboardState oldState;
+        GamePadState[] oldGamepadStates;
 
         int curSelected;
 
@@ -53,6 +54,8 @@ namespace BlastZone_Windows.States
             //menuBeginPosY = 250;
             menuBeginPosY = 300;
             menuOffset = 100;
+
+            oldGamepadStates = new GamePadState[4];
         }
 
         public override void LoadContent(ContentManager Content)
@@ -77,8 +80,41 @@ namespace BlastZone_Windows.States
             bgtex.ShiftOffset(new Vector2(50f * (float)gameTime.ElapsedGameTime.TotalSeconds, 50f * (float)gameTime.ElapsedGameTime.TotalSeconds));
 
             KeyboardState newState = Keyboard.GetState();
+            GamePadState[] currentGamepadStates = new GamePadState[4];
 
-            if (newState.IsKeyDown(Keys.Enter) || newState.IsKeyDown(Keys.Space))
+            for (int i = 0; i < 4; ++i)
+            {
+                currentGamepadStates[i] = GamePad.GetState((PlayerIndex)i);
+            }
+
+            //Check controller inputs
+            bool gamepadPressedA = false;
+            bool gamepadPressedUp = false;
+            bool gamepadPressedDown = false;
+            for (int i = 0; i < 4; ++i)
+            {
+                GamePadState gps = currentGamepadStates[i];
+                GamePadState ogps = oldGamepadStates[i];
+
+                if (!gps.IsConnected) continue;
+
+                if (gps.IsButtonDown(Buttons.A) && ogps.IsButtonUp(Buttons.A))
+                {
+                    gamepadPressedA = true;
+                }
+
+                if ((gps.IsButtonDown(Buttons.DPadUp) && ogps.IsButtonUp(Buttons.DPadUp)) || (gps.ThumbSticks.Left.Y > 0 && ogps.ThumbSticks.Left.Y == 0))
+                {
+                    gamepadPressedUp = true;
+                }
+
+                if ((gps.IsButtonDown(Buttons.DPadDown) && ogps.IsButtonUp(Buttons.DPadDown)) || (gps.ThumbSticks.Left.Y < 0 && ogps.ThumbSticks.Left.Y == 0))
+                {
+                    gamepadPressedDown = true;
+                }
+            }
+
+            if (newState.IsKeyDown(Keys.Enter) || newState.IsKeyDown(Keys.Space) || gamepadPressedA)
             {
                 switch (curSelected)
                 {
@@ -96,13 +132,18 @@ namespace BlastZone_Windows.States
                 }
             }
 
-            if (newState.IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down)) curSelected += 1;
-            if (newState.IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up)) curSelected -= 1;
+            if (newState.IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down) || gamepadPressedDown) curSelected += 1;
+            if (newState.IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up) || gamepadPressedUp) curSelected -= 1;
 
             curSelected %= 3;
             if (curSelected < 0) curSelected = 2;
 
             oldState = newState;
+
+            for (int i = 0; i < 4; ++i)
+            {
+                oldGamepadStates[i] = currentGamepadStates[i];
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)

@@ -208,7 +208,7 @@ namespace BlastZone_Windows.States
             Vector2 buttonInfoPos = new Vector2(GlobalGameData.windowWidth / 2, GlobalGameData.windowHeight - 210);
             DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFont, "Player Count: " + playerCount, Color.Black, Color.White, playerCountPos, 3f, HorizontalAlign.AlignCenter, VerticalAlign.AlignCenter);
 
-            DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFontSmall, "Press R (Keyboard) or Back (GamePad) to reset", Color.Black, Color.White, resetInfoPos, 3f, HorizontalAlign.AlignCenter);
+            DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFontSmall, "Press R (Keyboard) or B (GamePad) to reset", Color.Black, Color.White, resetInfoPos, 3f, HorizontalAlign.AlignCenter);
             DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFontSmall, "Press space to add one keyboard", Color.Black, Color.White, buttonInfoPos, 3f, HorizontalAlign.AlignCenter);
             DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFontSmall, "Press enter to add second keyboard", Color.Black, Color.White, buttonInfoPos + new Vector2(0, 50), 3f, HorizontalAlign.AlignCenter);
             DrawTextExtension.DrawTextOutline(spriteBatch, lobbyFontSmall, "Press Enter/Space, or the A button, to ready!", Color.Black, Color.White, buttonInfoPos + new Vector2(0, 100), 3f, HorizontalAlign.AlignCenter);
@@ -220,13 +220,13 @@ namespace BlastZone_Windows.States
         {
             KeyboardState k = Keyboard.GetState();
 
-            //Reset if any player has pressed Back, or key R is down
+            //Reset if any player has pressed B, or key R is down
             for (int i = 0; i < 4; ++i)
             {
                 GamePadState gps = GamePad.GetState((PlayerIndex)i);
                 if (!gps.IsConnected) continue;
 
-                if (gps.IsButtonDown(Buttons.Back))
+                if (gps.IsButtonDown(Buttons.B))
                 {
                     Enter(); //Reset
                 }
@@ -267,7 +267,7 @@ namespace BlastZone_Windows.States
                     //Check if controller unused
                     for (int p = 0; p < playerCount; ++p)
                     {
-                        if (controller[playerCount] == i)
+                        if (controller[p] == i)
                         {
                             isFound = true;
                         }
