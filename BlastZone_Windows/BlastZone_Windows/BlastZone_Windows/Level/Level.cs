@@ -56,7 +56,7 @@ namespace BlastZone_Windows.Level
 
             for (int i = 0; i < 4; ++i)
             {
-                players[i] = new Player(gridNodeMap, tileObjectManager.CreateBomb);
+                players[i] = new Player(gridNodeMap, i, tileObjectManager.CreateBomb);
             }
 
             playerInputControllers = new PlayerInputController[4];
@@ -235,6 +235,11 @@ namespace BlastZone_Windows.Level
             }
 
             spriteBatch.End();
+        }
+
+        public int getMaxBombs(int playerIndex)
+        {
+            return players[playerIndex].GetMaxBombs();
         }
     }
 }

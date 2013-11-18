@@ -26,6 +26,9 @@ namespace BlastZone_Windows
         /// </summary>
         TileObjectFactory tileObjectFactory;
 
+        int[] activeBombs;
+        Dictionary<TileObject, int> playerOwnedBombs;
+
         public Level.Level level;
 
         int gridSizeX, gridSizeY;
@@ -40,6 +43,9 @@ namespace BlastZone_Windows
             tileObjectFactory = new TileObjectFactory();
 
             this.level = level;
+
+            activeBombs = new int[4];
+            playerOwnedBombs = new Dictionary<TileObject, int>();
         }
 
         public void LoadContent(ContentManager Content)
@@ -50,6 +56,14 @@ namespace BlastZone_Windows
         public void RemoveAt(int x, int y)
         {
             if (!GlobalGameData.IsInBounds(x, y)) return;
+
+            TileObject obj = tileObjectGrid[x, y];
+
+            if (playerOwnedBombs.ContainsKey(obj))
+            {
+                activeBombs[playerOwnedBombs[obj]] -= 1;
+                playerOwnedBombs.Remove(obj);
+            }
 
             tileObjectGrid[x, y] = null;
         }
@@ -106,17 +120,20 @@ namespace BlastZone_Windows
                     tileObjectGrid[x, y] = null;
                 }
             }
-
-            CreateBomb(3, 1, 5);
-            CreateBomb(3, 5, 2);
         }
 
-        public void CreateBomb(int gx, int gy, int power = 3)
+        public void CreateBomb(int playerIndex, int gx, int gy, int power = 3)
         {
             if (!GlobalGameData.IsInBounds(gx, gy)) return;
             if (tileObjectGrid[gx, gy] != null) return; //Spot already occupied, can't place bomb here
 
-            tileObjectGrid[gx, gy] = tileObjectFactory.CreateBomb(this, gx, gy, power);
+            Console.Out.WriteLine(playerIndex + " : " + activeBombs[playerIndex] + " - " + level.getMaxBombs(playerIndex));
+            if (activeBombs[playerIndex] < level.getMaxBombs(playerIndex))
+            {
+                activeBombs[playerIndex] += 1;
+
+                tileObjectGrid[gx, gy] = tileObjectFactory.CreateBomb(this, gx, gy, power);
+            }
         }
 
         public bool SolidAt(int gx, int gy)

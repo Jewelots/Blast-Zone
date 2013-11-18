@@ -15,19 +15,24 @@ namespace BlastZone_Windows
         GridNodeMover movement;
         Texture2D playerTex; //replace with animation
 
-        Action<int, int, int> placeBombFunc;
+        Action<int, int, int, int> placeBombFunc;
 
-        int power = 1;
+        int power;
+        int playerIndex;
+        int bombCount;
 
-        public Player(GridNodeMap map, Action<int, int, int> placeBombFunc)
+        public Player(GridNodeMap map, int playerIndex, Action<int, int, int, int> placeBombFunc)
         {
             movement = new GridNodeMover(map);
             this.placeBombFunc = placeBombFunc;
+            this.playerIndex = playerIndex;
         }
 
         public void Reset(int gx, int gy)
         {
             movement.SetPosition(gx, gy);
+            bombCount = 1;
+            power = 1;
         }
 
         public void Move(MoveEvent moveEvent)
@@ -51,12 +56,17 @@ namespace BlastZone_Windows
 
             movement.GetGridPosition(out gx, out gy);
 
-            placeBombFunc(gx, gy, this.power); //x, y, power
+            placeBombFunc(playerIndex, gx, gy, this.power); //x, y, power
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Draw(playerTex, movement.GetPosition(), null, Color.White, 0f, new Vector2(GlobalGameData.tileSize / 2 - 0.5f, GlobalGameData.tileSize / 2 - 0.5f), GlobalGameData.drawRatio, SpriteEffects.None, 1f);
+        }
+
+        public int GetMaxBombs()
+        {
+            return bombCount;
         }
     }
 }

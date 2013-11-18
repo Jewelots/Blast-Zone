@@ -32,8 +32,6 @@ namespace BlastZone_Windows
         {
             fireArea = new float[GlobalGameData.gridSizeX, GlobalGameData.gridSizeY];
 
-            fireArea[5, 5] = 1; ///TEMP
-
             this.tileObjectManager = tileObjectManager;
         }
 
