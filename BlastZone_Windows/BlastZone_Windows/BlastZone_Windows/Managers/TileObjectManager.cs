@@ -43,9 +43,6 @@ namespace BlastZone_Windows
             tileObjectFactory = new TileObjectFactory();
 
             this.level = level;
-
-            //activeBombs = new int[4];
-            //playerOwnedBombs = new Dictionary<TileObject, int>();
         }
 
         public void Reset()
@@ -133,9 +130,15 @@ namespace BlastZone_Windows
             Console.Out.WriteLine(playerIndex + " : " + activeBombs[playerIndex] + " - " + level.getMaxBombs(playerIndex));
             if (activeBombs[playerIndex] < level.getMaxBombs(playerIndex))
             {
+                //Create bomb
+                Bomb b = tileObjectFactory.CreateBomb(this, gx, gy, power);
+
+                //Add the bomb to be tracked
+                playerOwnedBombs[b] = playerIndex;
                 activeBombs[playerIndex] += 1;
 
-                tileObjectGrid[gx, gy] = tileObjectFactory.CreateBomb(this, gx, gy, power);
+                //Add bomb to tile object grid
+                tileObjectGrid[gx, gy] = b;
             }
         }
 
