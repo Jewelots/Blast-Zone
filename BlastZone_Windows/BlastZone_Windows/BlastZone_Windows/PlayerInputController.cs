@@ -33,6 +33,7 @@ namespace BlastZone_Windows
             keyIdentifiers["left"] = left;
             keyIdentifiers["right"] = right;
             keyIdentifiers["bomb"] = bomb;
+            useKey = true;
         }
 
         public void SetJoyIdentifiers()
