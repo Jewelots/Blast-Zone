@@ -77,6 +77,11 @@ namespace BlastZone_Windows
             //Don't update if dead
             if (IsDead) return;
 
+            if (movement.IsEmpty())
+            {
+                playerAnimations.Stop();
+            }
+
             movement.Update(gameTime);
             playerAnimations.position = movement.GetPosition() - new Vector2(0, 10);
             playerAnimations.Update(gameTime);

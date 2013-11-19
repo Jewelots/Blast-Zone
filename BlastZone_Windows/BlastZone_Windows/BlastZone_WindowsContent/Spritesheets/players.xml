@@ -8,14 +8,13 @@
   </Textures>
   <Mesh x="4" y="2"/>
 	<Framerate default="4.0"/>
-  <Scale default="3.0"/>
+  <Scale default="4.0"/>
 	<Animations>
 		<StandDown>
 			<Frame x="0" y="0"/>
 			<End return="StandDown"/>
 		</StandDown>
 		<WalkDown>
-			<Frame x="0"  y="0"/>
 			<Frame x="1" y="0"/>
 			<Frame x="0"  y="0"/>
 			<Frame x="1" y="0" flip="H"/>
@@ -26,7 +25,6 @@
 			<End return="StandLeft"/>
 		</StandLeft>
 		<WalkLeft>
-			<Frame x="0"  y="1"/>
 			<Frame x="1" y="1"/>
 			<Frame x="0"  y="1"/>
 			<Frame x="1" y="1"/>
@@ -37,7 +35,6 @@
 			<End return="StandRight"/>
 		</StandRight>
 		<WalkRight>
-			<Frame x="0"  y="1" flip="H"/>
 			<Frame x="1" y="1" flip="H"/>
 			<Frame x="0"  y="1" flip="H"/>
 			<Frame x="2" y="1" flip="H"/>
@@ -48,7 +45,6 @@
 			<End return="StandUp"/>
 		</StandUp>
 		<WalkUp>
-			<Frame x="2" y="0"/>
 			<Frame x="3" y="0"/>
 			<Frame x="2" y="0"/>
 			<Frame x="3" y="0" flip="H"/>

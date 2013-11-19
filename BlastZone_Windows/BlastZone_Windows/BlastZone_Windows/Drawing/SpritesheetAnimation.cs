@@ -302,6 +302,14 @@ namespace SpritesheetAnimation
         }
 
         /// <summary>
+        /// Stop
+        /// </summary>
+        public void Stop()
+        {
+            SetAnimation(currentAnimation.Value.returnAnimation);
+        }
+
+        /// <summary>
         /// draw
         /// </summary>
         /// <param name="spritebatch"></param>

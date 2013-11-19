@@ -92,6 +92,11 @@ namespace BlastZone_Windows.MovementGrid
             moveEventQueue.Enqueue(moveEvent);
         }
 
+        public bool IsEmpty()
+        {
+            return moveEventQueue.Count == 0;
+        }
+
         public Vector2 GetPosition()
         {
             return position;
