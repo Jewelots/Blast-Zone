@@ -63,6 +63,7 @@ namespace BlastZone_Windows
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //load particles
+            Managers.ParticleManager.AddAndLoad(Content, "BombSmoke");
             Managers.ParticleManager.AddAndLoad(Content, "Explosion");
             Managers.ParticleManager.AddAndLoad(Content, "ExplosionFast");
             Managers.ParticleManager.AddAndLoad(Content, "Fire");
@@ -90,11 +91,11 @@ namespace BlastZone_Windows
         protected override void Update(GameTime gameTime)
         {
             MouseManager.Update();
+
             gameStateManager.Update(gameTime);
 
             //update particles
             Managers.ParticleManager.Update(gameTime);
-
 
             base.Update(gameTime);
         }

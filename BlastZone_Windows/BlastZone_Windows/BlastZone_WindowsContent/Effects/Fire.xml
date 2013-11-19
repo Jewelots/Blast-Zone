@@ -13,11 +13,15 @@
       <Point x="0.0" y="0.0"/>
       <Point x="1.0" y="2.0"/>
     </FireColor>
-    <Smoke type="Bezier">
+    <SmokeColor type="Bezier">
       <Point x="0.0" y="0.0"/>
       <Point x="0.25" y="1.0"/>
       <Point x="1.0" y="0.5"/>
-    </Smoke>
+    </SmokeColor>
+    <SmokeSize type="Bezier">
+      <Point x="0.0" y="1"/>
+      <Point x="1.0" y="0.5"/>
+    </SmokeSize>
   </Graphs>
   <Particles>
     <Base>
@@ -32,8 +36,8 @@
     <Smoke>
       <Texture texture="Smoke"/>
       <Life length="0.5"/>
-      <Size scale="100.0" graph="Smoke"/>
-      <Colour r="50" g="50" b="50" a="200" graph="Smoke"/>
+      <Size scale="100.0" graph="SmokeSize"/>
+      <Colour r="50" g="50" b="50" a="200" graph="SmokeColor"/>
       <Rotation angle="0.0" graph=""/>
       <Acceleration x="0.0" y="-98.0"/>
       <Decay x="0.0" y="0.0"/>
@@ -57,14 +61,5 @@
 				<State state="Additive"/>
 			</BlendStates>
 		</Base>
-		<Spark>
-			<Origin x="0.0" y="0.0" depth="0.0"/>
-			<Power x="200.0" y="200.0"/>
-			<Rate rate ="1.0" count ="1"/>
-			<BlendStates>
-				<State state="AlphaBlend"/>
-				<State state="Additive"/>
-			</BlendStates>
-		</Spark>
 	</Emitters>
 </MultiEmitter>

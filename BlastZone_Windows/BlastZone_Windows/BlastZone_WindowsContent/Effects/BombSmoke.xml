@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<MultiEmitter>
+  <Textures>
+    <Smoke texture="SmokeTex"/>
+  </Textures>
+  <Graphs>
+    <SmokeColor type="Bezier">
+      <Point x="0.0" y="0.0"/>
+      <Point x="0.4" y="0.0"/>
+      <Point x="0.25" y="1.0"/>
+      <Point x="1.0" y="0.5"/>
+    </SmokeColor>
+    <SmokeSize type="Bezier">
+      <Point x="0.0" y="1"/>
+      <Point x="1.0" y="0.2"/>
+    </SmokeSize>
+  </Graphs>
+  <Particles>
+    <Smoke>
+      <Texture texture="Smoke"/>
+      <Life length="2"/>
+      <Size scale="35.0" graph="SmokeSize"/>
+      <Colour r="50" g="50" b="50" a="120" graph="SmokeColor"/>
+      <Rotation angle="0.0" graph=""/>
+      <Acceleration x="20.0" y="-50.0"/>
+      <Decay x="0.0" y="0.0"/>
+    </Smoke>
+  </Particles>
+	<Emitters>
+		<Smoke>
+			<Origin x="0.0" y="0.0" depth="0.5"/>
+			<Power x="10.0" y="10.0"/>
+			<Rate rate ="0.0" count ="1"/>
+			<BlendStates>
+				<State state="AlphaBlend"/>
+			</BlendStates>
+		</Smoke>
+	</Emitters>
+</MultiEmitter>

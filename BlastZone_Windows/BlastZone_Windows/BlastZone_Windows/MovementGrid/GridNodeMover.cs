@@ -23,7 +23,6 @@ namespace BlastZone_Windows.MovementGrid
         public MoveEventType moveEvent;
         public float speed;
 
-
         public static MoveEvent MakeEvent(MoveEventType moveEventType, float speed)
         {
             MoveEvent me = new MoveEvent();
@@ -176,8 +175,8 @@ namespace BlastZone_Windows.MovementGrid
             float distToNearest = DistToNearestGridSquare();
             float percToNearest = PercentToNearestGridSquare();
 
-            //float snap = Math.Min(Math.Abs(speed) * 5, map.nodeSize / 2);
-            float snap = 0.2f;
+            float snap = Math.Min(Math.Abs(speed) * 5, map.nodeSize / 2);
+            //float snap = 0.2f;
 
             GridNodeMap.TileContents rightNode = GetNodeOffset(1, 0);
             GridNodeMap.TileContents leftNode = GetNodeOffset(-1, 0);
@@ -185,7 +184,7 @@ namespace BlastZone_Windows.MovementGrid
             //Check if was moving vertical, and snap to grid square before moving if close enough
             if (movingHorizontal == false)
             {
-                if (Math.Abs(percToNearest) < snap)
+                if (Math.Abs(distToNearest) < snap)
                 {
                     if (!((speed < 0 && leftNode != null && leftNode.solid) || (speed > 0 && rightNode != null && rightNode.solid)))
                     {
@@ -229,8 +228,8 @@ namespace BlastZone_Windows.MovementGrid
             float distToNearest = DistToNearestGridSquare();
             float percToNearest = PercentToNearestGridSquare();
 
-            //float snap = Math.Min(Math.Abs(speed) * 5, map.nodeSize / 2);
-            float snap = 0.2f;
+            float snap = Math.Min(Math.Abs(speed) * 5, map.nodeSize / 2);
+            //float snap = 0.2f;
 
             GridNodeMap.TileContents belowNode = GetNodeOffset(0, 1);
             GridNodeMap.TileContents aboveNode = GetNodeOffset(0, -1);
@@ -238,7 +237,7 @@ namespace BlastZone_Windows.MovementGrid
             //Check if was moving horizontal, and snap to grid square before moving if close enough
             if (movingHorizontal == true)
             {
-                if (Math.Abs(percToNearest) < snap)
+                if (Math.Abs(distToNearest) < snap)
                 {
                     if (!((speed < 0 && aboveNode != null && aboveNode.solid) || (speed > 0 && belowNode != null && belowNode.solid)))
                     {

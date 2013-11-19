@@ -37,6 +37,9 @@ namespace BlastZone_Windows
         public override void Update(GameTime gameTime)
         {
             lifeTimer.Update(gameTime);
+
+            Vector2 levelOffset = new Vector2(GlobalGameData.windowWidth / 2 - GlobalGameData.levelSizeX / 2, GlobalGameData.windowHeight / 2 - GlobalGameData.levelSizeY / 2);
+            Managers.ParticleManager.Emit("BombSmoke", levelOffset + DrawPosition + new Vector2(48, 2));
         }
 
         void Explode()
@@ -60,7 +63,7 @@ namespace BlastZone_Windows
                 bombTex, //Texture
                 DrawPosition + drawOffset, //Position
                 null, //Source Rect
-                Color.White, //Color
+                Color.Lerp(Color.White, new Color(255, 128, 128), (float)Math.Pow((float)percentComplete, 2)), //Color
                 0, //Rotation
                 new Vector2(GlobalGameData.tileSize / 2 - 0.5f, GlobalGameData.tileSize / 2 - 0.5f), //Offset
                 GlobalGameData.drawRatio + (float)throbScale, //Scale
