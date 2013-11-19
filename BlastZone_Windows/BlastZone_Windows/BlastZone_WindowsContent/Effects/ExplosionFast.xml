@@ -11,8 +11,8 @@
     </Base>
     <Smoke type="Bezier">
       <Point x="0.0" y="0.0"/>
-      <Point x="0.5" y="0.8"/>
-      <Point x="1.0" y="0.0"/>
+      <Point x="0.25" y="1.0"/>
+      <Point x="1.0" y="0.5"/>
     </Smoke>
     <FireTweak type="Bezier">
       <Point x="0" y="0.0"/>
@@ -34,7 +34,7 @@
       <Texture texture="Smoke"/>
       <Life length="1.5"/>
       <Size scale="100.0" graph="FireTweak"/>
-      <Colour r="255" g="127" b="40" a="255" graph="Smoke"/>
+      <Colour r="94" g="73" b="51" a="128" graph="Smoke"/>
       <Rotation angle="0.0" graph=""/>
       <Acceleration x="0.0" y="-49.0"/>
       <Decay x="0.0" y="0.0"/>

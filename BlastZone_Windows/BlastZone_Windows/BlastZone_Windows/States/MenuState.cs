@@ -18,6 +18,14 @@ namespace BlastZone_Windows.States
         Texture2D[] Blast = new Texture2D[4];
         Texture2D[] Zone = new Texture2D[4];
 
+        int fallingBombCount = 5;
+        Texture2D fallingBombTex;
+        Vector2[] fallingBombPos;
+        Vector2[] fallingBombSpeed;
+        float[] fallingBombRotation;
+        float[] fallingBombRotationalVelocity;
+        float fallingBombGravity = 500f;
+
         Vector2 blastPos;
         Vector2 zonePos;
 
@@ -35,6 +43,31 @@ namespace BlastZone_Windows.States
         public override void Enter()
         {
             curSelected = 0;
+
+            Random r = GlobalGameData.rand;
+
+            fallingBombPos = new Vector2[fallingBombCount];
+            fallingBombSpeed = new Vector2[fallingBombCount];
+            fallingBombRotation = new float[fallingBombCount];
+            fallingBombRotationalVelocity = new float[fallingBombCount];
+
+            for (int i = 0; i < fallingBombCount; ++i)
+            {
+                InitBomb(r, i);
+            }
+        }
+
+        void InitBomb(Random r, int bombIndex)
+        {
+            int columnWidth = GlobalGameData.windowWidth / 2 - 100;
+
+            bool leftOrRight = r.NextDouble() > 0.5;
+            float posOffset = leftOrRight ? GlobalGameData.windowWidth - columnWidth : 0;
+            fallingBombPos[bombIndex] = new Vector2(r.Next(columnWidth) + posOffset, -100);
+            fallingBombSpeed[bombIndex] = new Vector2(r.Next(200) - 100, -r.Next(0, 1000));
+
+            fallingBombRotation[bombIndex] = (float)r.NextDouble() * 360;
+            fallingBombRotationalVelocity[bombIndex] = (float)(r.NextDouble() - 0.5) * 500;
         }
 
         public override void Exit()
@@ -70,6 +103,8 @@ namespace BlastZone_Windows.States
             Zone[2] = Content.Load<Texture2D>("Images/Logo/Zone_Yellow");
             Zone[3] = Content.Load<Texture2D>("Images/Logo/Zone_Text");
 
+            fallingBombTex = Content.Load<Texture2D>("Images/Game/bomb");
+
             bgtex.SetTexture(Content.Load<Texture2D>("Images/Menu/bg"));
 
             menuTextTex = Content.Load<Texture2D>("Images/Menu/text");
@@ -78,6 +113,24 @@ namespace BlastZone_Windows.States
         public override void Update(GameTime gameTime)
         {
             bgtex.ShiftOffset(new Vector2(50f * (float)gameTime.ElapsedGameTime.TotalSeconds, 50f * (float)gameTime.ElapsedGameTime.TotalSeconds));
+
+            for (int i = 0; i < fallingBombCount; ++i)
+            {
+                fallingBombPos[i] += fallingBombSpeed[i] * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                fallingBombSpeed[i].Y += fallingBombGravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (fallingBombPos[i].Y > GlobalGameData.windowHeight + 150)
+                {
+                    InitBomb(GlobalGameData.rand, i);
+                }
+
+                fallingBombRotation[i] += fallingBombRotationalVelocity[i] * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                float rotInRad = (float)Math.PI * fallingBombRotation[i] / 180.0f;
+                Vector2 fireOffset = new Vector2(60, -80);
+                fireOffset = Vector2.Transform(fireOffset, Matrix.CreateRotationZ(rotInRad));
+                Managers.ParticleManager.Emit("Fire", fallingBombPos[i] + fireOffset);
+            }
 
             KeyboardState newState = Keyboard.GetState();
             GamePadState[] currentGamepadStates = new GamePadState[4];
@@ -155,6 +208,18 @@ namespace BlastZone_Windows.States
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
 
+            for (int i = 0; i < fallingBombCount; ++i)
+            {
+                spriteBatch.Draw(fallingBombTex, fallingBombPos[i], null, Color.White, (float)Math.PI * fallingBombRotation[i] / 180.0f, new Vector2(8, 8), 10f, SpriteEffects.None, 1f);
+            }
+
+            spriteBatch.End();
+
+            //Draw particles
+            Managers.ParticleManager.Draw(spriteBatch);
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
+
             spriteBatch.Draw(Zone[0], newZonePos, null, Color.White * 0.5f, 0f, new Vector2(30, 0), 5f, SpriteEffects.None, 1f);
             spriteBatch.Draw(Blast[0], newBlastPos, null, Color.White * 0.5f, 0f, new Vector2(30, 0), 5f, SpriteEffects.None, 1f);
 
@@ -180,9 +245,6 @@ namespace BlastZone_Windows.States
             spriteBatch.Draw(menuTextTex, new Vector2(viewW / 2, menuBeginPosY + menuOffset * 2), sourceRec, Color.White, 0f, new Vector2(sourceRec.Width / 2, sourceRec.Height / 2), 1f, SpriteEffects.None, 1f);
 
             spriteBatch.End();
-
-            //Draw particles
-            Managers.ParticleManager.Draw(spriteBatch);
         }
 
         void OnSelectStartGame()
