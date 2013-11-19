@@ -60,6 +60,10 @@ namespace BlastZone_Windows
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            //load particles
+            Managers.ParticleManager.AddAndLoad(Content, "Explosion");
+            Managers.ParticleManager.AddAndLoad(Content, "Fire");
+
             gameStateManager.LoadContent(Content);
         }
 
@@ -70,6 +74,9 @@ namespace BlastZone_Windows
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+
+            //unload particle system
+            Managers.ParticleManager.UnloadAll();
         }
 
         /// <summary>
@@ -81,6 +88,9 @@ namespace BlastZone_Windows
         {
             MouseManager.Update();
             gameStateManager.Update(gameTime);
+
+            //update particles
+            Managers.ParticleManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -94,6 +104,9 @@ namespace BlastZone_Windows
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             gameStateManager.Draw(spriteBatch, gameTime);
+
+            //draw particles
+            Managers.ParticleManager.Draw(spriteBatch);
 
             base.Draw(gameTime);
         }

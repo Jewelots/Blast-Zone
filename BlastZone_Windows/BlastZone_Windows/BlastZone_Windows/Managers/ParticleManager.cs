@@ -118,7 +118,7 @@ namespace BlastZone_Windows.Managers
         /// update all the emitters
         /// </summary>
         /// <param name="gametime">game gametime</param>
-        static void Update(GameTime gametime)
+        static public void Update(GameTime gametime)
         {
             foreach (MultiEmitter emitter in multiEmitterRegistry.Values)
                 emitter.Update(gametime);
@@ -128,7 +128,7 @@ namespace BlastZone_Windows.Managers
         /// draw all the particles
         /// </summary>
         /// <param name="spritebatch">game spritebatch, DONT PRE START</param>
-        static void Draw(SpriteBatch spritebatch)
+        static public void Draw(SpriteBatch spritebatch)
         {
             foreach (MultiEmitter emitter in multiEmitterRegistry.Values)
                 emitter.Draw(spritebatch);
