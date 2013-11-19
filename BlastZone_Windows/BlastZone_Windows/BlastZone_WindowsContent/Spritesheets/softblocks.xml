@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<softblocks>
+<Spritesheet>
+  <Textures>
+    <Texture name="softblocks"/>
+  </Textures>
 	<Mesh x="6" y="4"/>
 	<Framerate default="10.0"/>
-	<Size x="100" y="100"/>
+  <Scale default="3.0"/>
 	<Animations>
 		<Block1>
 			<Frame x="0" y="0"/>
@@ -41,4 +44,4 @@
 			<End return="Block4"/>
 		</Block4>
 	</Animations>
-</softblocks>
+</Spritesheet>

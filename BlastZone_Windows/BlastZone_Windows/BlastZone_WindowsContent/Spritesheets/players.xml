@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Spritesheet>
+  <Textures>
+    <Texture name="player1"/>
+    <Texture name="player2"/>
+    <Texture name="player3"/>
+    <Texture name="player4"/>
+  </Textures>
+  <Mesh x="4" y="2"/>
+	<Framerate default="4.0"/>
+  <Scale default="3.0"/>
+	<Animations>
+		<StandDown>
+			<Frame x="0" y="0"/>
+			<End return="StandDown"/>
+		</StandDown>
+		<WalkDown>
+			<Frame x="0"  y="0"/>
+			<Frame x="1" y="0"/>
+			<Frame x="0"  y="0"/>
+			<Frame x="1" y="0" flip="H"/>
+			<End return="StandDown"/>
+		</WalkDown>
+		<StandLeft>
+			<Frame x="0" y="1"/>
+			<End return="StandLeft"/>
+		</StandLeft>
+		<WalkLeft>
+			<Frame x="0"  y="1"/>
+			<Frame x="1" y="1"/>
+			<Frame x="0"  y="1"/>
+			<Frame x="1" y="1"/>
+			<End return="StandLeft"/>
+		</WalkLeft>
+		<StandRight>
+			<Frame x="0"  y="1" flip="H"/>
+			<End return="StandRight"/>
+		</StandRight>
+		<WalkRight>
+			<Frame x="0"  y="1" flip="H"/>
+			<Frame x="1" y="1" flip="H"/>
+			<Frame x="0"  y="1" flip="H"/>
+			<Frame x="2" y="1" flip="H"/>
+			<End return="StandRight"/>
+		</WalkRight>
+		<StandUp>
+			<Frame x="2" y="0"/>
+			<End return="StandUp"/>
+		</StandUp>
+		<WalkUp>
+			<Frame x="2" y="0"/>
+			<Frame x="3" y="0"/>
+			<Frame x="2" y="0"/>
+			<Frame x="3" y="0" flip="H"/>
+			<End return="StandUp"/>
+		</WalkUp>
+		<Win>
+			<Frame x="3" y="1"/>
+			<End return="Win"/>
+		</Win>
+	</Animations>
+</Spritesheet>
