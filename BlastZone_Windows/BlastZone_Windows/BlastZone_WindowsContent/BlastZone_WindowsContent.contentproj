@@ -75,11 +75,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Images\Game\playersprite.png">
-      <Name>playersprite</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Images\Game\softblocks.png">
       <Name>softblocks</Name>
       <Importer>TextureImporter</Importer>

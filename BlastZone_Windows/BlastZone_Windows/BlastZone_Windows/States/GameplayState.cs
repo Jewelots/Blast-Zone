@@ -80,10 +80,10 @@ namespace BlastZone_Windows.States
 
         void MoveToTieState()
         {
-            //TieScreenState tss = manager.GetState(StateType.TIESCREEN) as TieScreenState;
-            //tss.SetLevelData(playerCount, playerInputTypes[0], playerInputTypes[1], playerInputTypes[2], playerInputTypes[3]);
+            TieScreenState tss = manager.GetState(StateType.TIESCREEN) as TieScreenState;
+            tss.SetLevelData(playerCount, playerInputTypes[0], playerInputTypes[1], playerInputTypes[2], playerInputTypes[3]);
 
-            //manager.SwapStateWithTransition(StateType.TIESCREEN);
+            manager.SwapStateWithTransition(StateType.TIESCREEN);
         }
 
         public override void LoadContent(ContentManager Content)

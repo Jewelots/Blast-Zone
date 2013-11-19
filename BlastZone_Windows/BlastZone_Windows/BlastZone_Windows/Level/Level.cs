@@ -42,6 +42,8 @@ namespace BlastZone_Windows.Level
         Action<int> onWin;
         Action onTie;
 
+        EventTimer checkWinState;
+
         bool gameOver;
 
         public Level(Action<int> onWin, Action onTie)
@@ -90,6 +92,9 @@ namespace BlastZone_Windows.Level
             SetPlayerControlIdentifiers(playerCount, p1ControlType, p2ControlType, p3ControlType, p4ControlType);
 
             gameOver = false;
+
+            checkWinState = new EventTimer(0, 1, true);
+            checkWinState.OnEnd += checkIfWinOrTie;
         }
 
         /// <summary>
@@ -215,6 +220,8 @@ namespace BlastZone_Windows.Level
 
         public void Update(GameTime gameTime)
         {
+            checkWinState.Update(gameTime);
+
             tileObjectManager.Update(gameTime);
 
             fireManager.Update(gameTime);
@@ -266,31 +273,51 @@ namespace BlastZone_Windows.Level
             //If game not over check if it's won
             if (gameOver == false)
             {
-                //Check if 1 or 0 players remaining and move to win/tie screen
                 if (playersAlive == 1)
                 {
-                    //Get the living player index
-                    int alivePlayerIndex = -1;
-                    for (int i = 0; i < playerCount; ++i)
-                    {
-                        if (players[i].IsDead == false)
-                        {
-                            alivePlayerIndex = i;
-                            break;
-                        }
-                    }
-
-                    //Add delay (use eventtimer)
-                    onWin(alivePlayerIndex);
+                    checkWinState.UnPause();
                     gameOver = true;
                 }
+            }
+        }
 
-                if (playersAlive == 0)
+        private void checkIfWinOrTie()
+        {
+            int playersAlive = 0;
+            for (int i = 0; i < playerCount; ++i)
+            {
+                if (players[i].IsDead == false)
                 {
-                    //Add delay
-                    onTie();
-                    gameOver = true;
+                    //Count how many players are alive
+                    playersAlive += 1;
                 }
+            }
+
+            //Check if 1 or 0 players remaining and move to win/tie screen
+            if (playersAlive == 1)
+            {
+                //Get the living player index
+                int alivePlayerIndex = -1;
+                for (int i = 0; i < playerCount; ++i)
+                {
+                    if (players[i].IsDead == false)
+                    {
+                        alivePlayerIndex = i;
+                        break;
+                    }
+                }
+
+                onWin(alivePlayerIndex);
+            }
+
+            else if (playersAlive == 0)
+            {
+                onTie();
+            }
+            else
+            {
+                //More than one player alive or negative somehow? Go back to how it was. Should never be reached though!
+                gameOver = false;
             }
         }
 
