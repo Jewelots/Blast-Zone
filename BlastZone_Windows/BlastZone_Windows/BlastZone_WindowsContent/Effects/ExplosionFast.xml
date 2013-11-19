@@ -55,7 +55,6 @@
       <Power x="80.0" y="80.0"/>
       <Rate rate ="0.0" count ="10"/>
       <BlendStates>
-        <State state="AlphaBlend"/>
         <State state="NonPremultiplied"/>
       </BlendStates>
     </Smoke>
@@ -64,7 +63,6 @@
       <Power x="60.0" y="60.0"/>
       <Rate rate ="0.0" count ="20"/>
       <BlendStates>
-        <State state="AlphaBlend"/>
         <State state="NonPremultiplied"/>
         <State state="Additive"/>
       </BlendStates>
