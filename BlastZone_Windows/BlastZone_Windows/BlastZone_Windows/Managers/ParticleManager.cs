@@ -11,18 +11,18 @@ using Particles;
 
 namespace BlastZone_Windows.Managers
 {
-    class ParticleManager
+    static class ParticleManager
     {
-        string effectsDirectory = "Effects";
+        static string effectsDirectory = "Effects";
 
-        Dictionary<string, MultiEmitter> multiEmitterRegistry;
+        static Dictionary<string, MultiEmitter> multiEmitterRegistry = new Dictionary<string, MultiEmitter>();
 
         /// <summary>
         /// init the manager
         /// </summary>
-        public ParticleManager()
-        {
-        }
+        //ParticleManager()
+        //{
+        //}
 
         /// <summary>
         /// add a new emitter and load straight away
@@ -30,7 +30,7 @@ namespace BlastZone_Windows.Managers
         /// <param name="contentmanager">game contentmanager</param>
         /// <param name="name">name of the emitter file</param>
         /// <returns>error code, 0 if fine</returns>
-        public int AddAndLoad(ContentManager contentmanager, string name)
+        static public int AddAndLoad(ContentManager contentmanager, string name)
         {
             MultiEmitter newMultiEmitter = new MultiEmitter();
             newMultiEmitter.Load(contentmanager, effectsDirectory + "\\" + name);
@@ -45,7 +45,7 @@ namespace BlastZone_Windows.Managers
         /// </summary>
         /// <param name="name">name of the emitter</param>
         /// <returns></returns>
-        public bool Remove(string name)
+        static public bool Remove(string name)
         {
             multiEmitterRegistry[name].Unload();
             return multiEmitterRegistry.Remove(name);
@@ -54,7 +54,7 @@ namespace BlastZone_Windows.Managers
         /// <summary>
         /// completely wipes the emitter registry
         /// </summary>
-        public void UnloadAll()
+        static public void UnloadAll()
         {
 
             foreach (MultiEmitter emitter in multiEmitterRegistry.Values)
@@ -69,7 +69,7 @@ namespace BlastZone_Windows.Managers
         /// <param name="name">emitter name</param>
         /// <param name="pos">position to emit</param>
         /// <param name="time">time to emit</param>
-        public void AddEmissionPoint(string name, Vector2 pos, float time)
+        static public void AddEmissionPoint(string name, Vector2 pos, float time)
         {
             multiEmitterRegistry[name].AddEmissionPoint(pos, time);
         }
@@ -79,7 +79,7 @@ namespace BlastZone_Windows.Managers
         /// </summary>
         /// <param name="name">emitter name</param>
         /// <param name="pos">position to emit</param>
-        public void AddEmissionPoint(string name, Vector2 pos)
+        static public void AddEmissionPoint(string name, Vector2 pos)
         {
             multiEmitterRegistry[name].AddEmissionPoint(pos);
         }
@@ -91,7 +91,7 @@ namespace BlastZone_Windows.Managers
         /// <param name="gx">grid position X</param>
         /// <param name="gy">grid position Y</param>
         /// <param name="time">time to emit</param>
-        public void AddEmissionPointFromGrid(string name, int gx, int gy, float time)
+        static public void AddEmissionPointFromGrid(string name, int gx, int gy, float time)
         {
             //position
             Vector2 pos = new Vector2(gx, gy) * GlobalGameData.tileSize * GlobalGameData.drawRatio;
@@ -109,7 +109,7 @@ namespace BlastZone_Windows.Managers
         /// <param name="name">emitter name</param>
         /// <param name="gx">grid position X</param>
         /// <param name="gy">grid position Y</param>
-        public void AddEmissionPointFromGrid(string name, int gx, int gy)
+        static public void AddEmissionPointFromGrid(string name, int gx, int gy)
         {
             AddEmissionPointFromGrid(name, gx, gy, 0.0f);
         }
@@ -118,7 +118,7 @@ namespace BlastZone_Windows.Managers
         /// update all the emitters
         /// </summary>
         /// <param name="gametime">game gametime</param>
-        void Update(GameTime gametime)
+        static void Update(GameTime gametime)
         {
             foreach (MultiEmitter emitter in multiEmitterRegistry.Values)
                 emitter.Update(gametime);
@@ -128,7 +128,7 @@ namespace BlastZone_Windows.Managers
         /// draw all the particles
         /// </summary>
         /// <param name="spritebatch">game spritebatch, DONT PRE START</param>
-        void Draw(SpriteBatch spritebatch)
+        static void Draw(SpriteBatch spritebatch)
         {
             foreach (MultiEmitter emitter in multiEmitterRegistry.Values)
                 emitter.Draw(spritebatch);
