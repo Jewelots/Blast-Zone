@@ -40,7 +40,7 @@ namespace BlastZone_Windows.Drawing
         /// <param name="tilesY">Vertical Tile Count</param>
         /// <param name="reverseTransition">Bool to specify whether to reverse the transition or not</param>
         /// <param name="transitionTime">Time to complete transition</param>
-        public ScreenTransition(int tilesX = 13, int tilesY = 8, bool reverseTransition = false, double transitionTime = 1)
+        public ScreenTransition(int tilesX, int tilesY, bool reverseTransition, double transitionTime)
         {
             tileCount = new Vector2(tilesX, tilesY);
             tileSize = new Vector2(GlobalGameData.windowWidth / tileCount.X, GlobalGameData.windowHeight / tileCount.Y);
@@ -48,6 +48,19 @@ namespace BlastZone_Windows.Drawing
             reverse = reverseTransition;
 
             timer = new EventTimer(0, transitionTime);
+            timer.OnEnd += TransitionEnd;
+
+            args = EventArgs.Empty;
+        }
+
+        public ScreenTransition()
+        {
+            tileCount = new Vector2(13, 8);
+            tileSize = new Vector2(GlobalGameData.windowWidth / tileCount.X, GlobalGameData.windowHeight / tileCount.Y);
+
+            reverse = false;
+
+            timer = new EventTimer(0, 1);
             timer.OnEnd += TransitionEnd;
 
             args = EventArgs.Empty;
@@ -139,10 +152,18 @@ namespace BlastZone_Windows.Drawing
         /// <param name="tilesX">Horizontal Tile Count</param>
         /// <param name="tilesY">Vertical Tile Count</param>
         /// <param name="transitionTime">Time to complete transition (one way)</param>
-        public ScreenTransitionInOut(int tilesX = 13, int tilesY = 8, double transitionTime = 0.75f)
+        public ScreenTransitionInOut(int tilesX, int tilesY, double transitionTime)
         {
             stIn = new ScreenTransition(tilesX, tilesY, false, transitionTime);
             stOut = new ScreenTransition(tilesX, tilesY, true, transitionTime);
+
+            Init();
+        }
+
+        public ScreenTransitionInOut()
+        {
+            stIn = new ScreenTransition(13, 8, false, 0.75f);
+            stOut = new ScreenTransition(13, 8, true, 0.75f);
 
             Init();
         }

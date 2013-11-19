@@ -32,10 +32,12 @@ namespace BlastZone_Windows
             graphics.PreferredBackBufferWidth = GlobalGameData.windowWidth;
             graphics.PreferredBackBufferHeight = GlobalGameData.windowHeight;
 
+            IsMouseVisible = true;
+
             //graphics.SynchronizeWithVerticalRetrace = false;
             //IsFixedTimeStep = false;
 
-            IsMouseVisible = true;
+            
         }
 
         /// <summary>

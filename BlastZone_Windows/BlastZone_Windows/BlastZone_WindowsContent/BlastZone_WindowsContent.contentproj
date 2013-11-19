@@ -247,12 +247,12 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Content Include="Spritesheets\softblocks.xml">
+    <None Include="Spritesheets\softblocks.xml">
       <Name>softblocks</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Images\Lobby\ControllerBG.png">
@@ -305,12 +305,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Effects\Fire.xml">
+    <None Include="Effects\Fire.xml">
       <Name>Fire</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Compile Include="Spritesheets\player2.png">
       <Name>player2</Name>
       <Importer>TextureImporter</Importer>
@@ -326,12 +326,12 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Content Include="Spritesheets\players.xml">
+    <None Include="Spritesheets\players.xml">
       <Name>players</Name>
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

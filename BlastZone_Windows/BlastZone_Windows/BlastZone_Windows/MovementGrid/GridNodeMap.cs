@@ -18,10 +18,16 @@ namespace BlastZone_Windows.MovementGrid
             public Vector2 position;
             public bool solid;
             
-            public TileContents(Vector2 pos, bool solid = false)
+            public TileContents(Vector2 pos, bool solid)
             {
                 this.position = pos;
                 this.solid = solid;
+            }
+
+            public TileContents(Vector2 pos)
+            {
+                this.position = pos;
+                this.solid = false;
             }
         }
 

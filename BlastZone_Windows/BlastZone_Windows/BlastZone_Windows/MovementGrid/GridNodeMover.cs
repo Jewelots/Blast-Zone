@@ -24,11 +24,19 @@ namespace BlastZone_Windows.MovementGrid
         public float speed;
 
 
-        public static MoveEvent MakeEvent(MoveEventType moveEventType, float speed = 150)
+        public static MoveEvent MakeEvent(MoveEventType moveEventType, float speed)
         {
             MoveEvent me = new MoveEvent();
             me.moveEvent = moveEventType;
             me.speed = speed;
+            return me;
+        }
+
+        public static MoveEvent MakeEvent(MoveEventType moveEventType)
+        {
+            MoveEvent me = new MoveEvent();
+            me.moveEvent = moveEventType;
+            me.speed = 150;
             return me;
         }
     }
@@ -44,9 +52,24 @@ namespace BlastZone_Windows.MovementGrid
 
         Queue<MoveEvent> moveEventQueue;
 
-        public GridNodeMover(GridNodeMap gridNodeMap, int gx = 0, int gy = 0)
+        public GridNodeMover(GridNodeMap gridNodeMap, int gx, int gy)
         {
             GridNodeMap.TileContents tile = gridNodeMap.GetNode(gx, gy);
+
+            if (tile == null) //Tile requested doesn't exist
+            {
+                tile = gridNodeMap.GetNode(0, 0);
+            }
+
+            position = tile.position;
+            map = gridNodeMap;
+
+            moveEventQueue = new Queue<MoveEvent>();
+        }
+
+        public GridNodeMover(GridNodeMap gridNodeMap)
+        {
+            GridNodeMap.TileContents tile = gridNodeMap.GetNode(0, 0);
 
             if (tile == null) //Tile requested doesn't exist
             {

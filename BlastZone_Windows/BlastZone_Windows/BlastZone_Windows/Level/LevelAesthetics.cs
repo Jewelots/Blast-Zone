@@ -46,7 +46,8 @@ namespace BlastZone_Windows.Level
             TopLeftShadow,
             UnderBlockShadow,
             RightBlockShadow,
-            DiagonalBlockShadow
+            DiagonalBlockShadow,
+            _TILE_COUNT
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace BlastZone_Windows.Level
 
             textureTileGrid = new TextureTile[gridSizeX, gridSizeY];
 
-            TileTypes = new Vector2[Enum.GetNames(typeof(TileType)).Length];
+            TileTypes = new Vector2[(int)TileType._TILE_COUNT];
             TileTypes[(int)TileType.Border] = new Vector2(0, 0);
             TileTypes[(int)TileType.LeftBorder] = new Vector2(0, 16);
             TileTypes[(int)TileType.TopShadow] = new Vector2(32, 0);

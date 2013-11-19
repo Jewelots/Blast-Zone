@@ -58,7 +58,7 @@ namespace BlastZone_Windows
             }
         }
 
-        public void ExplodeFrom(int gx, int gy, int explodeSize = 3)
+        public void ExplodeFrom(int gx, int gy, int explodeSize)
         {
             if (!SetTileOnFire(gx, gy)) return;
 

@@ -27,7 +27,7 @@ namespace BlastZone_Windows
         public delegate void TimerEndHandler();
         public event TimerEndHandler OnEnd;
 
-        public EventTimer(double startTime, double endTime, bool startPaused = false)
+        public EventTimer(double startTime, double endTime, bool startPaused)
         {
             this.startTime = startTime;
 
@@ -35,6 +35,16 @@ namespace BlastZone_Windows
             maxTime = endTime;
 
             paused = startPaused;
+        }
+
+        public EventTimer(double startTime, double endTime)
+        {
+            this.startTime = startTime;
+
+            currentTime = startTime;
+            maxTime = endTime;
+
+            paused = false;
         }
 
         public void Pause()

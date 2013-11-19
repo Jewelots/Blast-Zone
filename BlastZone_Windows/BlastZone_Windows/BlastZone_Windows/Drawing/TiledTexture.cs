@@ -11,6 +11,9 @@ using Microsoft.Xna.Framework.Media;
 
 namespace BlastZone_Windows.Drawing
 {
+    /// <summary>
+    /// Texture that tiles over a destination rectangle
+    /// </summary>
     class TiledTexture
     {
         Texture2D tex;
@@ -22,6 +25,9 @@ namespace BlastZone_Windows.Drawing
 
         public Vector2 Offset { get { return offset; } set { offset = value; } }
 
+        /// <summary>
+        /// Create a tiled texture
+        /// </summary>
         public TiledTexture()
         {
             this.tex = null;
@@ -29,6 +35,10 @@ namespace BlastZone_Windows.Drawing
             CalculateTileCount();
         } 
 
+        /// <summary>
+        /// Create a tiled texture with boundary
+        /// </summary>
+        /// <param name="bounds">Boundary to draw</param>
         public TiledTexture(Rectangle bounds)
         {
             this.tex = null;
@@ -36,6 +46,10 @@ namespace BlastZone_Windows.Drawing
             CalculateTileCount();
         }
 
+        /// <summary>
+        /// Create a tiled texture
+        /// </summary>
+        /// <param name="tex">The texture to tile</param>
         public TiledTexture(Texture2D tex)
         {
             this.tex = tex;
@@ -43,6 +57,11 @@ namespace BlastZone_Windows.Drawing
             CalculateTileCount();
         }
 
+        /// <summary>
+        /// Create a tiled texture with boundaries and a texture
+        /// </summary>
+        /// <param name="tex">The texture to tile</param>
+        /// <param name="bounds">Boundary to draw</param>
         public TiledTexture(Texture2D tex, Rectangle bounds)
         {
             this.tex = tex;

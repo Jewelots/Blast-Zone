@@ -146,7 +146,7 @@ namespace BlastZone_Windows
             }
         }
 
-        public void CreateBomb(int playerIndex, int gx, int gy, int power = 3)
+        public void CreateBomb(int playerIndex, int gx, int gy, int power)
         {
             if (!GlobalGameData.IsInBounds(gx, gy)) return;
             if (tileObjectGrid[gx, gy] != null) return; //Spot already occupied, can't place bomb here
@@ -155,6 +155,25 @@ namespace BlastZone_Windows
             {
                 //Create bomb
                 Bomb b = tileObjectFactory.CreateBomb(this, gx, gy, power);
+
+                //Add the bomb to be tracked
+                playerOwnedBombs[b] = playerIndex;
+                activeBombs[playerIndex] += 1;
+
+                //Add bomb to tile object grid
+                tileObjectGrid[gx, gy] = b;
+            }
+        }
+
+        public void CreateBomb(int playerIndex, int gx, int gy)
+        {
+            if (!GlobalGameData.IsInBounds(gx, gy)) return;
+            if (tileObjectGrid[gx, gy] != null) return; //Spot already occupied, can't place bomb here
+
+            if (activeBombs[playerIndex] < level.getMaxBombs(playerIndex))
+            {
+                //Create bomb
+                Bomb b = tileObjectFactory.CreateBomb(this, gx, gy, 3);
 
                 //Add the bomb to be tracked
                 playerOwnedBombs[b] = playerIndex;
