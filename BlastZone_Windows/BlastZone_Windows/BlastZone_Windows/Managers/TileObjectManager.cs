@@ -151,7 +151,6 @@ namespace BlastZone_Windows
             if (!GlobalGameData.IsInBounds(gx, gy)) return;
             if (tileObjectGrid[gx, gy] != null) return; //Spot already occupied, can't place bomb here
 
-            Console.Out.WriteLine(playerIndex + " : " + activeBombs[playerIndex] + " - " + level.getMaxBombs(playerIndex));
             if (activeBombs[playerIndex] < level.getMaxBombs(playerIndex))
             {
                 //Create bomb
