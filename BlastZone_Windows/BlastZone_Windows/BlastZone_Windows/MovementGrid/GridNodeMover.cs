@@ -40,6 +40,8 @@ namespace BlastZone_Windows.MovementGrid
 
         bool movingHorizontal = false;
 
+        float speedModifier;
+
         Queue<MoveEvent> moveEventQueue;
 
         public GridNodeMover(GridNodeMap gridNodeMap, int gx = 0, int gy = 0)
@@ -55,6 +57,11 @@ namespace BlastZone_Windows.MovementGrid
             map = gridNodeMap;
 
             moveEventQueue = new Queue<MoveEvent>();
+        }
+
+        public void Reset()
+        {
+            speedModifier = 1;
         }
 
         public void QueueEvent(MoveEvent moveEvent)
@@ -163,7 +170,7 @@ namespace BlastZone_Windows.MovementGrid
             //Move
             if (movingHorizontal == true)
             {
-                position.X += speed;
+                position.X += speed * speedModifier;
             }
 
             distToNearest = DistToNearestGridSquare();
@@ -216,7 +223,7 @@ namespace BlastZone_Windows.MovementGrid
             //Move
             if (movingHorizontal == false)
             {
-                position.Y += speed;
+                position.Y += speed * speedModifier;
             }
 
             distToNearest = DistToNearestGridSquare();
@@ -366,6 +373,11 @@ namespace BlastZone_Windows.MovementGrid
         {
             position.X = gx * map.nodeSize + map.nodeSize / 2;
             position.Y = gy * map.nodeSize + map.nodeSize / 2;
+        }
+
+        public void AddSpeed()
+        {
+            speedModifier += 0.2f;
         }
     }
 }

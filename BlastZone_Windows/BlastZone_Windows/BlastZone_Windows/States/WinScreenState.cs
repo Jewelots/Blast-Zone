@@ -16,7 +16,7 @@ namespace BlastZone_Windows.States
 {
     class WinScreenState : GameState
     {
-        AnimatedSprite playerWinAnimation; 
+        AnimatedSprite playerWinAnimation;
         SpriteFont winTextFont;
         TiledTexture bgtex;
 
@@ -38,7 +38,7 @@ namespace BlastZone_Windows.States
         {
             this.winningPlayerIndex = winningPlayerIndex;
 
-            playerWinAnimation.SetTexture("player" + (winningPlayerIndex + 1) + "Death");
+            playerWinAnimation.SetTexture("player" + (winningPlayerIndex + 1) + "Win");
         }
 
         public override void Enter()

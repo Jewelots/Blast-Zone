@@ -35,6 +35,7 @@ namespace BlastZone_Windows
         public void Reset(int gx, int gy)
         {
             movement.SetPosition(gx, gy);
+            movement.Reset();
             bombCount = 1;
             power = 1;
             IsDead = false;
@@ -68,6 +69,7 @@ namespace BlastZone_Windows
             AnimationSheet playerSheet = new AnimationSheet();
             playerSheet.Load(Content, "Spritesheets\\players");
             playerAnimations = new AnimatedSprite(playerSheet, "StandDown");
+            playerAnimations.SetTexture("player" + (playerIndex + 1));
         }
 
         public void Update(GameTime gameTime)
@@ -113,6 +115,21 @@ namespace BlastZone_Windows
         public void GetAllOccupiedPositions(out int[] tx, out int[] ty)
         {
             movement.GetAllOccupiedPositions(out tx, out ty);
+        }
+
+        public void BombUp()
+        {
+            bombCount += 1;
+        }
+
+        public void FireUp()
+        {
+            power += 1;
+        }
+
+        public void SpeedUp()
+        {
+            movement.AddSpeed();
         }
     }
 }

@@ -35,7 +35,7 @@ namespace BlastZone_Windows
 
         protected Vector2 DrawPosition { get { return Position * GlobalGameData.tileSize * GlobalGameData.drawRatio; } }
 
-        public delegate void PlayerCollisionHandler();
+        public delegate void PlayerCollisionHandler(Player p);
         public delegate void FireSpreadHandler();
         /// <summary>
         /// Event called when player moves to the tile this TileObject resides in
@@ -46,10 +46,10 @@ namespace BlastZone_Windows
         /// </summary>
         public event FireSpreadHandler OnFireSpread;
 
-        protected void PlayerCollision()
+        public void PlayerCollision(Player p)
         {
             if (OnPlayerCollision != null)
-                OnPlayerCollision();
+                OnPlayerCollision(p);
         }
 
         public void FireSpread()

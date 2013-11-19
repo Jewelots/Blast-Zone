@@ -18,6 +18,8 @@ namespace BlastZone_Windows
     {
         Texture2D bombTex, blockTex;
 
+        Texture2D[] powerupTex;
+
         bool loaded = false;
 
         public void LoadContent(ContentManager Content)
@@ -25,6 +27,12 @@ namespace BlastZone_Windows
             bombTex = Content.Load<Texture2D>("Images/Game/bomb");
             blockTex = Content.Load<Texture2D>("Images/Game/softblock");
             loaded = true;
+
+            powerupTex = new Texture2D[3];
+
+            powerupTex[0] = Content.Load<Texture2D>("Images/Game/bombup");
+            powerupTex[1] = Content.Load<Texture2D>("Images/Game/fireup");
+            powerupTex[2] = Content.Load<Texture2D>("Images/Game/speedup");
         }
 
         public Bomb CreateBomb(TileObjectManager manager, int tilePosX, int tilePosY, int power)
@@ -39,6 +47,31 @@ namespace BlastZone_Windows
             if (!loaded) return null;
 
             return new SoftBlock(manager, tilePosX, tilePosY, blockTex);
+        }
+
+        public Powerup CreatePowerup(TileObjectManager manager, int tilePosX, int tilePosY, PowerupType pType)
+        {
+            if (!loaded) return null;
+
+            Texture2D pTex;
+
+            switch (pType)
+            {
+                case PowerupType.BOMB_UP:
+                    pTex = powerupTex[0];
+                    break;
+                case PowerupType.FIRE_UP:
+                    pTex = powerupTex[1];
+                    break;
+                case PowerupType.SPEED_UP:
+                    pTex = powerupTex[2];
+                    break;
+                default:
+                    pTex = powerupTex[0];
+                    break;
+            }
+
+            return new Powerup(manager, tilePosX, tilePosY, pType, pTex);
         }
     }
 }

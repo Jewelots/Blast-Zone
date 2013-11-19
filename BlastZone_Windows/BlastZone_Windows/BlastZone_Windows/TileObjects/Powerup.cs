@@ -11,30 +11,61 @@ using Microsoft.Xna.Framework.Media;
 
 namespace BlastZone_Windows
 {
-    class SoftBlock : TileObject
+    enum PowerupType
     {
-        Texture2D blockTex;
+        BOMB_UP,
+        FIRE_UP,
+        SPEED_UP
+    }
 
-        public SoftBlock(TileObjectManager manager, int tilePosX, int tilePosY, Texture2D tex)
+    class Powerup : TileObject
+    {
+        Texture2D powerupTex;
+        PowerupType pType;
+
+        public Powerup(TileObjectManager manager, int tilePosX, int tilePosY, PowerupType pType, Texture2D tex)
             : base(manager, tilePosX, tilePosY)
         {
-            blockTex = tex;
-            Solid = true;
+            this.pType = pType;
+            powerupTex = tex;
+            Solid = false;
 
             //Hook to destroy when burnt
             OnFireSpread += Destroy;
+            OnPlayerCollision += PlayerCollect;
         }
 
         public override void Update(GameTime gameTime)
         {
         }
 
+        public PowerupType GetPowerType()
+        {
+            return pType;
+        }
+
         void Destroy()
         {
             RemoveThis();
-            manager.SpawnPowerup(tilePositionX, tilePositionY);
             //Spawn effect
-            //manager.level.fireManager.ExplodeFrom(tilePositionX, tilePositionY, 3);
+        }
+
+        void PlayerCollect(Player p)
+        {
+            switch (pType)
+            {
+                case PowerupType.BOMB_UP:
+                    p.BombUp();
+                    break;
+                case PowerupType.FIRE_UP:
+                    p.FireUp();
+                    break;
+                case PowerupType.SPEED_UP:
+                    p.SpeedUp();
+                    break;
+            }
+
+            RemoveThis();
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -47,7 +78,7 @@ namespace BlastZone_Windows
             drawPos.Y = (int)Math.Floor(drawPos.Y);
 
             spriteBatch.Draw(
-                blockTex, //Texture
+                powerupTex, //Texture
                 drawPos, //Position
                 null, //Source Rect
                 Color.White, //Color

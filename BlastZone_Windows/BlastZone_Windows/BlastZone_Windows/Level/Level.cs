@@ -260,6 +260,14 @@ namespace BlastZone_Windows.Level
                             //Spawn effect of player dying
                             break;
                         }
+                        
+                        //Get item player standing on
+                        TileObject obj = tileObjectManager.ObjectAt(tx[t], ty[t]);
+
+                        if (obj != null)
+                        {
+                            obj.PlayerCollision(players[i]);
+                        }
                     }
 
                     if (players[i].IsDead == false)

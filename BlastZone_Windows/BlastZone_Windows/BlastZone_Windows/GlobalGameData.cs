@@ -32,5 +32,7 @@ namespace BlastZone_Windows
         {
             return (gx >= 0 && gy >= 0 && gx < gridSizeX && gy < gridSizeY);
         }
+
+        public static Random rand = new Random();
     }
 }

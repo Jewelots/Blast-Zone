@@ -19,13 +19,13 @@ namespace BlastZone_Windows
 
         int power;
 
-        public Bomb(TileObjectManager manager, int tilePosX, int tilePosY, Texture2D tex, int power) //replace with Animation
+        public Bomb(TileObjectManager manager, int tilePosX, int tilePosY, Texture2D tex, int power)
             : base(manager, tilePosX, tilePosY)
         {
             bombTex = tex;
             Solid = true;
 
-            lifeTimer = new EventTimer(0, 5);
+            lifeTimer = new EventTimer(0, 4);
 
             this.power = power;
 

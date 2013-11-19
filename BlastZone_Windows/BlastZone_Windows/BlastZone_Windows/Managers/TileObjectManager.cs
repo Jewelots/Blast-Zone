@@ -186,5 +186,22 @@ namespace BlastZone_Windows
 
             t.FireSpread();
         }
+
+        public TileObject ObjectAt(int gx, int gy)
+        {
+            return tileObjectGrid[gx, gy];
+        }
+
+        public void SpawnPowerup(int tilePositionX, int tilePositionY)
+        {
+            if (GlobalGameData.rand.Next(0, 2) != 0) return;
+
+            PowerupType pType;
+
+            int randNum = GlobalGameData.rand.Next(0, 3);
+            pType = (PowerupType)randNum;
+
+            tileObjectGrid[tilePositionX, tilePositionY] = tileObjectFactory.CreatePowerup(this, tilePositionX, tilePositionY, pType);
+        }
     }
 }
