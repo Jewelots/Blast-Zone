@@ -245,25 +245,22 @@ namespace BlastZone_Windows.Level
                     players[i].Update(gameTime);
 
                     //Check if player is in fire and kill them if so
-                    int[] tx, ty;
-                    players[i].GetAllOccupiedPositions(out tx, out ty);
+                    int gx, gy;
+                    players[i].GetGridPosition(out gx, out gy);
 
-                    for (int t = 0; t < tx.Length; ++t)
+                    if (fireManager.IsOnFire(gx, gy))
                     {
-                        if (fireManager.IsOnFire(tx[t], ty[t]))
-                        {
-                            players[i].IsDead = true;
-                            //Spawn effect of player dying
-                            break;
-                        }
+                        players[i].IsDead = true;
+                        //Spawn effect of player dying
+                        break;
+                    }
                         
-                        //Get item player standing on
-                        TileObject obj = tileObjectManager.ObjectAt(tx[t], ty[t]);
+                    //Get item player standing on
+                    TileObject obj = tileObjectManager.ObjectAt(gx, gy);
 
-                        if (obj != null)
-                        {
-                            obj.PlayerCollision(players[i]);
-                        }
+                    if (obj != null)
+                    {
+                        obj.PlayerCollision(players[i]);
                     }
 
                     if (players[i].IsDead == false)

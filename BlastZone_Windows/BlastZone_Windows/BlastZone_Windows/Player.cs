@@ -117,11 +117,6 @@ namespace BlastZone_Windows
             return bombCount;
         }
 
-        public void GetAllOccupiedPositions(out int[] tx, out int[] ty)
-        {
-            movement.GetAllOccupiedPositions(out tx, out ty);
-        }
-
         public void BombUp()
         {
             bombCount += 1;

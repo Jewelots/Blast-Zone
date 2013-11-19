@@ -352,50 +352,6 @@ namespace BlastZone_Windows.MovementGrid
             gy = (int)Math.Floor(position.Y / map.nodeSize);
         }
 
-        public void GetAllOccupiedPositions(out int[] tx, out int[] ty)
-        {
-            List<int> tempTilesX = new List<int>();
-            List<int> tempTilesY = new List<int>();
-
-            int curX, curY;
-            GetGridPosition(out curX, out curY);
-
-            tempTilesX.Add(curX);
-            tempTilesY.Add(curY);
-
-            float distToNearest = DistToNearestGridSquare();
-
-            if (movingHorizontal)
-            {
-                if (distToNearest < 0)
-                {
-                    tempTilesX.Add(curX - 1);
-                    tempTilesY.Add(curY);
-                }
-                else if (distToNearest > 0)
-                {
-                    tempTilesX.Add(curX + 1);
-                    tempTilesY.Add(curY);
-                }
-            }
-            else
-            {
-                if (distToNearest < 0)
-                {
-                    tempTilesX.Add(curX);
-                    tempTilesY.Add(curY - 1);
-                }
-                else if (distToNearest > 0)
-                {
-                    tempTilesX.Add(curX);
-                    tempTilesY.Add(curY + 1);
-                }
-            }
-
-            tx = tempTilesX.ToArray();
-            ty = tempTilesY.ToArray();
-        }
-
         public void SetPosition(int gx, int gy)
         {
             position.X = gx * map.nodeSize + map.nodeSize / 2;
