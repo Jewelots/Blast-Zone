@@ -450,7 +450,7 @@ namespace Particles
         //public BlendState blendState = BlendState.AlphaBlend;
         public List<BlendState> blendStates;
 
-        private static Random random = new Random();
+        private Random random = new Random();
 
         //threading, one thread per emitter
         //private ManualResetEvent particlesUpdated;
@@ -916,6 +916,11 @@ namespace Particles
                     position.X += velocity.X * timeToAdd;
                     position.Y += velocity.Y * timeToAdd;
 
+                    //Leaving comment here for you: You're getting value at the graph at "lifeLeft" which starts at 1?
+                    //Doesn't that mean the graph is backwards, 1 being the start 0 being the end? 1-lifeLeft would make
+                    //More sense imo because 0 would be "been alive for 0s"
+                    //The way you formatted them (going from 0, 0.5, 1, or such) in the xml files makes me think you meant it to be 1-lifeLeft
+                    //But because yours are all symmetric it made no difference. Anyway!
                     colourMulti = colourGraph.GetValue(lifeLeft);
                     sizeMulti = sizeGraph.GetValue(lifeLeft);
                     rotationMulti = 1.0f - rotationGraph.GetValue(lifeLeft);

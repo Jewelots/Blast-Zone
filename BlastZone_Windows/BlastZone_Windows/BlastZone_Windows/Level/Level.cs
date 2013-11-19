@@ -123,10 +123,6 @@ namespace BlastZone_Windows.Level
 
             tileObjectManager.LoadContent(Content);
 
-            ///////////////REPLACE LATER/////////////
-            fireManager.LoadContent(Content);
-            /////////////////////////////////////////
-
             for (int i = 0; i < 4; ++i)
             {
                 players[i].LoadContent(Content);
@@ -336,10 +332,6 @@ namespace BlastZone_Windows.Level
 
             aesthetics.Draw(spriteBatch, gameTime);
             tileObjectManager.Draw(spriteBatch, gameTime);
-
-            ///////////////REPLACE LATER/////////////
-            fireManager.Draw(spriteBatch, gameTime);
-            /////////////////////////////////////////
 
             for (int i = 0; i < playerCount; ++i)
             {

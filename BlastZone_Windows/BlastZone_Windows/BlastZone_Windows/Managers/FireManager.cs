@@ -26,8 +26,6 @@ namespace BlastZone_Windows
         //Reference to level's solid area
         bool[,] solidArea;
 
-        Texture2D px; ///TEMP
-
         public FireManager(TileObjectManager tileObjectManager)
         {
             this.tileObjectManager = tileObjectManager;
@@ -36,11 +34,6 @@ namespace BlastZone_Windows
         public void Reset()
         {
             fireArea = new float[GlobalGameData.gridSizeX, GlobalGameData.gridSizeY];
-        }
-
-        public void LoadContent(ContentManager Content)
-        {
-            px = Content.Load<Texture2D>("Images/1px");
         }
 
         public void Update(GameTime gameTime)
@@ -107,28 +100,13 @@ namespace BlastZone_Windows
 
             fireArea[gx, gy] = 1;
 
+            Vector2 levelOffsetPos = new Vector2(GlobalGameData.windowWidth / 2 - GlobalGameData.levelSizeX / 2, GlobalGameData.windowHeight / 2 - GlobalGameData.levelSizeY / 2);
+            Vector2 emitPos = levelOffsetPos + new Vector2(gx, gy) * GlobalGameData.tileSize * GlobalGameData.drawRatio;
+            emitPos.X += (GlobalGameData.tileSize * GlobalGameData.drawRatio) / 2;
+            emitPos.Y += (GlobalGameData.tileSize * GlobalGameData.drawRatio) / 2;
+            Managers.ParticleManager.Emit("ExplosionFast", emitPos);
+
             return true;
-        }
-
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            for (int y = 0; y < GlobalGameData.gridSizeY; ++y)
-            {
-                for (int x = 0; x < GlobalGameData.gridSizeX; ++x)
-                {
-                    if (!solidArea[x, y] && IsOnFire(x, y))
-                    {
-                        int factor = GlobalGameData.tileSize * GlobalGameData.drawRatio;
-                        //Color color = new Color(fireArea[x, y] / 1, 0, 0) * 0.8f;
-                        Color color = new Color(255, 0, 0) * fireArea[x, y];
-
-                        int border = 5;
-                    
-                        Rectangle destrect = new Rectangle(x * factor + border, y * factor + border, factor - border * 2, factor - border * 2);
-                        spriteBatch.Draw(px, destrect, color);
-                    }
-                }
-            }
         }
 
         public void SetSolidArea(bool[,] solidArea)

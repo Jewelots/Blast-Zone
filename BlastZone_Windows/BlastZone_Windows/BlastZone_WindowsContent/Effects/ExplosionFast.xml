@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<MultiEmitter>
+  <Textures>
+    <Smoke texture="SmokeTex"/>
+  </Textures>
+  <Graphs>
+    <Base type="Bezier">
+      <Point x="0.0" y="0.0"/>
+      <Point x="1.0" y="2.0"/>
+      <Point x="1.0" y="0.0"/>
+    </Base>
+    <Smoke type="Bezier">
+      <Point x="0.0" y="0.0"/>
+      <Point x="0.5" y="0.8"/>
+      <Point x="1.0" y="0.0"/>
+    </Smoke>
+    <FireTweak type="Bezier">
+      <Point x="0" y="0.0"/>
+      <Point x="0.5" y="2"/>
+      <Point x="1.0" y="1"/>
+    </FireTweak>
+  </Graphs>
+  <Particles>
+    <Base>
+      <Texture texture="Smoke"/>
+      <Life length="1"/>
+      <Size scale="64.0" graph="FireTweak"/>
+      <Colour r="255" g="69" b="0" a="255" graph="Base"/>
+      <Rotation angle="0.0" graph=""/>
+      <Acceleration x="0.0" y="-49.0"/>
+      <Decay x="0.0" y="0.0"/>
+    </Base>
+    <Smoke>
+      <Texture texture="Smoke"/>
+      <Life length="1.5"/>
+      <Size scale="100.0" graph="FireTweak"/>
+      <Colour r="255" g="127" b="40" a="255" graph="Smoke"/>
+      <Rotation angle="0.0" graph=""/>
+      <Acceleration x="0.0" y="-49.0"/>
+      <Decay x="0.0" y="0.0"/>
+    </Smoke>
+    <Spark>
+      <Texture texture="Smoke"/>
+      <Life length="1"/>
+      <Size scale="5.0" graph=""/>
+      <Colour r="255" g="200" b="200" a="255" graph="Base"/>
+      <Rotation angle="0.0" graph=""/>
+      <Acceleration x="0.0" y="49.0"/>
+      <Decay x="1.0" y="1.0"/>
+    </Spark>
+  </Particles>
+	<Emitters>
+    <Smoke>
+      <Origin x="0.0" y="0.0" depth="0.5"/>
+      <Power x="80.0" y="80.0"/>
+      <Rate rate ="0.0" count ="10"/>
+      <BlendStates>
+        <State state="AlphaBlend"/>
+        <State state="NonPremultiplied"/>
+      </BlendStates>
+    </Smoke>
+    <Base>
+      <Origin x="0.0" y="0.0" depth="0.0"/>
+      <Power x="60.0" y="60.0"/>
+      <Rate rate ="0.0" count ="20"/>
+      <BlendStates>
+        <State state="AlphaBlend"/>
+        <State state="NonPremultiplied"/>
+        <State state="Additive"/>
+      </BlendStates>
+    </Base>
+    <Spark>
+      <Origin x="0.0" y="0.0" depth="0.0"/>
+      <Power x="240.0" y="160.0"/>
+      <Rate rate ="0.0" count ="6"/>
+      <BlendStates>
+        <State state="AlphaBlend"/>
+        <State state="Additive"/>
+      </BlendStates>
+    </Spark>
+	</Emitters>
+</MultiEmitter>
