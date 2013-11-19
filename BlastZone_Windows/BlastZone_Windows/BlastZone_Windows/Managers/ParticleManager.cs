@@ -11,18 +11,15 @@ using Particles;
 
 namespace BlastZone_Windows.Managers
 {
+    /// <summary>
+    /// static manager class for particle emitters in the game
+    /// </summary>
     static class ParticleManager
     {
         static string effectsDirectory = "Effects";
 
         static Dictionary<string, MultiEmitter> multiEmitterRegistry = new Dictionary<string, MultiEmitter>();
 
-        /// <summary>
-        /// init the manager
-        /// </summary>
-        //ParticleManager()
-        //{
-        //}
 
         /// <summary>
         /// add a new emitter and load straight away
@@ -30,12 +27,12 @@ namespace BlastZone_Windows.Managers
         /// <param name="contentmanager">game contentmanager</param>
         /// <param name="name">name of the emitter file</param>
         /// <returns>error code, 0 if fine</returns>
-        static public int AddAndLoad(ContentManager contentmanager, string name)
+        static public int AddAndLoad(ContentManager contentmanager, string emitter)
         {
             MultiEmitter newMultiEmitter = new MultiEmitter();
-            newMultiEmitter.Load(contentmanager, effectsDirectory + "\\" + name);
+            newMultiEmitter.Load(contentmanager, effectsDirectory + "\\" + emitter);
 
-            multiEmitterRegistry.Add(name, newMultiEmitter);
+            multiEmitterRegistry.Add(emitter, newMultiEmitter);
 
             return 0;
         }
@@ -45,10 +42,10 @@ namespace BlastZone_Windows.Managers
         /// </summary>
         /// <param name="name">name of the emitter</param>
         /// <returns></returns>
-        static public bool Remove(string name)
+        static public bool Remove(string emitter)
         {
-            multiEmitterRegistry[name].Unload();
-            return multiEmitterRegistry.Remove(name);
+            multiEmitterRegistry[emitter].Unload();
+            return multiEmitterRegistry.Remove(emitter);
         }
 
         /// <summary>
@@ -69,9 +66,9 @@ namespace BlastZone_Windows.Managers
         /// <param name="name">emitter name</param>
         /// <param name="pos">position to emit</param>
         /// <param name="time">time to emit</param>
-        static public void AddEmissionPoint(string name, Vector2 pos, float time)
+        static public void AddEmissionPoint(string emitter, Vector2 pos, float time)
         {
-            multiEmitterRegistry[name].AddEmissionPoint(pos, time);
+            multiEmitterRegistry[emitter].AddEmissionPoint(pos, time);
         }
 
         /// <summary>
@@ -79,9 +76,9 @@ namespace BlastZone_Windows.Managers
         /// </summary>
         /// <param name="name">emitter name</param>
         /// <param name="pos">position to emit</param>
-        static public void AddEmissionPoint(string name, Vector2 pos)
+        static public void AddEmissionPoint(string emitter, Vector2 pos)
         {
-            multiEmitterRegistry[name].AddEmissionPoint(pos);
+            multiEmitterRegistry[emitter].AddEmissionPoint(pos);
         }
 
         /// <summary>
@@ -91,16 +88,10 @@ namespace BlastZone_Windows.Managers
         /// <param name="gx">grid position X</param>
         /// <param name="gy">grid position Y</param>
         /// <param name="time">time to emit</param>
-        static public void AddEmissionPointFromGrid(string name, int gx, int gy, float time)
+        static public void AddEmissionPointFromGrid(string emitter, int gx, int gy, float time)
         {
-            //position
-            Vector2 pos = new Vector2(gx, gy) * GlobalGameData.tileSize * GlobalGameData.drawRatio;
-
-            //Draw offset to center sprite
-            Vector2 offset = new Vector2(GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio, GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio);
-
             //add the point
-            AddEmissionPoint(name, pos + offset, time);
+            AddEmissionPoint(emitter, GetCoordsForGrid(gx, gy), time);
         }
 
         /// <summary>
@@ -109,9 +100,88 @@ namespace BlastZone_Windows.Managers
         /// <param name="name">emitter name</param>
         /// <param name="gx">grid position X</param>
         /// <param name="gy">grid position Y</param>
-        static public void AddEmissionPointFromGrid(string name, int gx, int gy)
+        static public void AddEmissionPointFromGrid(string emitter, int gx, int gy)
         {
-            AddEmissionPointFromGrid(name, gx, gy, 0.0f);
+            AddEmissionPointFromGrid(emitter, gx, gy, 0.0f);
+        }
+
+        /// <summary>
+        /// emit from the positions
+        /// </summary>
+        /// <param name="emitter">emitter name</param>
+        static public void EmitAll(string emitter)
+        {
+            multiEmitterRegistry[emitter].EmitAll();
+        }
+
+        /// <summary>
+        /// emit from the emitter's own position
+        /// </summary>
+        /// <param name="emitter">emitter name</param>
+        static public void Emit(string emitter)
+        {
+            multiEmitterRegistry[emitter].Emit();
+        }
+
+        /// <summary>
+        /// emit particles from position
+        /// </summary>
+        /// <param name="emitter">emitter name</param>
+        /// <param name="emitPos">position</param>
+        static public void Emit(string emitter, Vector2 emitPos)
+        {
+            multiEmitterRegistry[emitter].Emit(emitPos);
+        }
+
+        /// <summary>
+        /// emit particles from grid position
+        /// </summary>
+        /// <param name="emitter">emitter name</param>
+        /// <param name="gx">grid X</param>
+        /// <param name="gy">grid Y</param>
+        static public void EmitFromGridPosition(string emitter, int gx, int gy)
+        {
+            multiEmitterRegistry[emitter].Emit(GetCoordsForGrid(gx, gy));
+        }
+
+        /// <summary>
+        /// gets whether the emitter emits from its own point
+        /// </summary>
+        /// <param name="emitter">emitter name</param>
+        /// <returns>the emitfrompos value</returns>
+        static public bool GetEmitFromSelf(string emitter)
+        {
+            return multiEmitterRegistry[emitter].EmitFromSelf;
+        }
+
+        /// <summary>
+        /// sets the emitter emitfromself
+        /// </summary>
+        /// <param name="emitter">emitter name</param>
+        /// <param name="value">emitfromself value</param>
+        static public void SetEmitFromSelf(string emitter, bool value)
+        {
+            multiEmitterRegistry[emitter].EmitFromSelf = value;
+        }
+
+        /// <summary>
+        /// gets the emitter's position
+        /// </summary>
+        /// <param name="emitter">emitter name</param>
+        /// <returns>emitter's Vector2</returns>
+        static public Vector2 GetPosition(string emitter)
+        {
+            return multiEmitterRegistry[emitter].Position;
+        }
+
+        /// <summary>
+        /// sets the emitter's position
+        /// </summary>
+        /// <param name="emitter">emitter name</param>
+        /// <param name="pos">Vcector2 position</param>
+        static public void SetPosition(string emitter, Vector2 pos)
+        {
+            multiEmitterRegistry[emitter].Position = pos;
         }
 
         /// <summary>
@@ -132,6 +202,24 @@ namespace BlastZone_Windows.Managers
         {
             foreach (MultiEmitter emitter in multiEmitterRegistry.Values)
                 emitter.Draw(spritebatch);
+        }
+
+        /// <summary>
+        /// calculates the Vector2 from grid coords
+        /// </summary>
+        /// <param name="gx">grid X</param>
+        /// <param name="gy">grid Y</param>
+        /// <returns>position Vector2</returns>
+        static Vector2 GetCoordsForGrid(int gx, int gy)
+        {
+
+            //position
+            Vector2 pos = new Vector2(gx, gy) * GlobalGameData.tileSize * GlobalGameData.drawRatio;
+
+            //Draw offset to center sprite
+            Vector2 offset = new Vector2(GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio, GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio);
+
+            return pos + offset;
         }
 
     }
