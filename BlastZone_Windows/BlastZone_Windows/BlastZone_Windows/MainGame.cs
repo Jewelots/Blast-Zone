@@ -109,9 +109,6 @@ namespace BlastZone_Windows
 
             gameStateManager.Draw(spriteBatch, gameTime);
 
-            //draw particles
-            Managers.ParticleManager.Draw(spriteBatch);
-
             base.Draw(gameTime);
         }
     }

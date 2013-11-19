@@ -146,6 +146,13 @@ namespace BlastZone_Windows.States
             //Draw the level itself
             spriteBatch.Draw(levelRenderTarget, new Vector2(GlobalGameData.windowWidth / 2, GlobalGameData.windowHeight / 2), null, Color.White, 0f, new Vector2(GlobalGameData.levelSizeX / 2, GlobalGameData.levelSizeY / 2), 1f, SpriteEffects.None, 1f);
 
+            spriteBatch.End();
+
+            //draw particles
+            Managers.ParticleManager.Draw(spriteBatch);
+
+            spriteBatch.Begin();
+
             //Draw the score
             scoreRenderer.Draw(spriteBatch, level.GetPlayerCount());
 

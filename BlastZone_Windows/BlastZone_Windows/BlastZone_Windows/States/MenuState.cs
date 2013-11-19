@@ -180,6 +180,9 @@ namespace BlastZone_Windows.States
             spriteBatch.Draw(menuTextTex, new Vector2(viewW / 2, menuBeginPosY + menuOffset * 2), sourceRec, Color.White, 0f, new Vector2(sourceRec.Width / 2, sourceRec.Height / 2), 1f, SpriteEffects.None, 1f);
 
             spriteBatch.End();
+
+            //Draw particles
+            Managers.ParticleManager.Draw(spriteBatch);
         }
 
         void OnSelectStartGame()
