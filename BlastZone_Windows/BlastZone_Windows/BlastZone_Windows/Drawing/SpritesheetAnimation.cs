@@ -30,9 +30,9 @@ namespace SpritesheetAnimation
         private Rectangle? mesh;
 
         public float defaultFrameRate { get; private set; }
-        public Vector2 defaultSpriteSize { get; private set; }
-        //public float defaultScale { get; private set; }
-        public Texture2D texture { get; private set; }
+        //public Vector2 defaultSpriteSize { get; private set; }
+        public float defaultScale { get; private set; }
+        public Dictionary<string,Texture2D> textures { get; private set; }
 
         private Dictionary<string,Animation> animationList;
 
@@ -48,9 +48,9 @@ namespace SpritesheetAnimation
             //meshY = 1;
             mesh = null;
             defaultFrameRate = 0.0f;
-            defaultSpriteSize = new Vector2(0.0f);
-            //defaultScale = 1.0f;
-            texture = null;
+            //defaultSpriteSize = new Vector2(0.0f);
+            defaultScale = 1.0f;
+            textures = new Dictionary<string, Texture2D>();
             animationList = null;
         }
 
@@ -69,27 +69,41 @@ namespace SpritesheetAnimation
             int end = xmlFile.LastIndexOf('\\') + 1;
             string directory = xmlFile.Remove(end, xmlFile.Length - end);
 
-            this.texture = contentManager.Load<Texture2D>(directory + document.Name.LocalName);
+            //this.texture = contentManager.Load<Texture2D>(directory + document.Name.LocalName);
+
+            //textures
+            foreach (XElement texture in document.Element("Textures").Elements())
+            {
+                if (texture.Name.LocalName == "Texture")
+                {
+                    Texture2D newTexture = contentManager.Load<Texture2D>(directory + texture.Attribute("name").Value);
+                    this.textures.Add(texture.Attribute("name").Value, newTexture);
+                }
+            }
 
             int x = 0, y = 0;
-            double rate = 0.0;
+            double scale = 0.0, rate = 0.0;
 
             //mesh
             if (document.Element("Mesh") != null)
             {
                 if (int.TryParse(document.Element("Mesh").Attribute("x").Value, out x) &&
                     int.TryParse(document.Element("Mesh").Attribute("y").Value, out y))
-                    mesh = new Rectangle(x, y, texture.Width / x, texture.Height / y);
+                    mesh = new Rectangle(x, y, textures.First().Value.Width / x, textures.First().Value.Height / y);
             }
 
             //framerate
             if (double.TryParse(document.Element("Framerate").Attribute("default").Value, out rate))
                 defaultFrameRate = (float)rate;
 
+            //default scale
+            if (double.TryParse(document.Element("Scale").Attribute("default").Value, out scale))
+                defaultScale = (float)scale;
+
             //size
-            if (int.TryParse(document.Element("Size").Attribute("x").Value, out x) &&
-                int.TryParse(document.Element("Size").Attribute("y").Value, out y))
-                defaultSpriteSize = new Vector2((float)x, (float)y);
+            //if (int.TryParse(document.Element("Size").Attribute("x").Value, out x) &&
+            //    int.TryParse(document.Element("Size").Attribute("y").Value, out y))
+            //    defaultSpriteSize = new Vector2((float)x, (float)y);
 
 
             //animations
@@ -185,7 +199,19 @@ namespace SpritesheetAnimation
                 return null;
         }
 
-        
+        /// <summary>
+        /// gets texture out of registry
+        /// </summary>
+        /// <param name="name">name of texture</param>
+        /// <returns>texture2D? null if not existant</returns>
+        public Texture2D GetTexture(string name)
+        {
+            Texture2D returnTexture;
+            if (textures.TryGetValue(name, out returnTexture))
+                return returnTexture;
+            else
+                return null;
+        }
 
     }
 
@@ -197,8 +223,8 @@ namespace SpritesheetAnimation
         public Vector2 position;
         public float rotation;
         public Color colour;
-        //public float scale;
-        public Vector2 size;
+        public float scale;
+        //public Vector2 size;
         public float depth;
 
         //private AnimationNode animationNode;
@@ -210,6 +236,8 @@ namespace SpritesheetAnimation
 
         public float frameRate;
 
+        private Texture2D currentTexture;
+
         public Animation? Animation { get { return currentAnimation; } }
 
 
@@ -218,8 +246,8 @@ namespace SpritesheetAnimation
             position = new Vector2();
             rotation = 0.0f;
             colour = Color.White;
-            //scale = 1.0f;
-            size = new Vector2();
+            scale = 1.0f;
+            //size = new Vector2();
             depth = 0.0f;
 
             currentAnimation = null;
@@ -238,9 +266,11 @@ namespace SpritesheetAnimation
             //animationNode.currentAnimation = animation;
             currentAnimation = animationSheet.GetAnimation(animation);
 
-            //scale = animationSheet.defaultScale;
-            size = animationSheet.defaultSpriteSize;
+            scale = animationSheet.defaultScale;
+            //size = animationSheet.defaultSpriteSize;
             frameRate = animationSheet.defaultFrameRate;
+
+            currentTexture = animationSheet.textures.First().Value;
         }
 
         /// <summary>
@@ -277,9 +307,30 @@ namespace SpritesheetAnimation
         /// <param name="spritebatch"></param>
         public void Draw(SpriteBatch spritebatch)
         {
-            //spritebatch.Draw(texture, position, null, colour * colourMulti, 2.0f * (float)Math.PI * rotationMulti, new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2)), sizeScale * sizeMulti, SpriteEffects.None, depth);
-            if(currentAnimation != null)
-                spritebatch.Draw(animationSheet.texture, new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y), currentFrame.coords, colour, rotation, new Vector2((float)(currentFrame.coords.Width / 2), (float)(currentFrame.coords.Height / 2)), currentFrame.flip, depth);
+            if (currentAnimation != null)
+                spritebatch.Draw(currentTexture, position, currentFrame.coords, colour, rotation, new Vector2((float)(currentFrame.coords.Width / 2), (float)(currentFrame.coords.Height / 2)), scale, currentFrame.flip, depth);
+        }
+
+        /// <summary>
+        /// draw
+        /// </summary>
+        /// <param name="spritebatch"></param>
+        public void Draw(SpriteBatch spritebatch, float tempScale)
+        {
+            if (currentAnimation != null)
+                spritebatch.Draw(currentTexture, position, currentFrame.coords, colour, rotation, new Vector2((float)(currentFrame.coords.Width / 2), (float)(currentFrame.coords.Height / 2)), tempScale, currentFrame.flip, depth);
+        }
+
+        /// <summary>
+        /// sets the texture for the sprite to use
+        /// </summary>
+        /// <param name="texture">the name of the texture</param>
+        public void SetTexture(string texture)
+        {
+            //texture = animationSheet.GetTexture(texture);
+            Texture2D newTexture = animationSheet.GetTexture(texture);
+            if (newTexture != null)
+                currentTexture = newTexture;
         }
 
         /// <summary>
