@@ -16,6 +16,8 @@ namespace BlastZone_Windows.States
         MENU,
         LOBBY,
         CONTROLS,
+        WINSCREEN,
+        TISCREEN,
         GAME
     }
 
@@ -47,6 +49,8 @@ namespace BlastZone_Windows.States
             gameStates[StateType.MENU] = new MenuState(this);
             gameStates[StateType.LOBBY] = new LobbyState(this);
             gameStates[StateType.CONTROLS] = new ControlsState(this);
+            gameStates[StateType.WINSCREEN] = new WinScreenState(this);
+            //gameStates[StateType.TISCREEN] = new TieScreenState(this);
             gameStates[StateType.GAME] = new GameplayState(this, graphicsDevice);
 
             SwapState(StateType.MENU);

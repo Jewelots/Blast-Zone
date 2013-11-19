@@ -72,23 +72,36 @@ namespace BlastZone_Windows
             scoreOffset[3] = -(scoreFont.MeasureString(text[3]).Y - 10);
         }
 
-        public void SetScore(int player, int score)
+        public void SetScore(int playerIndex, int score)
         {
-            scores[player] = score;
+            scores[playerIndex] = score;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void AddScore(int playerIndex)
         {
-            //Draw Text
-            DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, text[0], backColors[0], frontColors[0], renderPositions[0], 3f);
-            DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, text[1], backColors[1], frontColors[1], renderPositions[1], 3f, HorizontalAlign.AlignRight);
-            DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, text[2], backColors[2], frontColors[2], renderPositions[2], 3f, HorizontalAlign.AlignLeft,  VerticalAlign.AlignBottom);
-            DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, text[3], backColors[3], frontColors[3], renderPositions[3], 3f, HorizontalAlign.AlignRight, VerticalAlign.AlignBottom);
+            scores[playerIndex] += 1;
+        }
 
-            //Draw Scores
+        public void Draw(SpriteBatch spriteBatch, int playerCount)
+        {
+            //Player one
+            DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, text[0], backColors[0], frontColors[0], renderPositions[0], 3f);
             DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, scores[0].ToString(), backColors[0], frontColors[0], renderPositions[0] + new Vector2(0, scoreOffset[0]), 3f);
+
+            //Player two
+            DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, text[1], backColors[1], frontColors[1], renderPositions[1], 3f, HorizontalAlign.AlignRight);
             DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, scores[1].ToString(), backColors[1], frontColors[1], renderPositions[1] + new Vector2(0, scoreOffset[1]), 3f, HorizontalAlign.AlignRight);
+
+            if (playerCount < 3) return;
+
+            //Player three
+            DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, text[2], backColors[2], frontColors[2], renderPositions[2], 3f, HorizontalAlign.AlignLeft,  VerticalAlign.AlignBottom);
             DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, scores[2].ToString(), backColors[2], frontColors[2], renderPositions[2] + new Vector2(0, scoreOffset[2]), 3f, HorizontalAlign.AlignLeft, VerticalAlign.AlignBottom);
+
+            if (playerCount < 4) return;
+
+            //Player four
+            DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, text[3], backColors[3], frontColors[3], renderPositions[3], 3f, HorizontalAlign.AlignRight, VerticalAlign.AlignBottom);
             DrawTextExtension.DrawTextOutline(spriteBatch, scoreFont, scores[3].ToString(), backColors[3], frontColors[3], renderPositions[3] + new Vector2(0, scoreOffset[3]), 3f, HorizontalAlign.AlignRight, VerticalAlign.AlignBottom);
         }
     }

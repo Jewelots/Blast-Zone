@@ -40,6 +40,9 @@ namespace BlastZone_Windows
 
         public void Move(MoveEvent moveEvent)
         {
+            //Don't move if dead
+            if (IsDead) return;
+
             movement.QueueEvent(moveEvent);
         }
 
@@ -50,6 +53,9 @@ namespace BlastZone_Windows
 
         public void Update(GameTime gameTime)
         {
+            //Don't update if dead
+            if (IsDead) return;
+
             movement.Update(gameTime);
         }
 
@@ -60,6 +66,9 @@ namespace BlastZone_Windows
 
         public void PlaceBomb()
         {
+            //Don't place bomb if dead
+            if (IsDead) return;
+
             int gx, gy;
 
             movement.GetGridPosition(out gx, out gy);

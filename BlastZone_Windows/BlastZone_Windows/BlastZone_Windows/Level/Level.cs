@@ -39,8 +39,16 @@ namespace BlastZone_Windows.Level
 
         int playerCount = 1;
 
-        public Level()
+        Action<int> onWin;
+        Action onTie;
+
+        bool gameOver;
+
+        public Level(Action<int> onWin, Action onTie)
         {
+            this.onWin = onWin;
+            this.onTie = onTie;
+
             aesthetics = new LevelAesthetics();
 
             tileObjectManager = new TileObjectManager(this);
@@ -66,14 +74,22 @@ namespace BlastZone_Windows.Level
             }
         }
 
-        void SetKeyType1(PlayerInputController controller)
+        public void Reset(int playerCount, int p1ControlType, int p2ControlType, int p3ControlType, int p4ControlType)
         {
-            controller.SetKeyIdentifiers(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Space);
-        }
+            this.playerCount = playerCount;
 
-        void SetKeyType2(PlayerInputController controller)
-        {
-            controller.SetKeyIdentifiers(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Enter);
+            tileObjectManager.Reset();
+            fireManager.Reset();
+
+            //Reset players to positions
+            players[0].Reset(1, 1);
+            players[1].Reset(GlobalGameData.gridSizeX - 2, 1);
+            players[2].Reset(1, GlobalGameData.gridSizeY - 2);
+            players[3].Reset(GlobalGameData.gridSizeX - 2, GlobalGameData.gridSizeY - 2);
+
+            SetPlayerControlIdentifiers(playerCount, p1ControlType, p2ControlType, p3ControlType, p4ControlType);
+
+            gameOver = false;
         }
 
         /// <summary>
@@ -134,6 +150,16 @@ namespace BlastZone_Windows.Level
             currentKeyboards += 1;
         }
 
+        void SetKeyType1(PlayerInputController controller)
+        {
+            controller.SetKeyIdentifiers(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Space);
+        }
+
+        void SetKeyType2(PlayerInputController controller)
+        {
+            controller.SetKeyIdentifiers(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Enter);
+        }
+
         void InitialisePlayerToJoystick(int playerIndex, int joystickIndex)
         {
             playerToController[playerIndex] = joystickIndex;
@@ -187,21 +213,6 @@ namespace BlastZone_Windows.Level
             }
         }
 
-        public void Reset(int playerCount, int p1ControlType, int p2ControlType, int p3ControlType, int p4ControlType)
-        {
-            this.playerCount = playerCount;
-
-            tileObjectManager.Reset();
-
-            //Reset players to positions
-            players[0].Reset(1, 1);
-            players[1].Reset(GlobalGameData.gridSizeX - 2, 1);
-            players[2].Reset(1, GlobalGameData.gridSizeY - 2);
-            players[3].Reset(GlobalGameData.gridSizeX - 2, GlobalGameData.gridSizeY - 2);
-
-            SetPlayerControlIdentifiers(playerCount, p1ControlType, p2ControlType, p3ControlType, p4ControlType);
-        }
-
         public void Update(GameTime gameTime)
         {
             tileObjectManager.Update(gameTime);
@@ -211,35 +222,74 @@ namespace BlastZone_Windows.Level
             //Set what's solid for collision
             gridNodeMap.SetSolid(GetSolid());
 
+            int playersAlive = 0;
             for (int i = 0; i < playerCount; ++i)
             {
-                //Update input
-                if (playerToController[i] == -1)
+                //Only update if player not dead
+                if (players[i].IsDead == false)
                 {
-                    playerInputControllers[i].GetKeyInput(Keyboard.GetState());
-                }
-                else
-                {
-                    playerInputControllers[i].GetPadInput(GamePad.GetState((PlayerIndex)playerToController[i]));
-                }
-
-                //Update players
-                players[i].Update(gameTime);
-                
-                //Check if player is in fire and kill them if so
-                //int gx, gy;
-                //players[i].GetGridPosition(out gx, out gy);
-                int[] tx, ty;
-                players[i].GetAllOccupiedPositions(out tx, out ty);
-
-                for (int t = 0; t < tx.Length; ++t)
-                {
-                    if (fireManager.IsOnFire(tx[t], ty[t]))
+                    //Update input
+                    if (playerToController[i] == -1)
                     {
-                        players[i].IsDead = true;
-                        //Spawn effect of player dying
-                        break;
+                        playerInputControllers[i].GetKeyInput(Keyboard.GetState());
                     }
+                    else
+                    {
+                        playerInputControllers[i].GetPadInput(GamePad.GetState((PlayerIndex)playerToController[i]));
+                    }
+
+                    //Update players
+                    players[i].Update(gameTime);
+
+                    //Check if player is in fire and kill them if so
+                    int[] tx, ty;
+                    players[i].GetAllOccupiedPositions(out tx, out ty);
+
+                    for (int t = 0; t < tx.Length; ++t)
+                    {
+                        if (fireManager.IsOnFire(tx[t], ty[t]))
+                        {
+                            players[i].IsDead = true;
+                            //Spawn effect of player dying
+                            break;
+                        }
+                    }
+
+                    if (players[i].IsDead == false)
+                    {
+                        //Count how many players are alive
+                        playersAlive += 1;
+                    }
+                }
+            }
+
+            //If game not over check if it's won
+            if (gameOver == false)
+            {
+                //Check if 1 or 0 players remaining and move to win/tie screen
+                if (playersAlive == 1)
+                {
+                    //Get the living player index
+                    int alivePlayerIndex = -1;
+                    for (int i = 0; i < playerCount; ++i)
+                    {
+                        if (players[i].IsDead == false)
+                        {
+                            alivePlayerIndex = i;
+                            break;
+                        }
+                    }
+
+                    //Add delay (use eventtimer)
+                    onWin(alivePlayerIndex);
+                    gameOver = true;
+                }
+
+                if (playersAlive == 0)
+                {
+                    //Add delay
+                    onTie();
+                    gameOver = true;
                 }
             }
         }
@@ -267,6 +317,11 @@ namespace BlastZone_Windows.Level
         public int getMaxBombs(int playerIndex)
         {
             return players[playerIndex].GetMaxBombs();
+        }
+
+        public int GetPlayerCount()
+        {
+            return playerCount;
         }
     }
 }

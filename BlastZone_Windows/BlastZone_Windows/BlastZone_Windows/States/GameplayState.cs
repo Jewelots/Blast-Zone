@@ -55,7 +55,7 @@ namespace BlastZone_Windows.States
         public GameplayState(GameStateManager gameStateManager, GraphicsDevice graphicsDevice)
             : base(gameStateManager)
         {
-            level = new Level.Level();
+            level = new Level.Level(MoveToWinState, MoveToTieState);
             scoreRenderer = new ScoreRenderer();
 
             //Create the render target to the level size
@@ -65,6 +65,25 @@ namespace BlastZone_Windows.States
             this.graphicsDevice = graphicsDevice;
 
             playerInputTypes = new int[4];
+        }
+
+        void MoveToWinState(int winningPlayerIndex)
+        {
+            scoreRenderer.AddScore(winningPlayerIndex);
+
+            WinScreenState wss = manager.GetState(StateType.WINSCREEN) as WinScreenState;
+            wss.SetLevelData(playerCount, playerInputTypes[0], playerInputTypes[1], playerInputTypes[2], playerInputTypes[3]);
+            wss.SetWinData(winningPlayerIndex);
+
+            manager.SwapStateWithTransition(StateType.WINSCREEN);
+        }
+
+        void MoveToTieState()
+        {
+            //TieScreenState tss = manager.GetState(StateType.TIESCREEN) as TieScreenState;
+            //tss.SetLevelData(playerCount, playerInputTypes[0], playerInputTypes[1], playerInputTypes[2], playerInputTypes[3]);
+
+            //manager.SwapStateWithTransition(StateType.TIESCREEN);
         }
 
         public override void LoadContent(ContentManager Content)
@@ -102,11 +121,6 @@ namespace BlastZone_Windows.States
                 manager.SwapStateWithTransition(StateType.MENU);
             }
 
-            scoreRenderer.SetScore(0, (int)(gameTime.TotalGameTime.TotalMilliseconds - startTime) / 500);
-            scoreRenderer.SetScore(1, (int)(gameTime.TotalGameTime.TotalMilliseconds - startTime) / 1000);
-            scoreRenderer.SetScore(2, (int)(gameTime.TotalGameTime.TotalMilliseconds - startTime) / 1500);
-            scoreRenderer.SetScore(3, (int)(gameTime.TotalGameTime.TotalMilliseconds - startTime) / 2000);
-
             level.Update(gameTime);
         }
 
@@ -133,7 +147,7 @@ namespace BlastZone_Windows.States
             spriteBatch.Draw(levelRenderTarget, new Vector2(GlobalGameData.windowWidth / 2, GlobalGameData.windowHeight / 2), null, Color.White, 0f, new Vector2(GlobalGameData.levelSizeX / 2, GlobalGameData.levelSizeY / 2), 1f, SpriteEffects.None, 1f);
 
             //Draw the score
-            scoreRenderer.Draw(spriteBatch);
+            scoreRenderer.Draw(spriteBatch, level.GetPlayerCount());
 
             spriteBatch.End();
         }

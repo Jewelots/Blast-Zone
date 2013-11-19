@@ -30,9 +30,12 @@ namespace BlastZone_Windows
 
         public FireManager(TileObjectManager tileObjectManager)
         {
-            fireArea = new float[GlobalGameData.gridSizeX, GlobalGameData.gridSizeY];
-
             this.tileObjectManager = tileObjectManager;
+        }
+
+        public void Reset()
+        {
+            fireArea = new float[GlobalGameData.gridSizeX, GlobalGameData.gridSizeY];
         }
 
         public void LoadContent(ContentManager Content)
@@ -48,8 +51,8 @@ namespace BlastZone_Windows
                 {
                     if (fireArea[x, y] > 0)
                     {
-                        //Tile on fire, decrease fire time
-                        fireArea[x, y] -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        //Tile on fire, decrease fire time so it takes 0.5 seconds for them to disappear
+                        fireArea[x, y] -= (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
                     }
                 }
             }
@@ -133,7 +136,7 @@ namespace BlastZone_Windows
             this.solidArea = solidArea;
         }
 
-        internal bool IsOnFire(int gx, int gy)
+        public bool IsOnFire(int gx, int gy)
         {
             return fireArea[gx, gy] > 0;
         }

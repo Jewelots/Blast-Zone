@@ -40,10 +40,14 @@ namespace BlastZone_Windows
         {
             //Draw offset to center sprite
             Vector2 drawOffset = new Vector2(GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio, GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio);
+            Vector2 drawPos = DrawPosition + drawOffset;
+
+            drawPos.X = (int)Math.Floor(drawPos.X) - 1;
+            drawPos.Y = (int)Math.Floor(drawPos.Y) - 1;
 
             spriteBatch.Draw(
                 blockTex, //Texture
-                DrawPosition + drawOffset, //Position
+                drawPos, //Position
                 null, //Source Rect
                 Color.White, //Color
                 0, //Rotation
