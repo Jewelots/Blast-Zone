@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<MultiEmitter>
+  <Textures>
+    <Smoke texture="SmokeTex"/>
+  </Textures>
+  <Graphs>
+    <Base type="Bezier">
+      <Point x="0.0" y="0.0"/>
+      <Point x="1.0" y="2.0"/>
+      <Point x="1.0" y="0.0"/>
+    </Base>
+    <Smoke type="Bezier">
+      <Point x="0.0" y="0.0"/>
+      <Point x="0.25" y="1.0"/>
+      <Point x="1.0" y="0.0"/>
+    </Smoke>
+  </Graphs>
+  <Particles>
+    <Base>
+      <Texture texture="Smoke"/>
+      <Life length="3.0"/>
+      <Size scale="50.0" graph="Base"/>
+      <Colour r="255" g="69" b="0" a="255" graph="Base"/>
+      <Rotation angle="0.0" graph=""/>
+      <Acceleration x="0.0" y="-98.0"/>
+      <Decay x="1.0" y="1.0"/>
+    </Base>
+    <Smoke>
+      <Texture texture="Smoke"/>
+      <Life length="5.0"/>
+      <Size scale="100.0" graph="Smoke"/>
+      <Colour r="127" g="127" b="127" a="255" graph="Smoke"/>
+      <Rotation angle="0.0" graph=""/>
+      <Acceleration x="0.0" y="-98.0"/>
+      <Decay x="0.0" y="0.0"/>
+    </Smoke>
+    <Spark>
+      <Texture texture="Smoke"/>
+      <Life length="2.0"/>
+      <Size scale="5.0" graph=""/>
+      <Colour r="255" g="200" b="200" a="255" graph="Base"/>
+      <Rotation angle="0.0" graph=""/>
+      <Acceleration x="0.0" y="98.0"/>
+      <Decay x="2.0" y="2.0"/>
+    </Spark>
+  </Particles>
+	<Emitters>
+		<Smoke>
+			<Origin x="0.0" y="-50.0" depth="0.5"/>
+			<Power x="25.0" y="25.0"/>
+			<Rate rate ="20.0" count ="1"/>
+			<BlendStates>
+				<State state="AlphaBlend"/>
+			</BlendStates>
+		</Smoke>
+		<Base>
+			<Origin x="0.0" y="0.0" depth="0.0"/>
+			<Power x="15.0" y="25.0"/>
+			<Rate rate ="30.0" count ="2"/>
+			<BlendStates>
+				<State state="AlphaBlend"/>
+				<State state="Additive"/>
+			</BlendStates>
+		</Base>
+		<Spark>
+			<Origin x="0.0" y="0.0" depth="0.0"/>
+			<Power x="200.0" y="200.0"/>
+			<Rate rate ="1.0" count ="1"/>
+			<BlendStates>
+				<State state="AlphaBlend"/>
+				<State state="Additive"/>
+			</BlendStates>
+		</Spark>
+	</Emitters>
+</MultiEmitter>
