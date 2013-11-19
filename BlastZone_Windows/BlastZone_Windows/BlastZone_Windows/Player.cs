@@ -8,12 +8,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 
+using SpritesheetAnimation;
+
 namespace BlastZone_Windows
 {
     class Player
     {
         GridNodeMover movement;
-        Texture2D playerTex; //replace with animation
+        AnimatedSprite playerAnimations;
 
         Action<int, int, int, int> placeBombFunc;
 
@@ -44,11 +46,28 @@ namespace BlastZone_Windows
             if (IsDead) return;
 
             movement.QueueEvent(moveEvent);
+            switch (moveEvent.moveEvent)
+            {
+                case MoveEvent.MoveEventType.MOVE_UP:
+                    playerAnimations.ContinueAnimation("WalkUp");
+                    break;
+                case MoveEvent.MoveEventType.MOVE_DOWN:
+                    playerAnimations.ContinueAnimation("WalkDown");
+                    break;
+                case MoveEvent.MoveEventType.MOVE_LEFT:
+                    playerAnimations.ContinueAnimation("WalkLeft");
+                    break;
+                case MoveEvent.MoveEventType.MOVE_RIGHT:
+                    playerAnimations.ContinueAnimation("WalkRight");
+                    break;
+            }
         }
 
         public void LoadContent(ContentManager Content)
         {
-            playerTex = Content.Load<Texture2D>("Images/Game/bomb");
+            AnimationSheet playerSheet = new AnimationSheet();
+            playerSheet.Load(Content, "Spritesheets\\players");
+            playerAnimations = new AnimatedSprite(playerSheet, "StandDown");
         }
 
         public void Update(GameTime gameTime)
@@ -57,6 +76,8 @@ namespace BlastZone_Windows
             if (IsDead) return;
 
             movement.Update(gameTime);
+            playerAnimations.position = movement.GetPosition() - new Vector2(0, 10);
+            playerAnimations.Update(gameTime);
         }
 
         public void GetGridPosition(out int gx, out int gy)
@@ -81,7 +102,7 @@ namespace BlastZone_Windows
             //Don't draw if dead
             if (IsDead) return;
 
-            spriteBatch.Draw(playerTex, movement.GetPosition(), null, Color.White, 0f, new Vector2(GlobalGameData.tileSize / 2 - 0.5f, GlobalGameData.tileSize / 2 - 0.5f), GlobalGameData.drawRatio, SpriteEffects.None, 1f);
+            playerAnimations.Draw(spriteBatch, GlobalGameData.drawRatio);
         }
 
         public int GetMaxBombs()

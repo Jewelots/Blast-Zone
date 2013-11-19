@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Spritesheet>
+	<Textures>
+		<Texture name="player1Death"/>
+		<Texture name="player2Death"/>
+		<Texture name="player3Death"/>
+		<Texture name="player4Death"/>
+	</Textures>
+	<Framerate default="4.0"/>
+	<Scale default="3.0"/>
+	<Animations>
+		<Death width="23" height="20">
+			<Frame x="0" y="0"/>
+			<Frame x="23" y="0"/>
+			<Frame x="46" y="0"/>
+			<Frame x="69" y="0"/>
+			<End return=""/>
+		</Death>
+	</Animations>
+</Spritesheet>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Spritesheet>
+	<Textures>
+		<Texture name="player1Win"/>
+		<Texture name="player2Win"/>
+		<Texture name="player3Win"/>
+		<Texture name="player4Win"/>
+	</Textures>
+	<Framerate default="4.0"/>
+	<Mesh x="2" y="1"/>
+	<Scale default="3.0"/>
+	<Animations>
+		<Win width="23" height="20">
+			<Frame x="0" y="0"/>
+			<Frame x="1" y="0"/>
+			<End return="Win"/>
+		</Win>
+	</Animations>
+</Spritesheet>

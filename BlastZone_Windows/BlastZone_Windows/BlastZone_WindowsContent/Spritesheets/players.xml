@@ -54,9 +54,5 @@
 			<Frame x="3" y="0" flip="H"/>
 			<End return="StandUp"/>
 		</WalkUp>
-		<Win>
-			<Frame x="3" y="1"/>
-			<End return="Win"/>
-		</Win>
 	</Animations>
 </Spritesheet>

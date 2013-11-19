@@ -10,12 +10,13 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
 using BlastZone_Windows.Drawing;
+using SpritesheetAnimation;
 
 namespace BlastZone_Windows.States
 {
     class WinScreenState : GameState
     {
-        Texture2D playerWinImage; //Replace with animation of the player cheering
+        AnimatedSprite playerWinAnimation; 
         SpriteFont winTextFont;
         TiledTexture bgtex;
 
@@ -36,6 +37,8 @@ namespace BlastZone_Windows.States
         public void SetWinData(int winningPlayerIndex)
         {
             this.winningPlayerIndex = winningPlayerIndex;
+
+            playerWinAnimation.SetTexture("player" + (winningPlayerIndex + 1) + "Death");
         }
 
         public override void Enter()
@@ -55,8 +58,14 @@ namespace BlastZone_Windows.States
         public override void LoadContent(ContentManager Content)
         {
             bgtex.SetTexture(Content.Load<Texture2D>("Images/Menu/bg"));
-            playerWinImage = Content.Load<Texture2D>("Images/Controls/KeyboardControls");
             winTextFont = Content.Load<SpriteFont>("Fonts/Badaboom");
+
+            AnimationSheet winSheet = new AnimationSheet();
+            winSheet.Load(Content, "Spritesheets\\winsprite");
+
+            playerWinAnimation = new AnimatedSprite(winSheet, "Win");
+            playerWinAnimation.position = new Vector2(GlobalGameData.windowWidth / 2, GlobalGameData.windowHeight / 2);
+            playerWinAnimation.frameRate = 2;
         }
 
         public override void Update(GameTime gameTime)
@@ -95,6 +104,8 @@ namespace BlastZone_Windows.States
             }
 
             bgtex.ShiftOffset(new Vector2(50f * (float)gameTime.ElapsedGameTime.TotalSeconds, 50f * (float)gameTime.ElapsedGameTime.TotalSeconds));
+
+            playerWinAnimation.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -103,8 +114,9 @@ namespace BlastZone_Windows.States
 
             Vector2 textPos = new Vector2(GlobalGameData.windowWidth / 2, GlobalGameData.windowHeight / 2 + 200);
 
-            spriteBatch.Begin();
-            spriteBatch.Draw(playerWinImage, new Vector2(GlobalGameData.windowWidth / 2 - playerWinImage.Width / 2, GlobalGameData.windowHeight / 2 - playerWinImage.Height / 2), Color.White);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
+            playerWinAnimation.Draw(spriteBatch, 15);
+            //spriteBatch.Draw(playerWinImage, new Vector2(GlobalGameData.windowWidth / 2 - playerWinImage.Width / 2, GlobalGameData.windowHeight / 2 - playerWinImage.Height / 2), Color.White);
             DrawTextExtension.DrawTextOutline(spriteBatch, winTextFont, "Player " + (winningPlayerIndex + 1) + " wins!", Color.Black, Color.White, textPos, 3f, HorizontalAlign.AlignCenter);
             spriteBatch.End();
         }
