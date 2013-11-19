@@ -28,6 +28,8 @@ namespace Particles
     {
         //variables
         private Vector2 position;
+
+        private bool emitFromSelf;
         /// <summary>
         /// position of the emitter
         /// </summary>
@@ -42,6 +44,19 @@ namespace Particles
             }
         }
 
+        /// <summary>
+        /// whether you want the emitters to emit at their own position
+        /// </summary>
+        public bool EmitFromSelf
+        {
+            get { return emitFromSelf; }
+            set 
+            { 
+                foreach (Emitter e in EmitterList) e.emitFromSelf = value; 
+                emitFromSelf = value; 
+            }
+        }
+
         private List<Emitter> EmitterList;
 
         //functions
@@ -53,6 +68,7 @@ namespace Particles
         {
             position = new Vector2();
             EmitterList = new List<Emitter>();
+            emitFromSelf = false;
         }
 
         /// <summary>
@@ -139,7 +155,7 @@ namespace Particles
 
                 //read through attributes
 
-                //double angle;
+                double angle;
                 double length;
                 double scale;
                 int r, g, b, a;
@@ -289,6 +305,7 @@ namespace Particles
                     newEmitter.blendStates = blendstateList;
                     newEmitter.origin = newOrigin;
                     newEmitter.depth = newDepth;
+                    newEmitter.emitFromSelf = emitFromSelf;
 
                     EmitterList.Add(newEmitter);
                 }
@@ -457,7 +474,7 @@ namespace Particles
 
             emissionPoints = new List<emissionNode>();
 
-            emitFromSelf = true;
+            emitFromSelf = false;
 
             blendStates = new List<BlendState>();
             blendStates.Add(BlendState.AlphaBlend);
@@ -888,7 +905,7 @@ namespace Particles
             //update, check ticking
             if (currentTick == tickCount)
             {
-                timeToAdd *= tickCount;
+                //timeToAdd *= tickCount;
                 if (lifeLeft >= 0.0f)
                 {
                     //update values
