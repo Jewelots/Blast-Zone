@@ -47,19 +47,19 @@
 		<Smoke>
 			<Origin x="0.0" y="-50.0" depth="0.5"/>
 			<Power x="25.0" y="25.0"/>
-			<Rate rate ="60.0" count ="1"/>
+			<Rate rate ="40.0" count ="1"/>
 			<BlendStates>
 				<State state="AlphaBlend"/>
 			</BlendStates>
 		</Smoke>
-		<Base>
-			<Origin x="0.0" y="0.0" depth="0.0"/>
-			<Power x="15.0" y="25.0"/>
-			<Rate rate ="80.0" count ="2"/>
-			<BlendStates>
-				<State state="AlphaBlend"/>
-				<State state="Additive"/>
-			</BlendStates>
-		</Base>
+    <Base>
+      <Origin x="0.0" y="0.0" depth="0.0"/>
+      <Power x="15.0" y="25.0"/>
+      <Rate rate ="60.0" count ="1"/>
+      <BlendStates>
+        <State state="AlphaBlend"/>
+        <State state="Additive"/>
+      </BlendStates>
+    </Base>
 	</Emitters>
 </MultiEmitter>

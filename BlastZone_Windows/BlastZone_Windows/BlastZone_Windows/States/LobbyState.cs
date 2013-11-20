@@ -45,16 +45,6 @@ namespace BlastZone_Windows.States
             }
 
             keyboardCount = 0;
-
-            ///
-            //playerCount = 3;
-
-            //ready[0] = true;
-            //ready[2] = true;
-
-            //controller[0] = -1;
-            //controller[1] = -1;
-            //controller[2] = 0;
         }
 
         public override void Exit()

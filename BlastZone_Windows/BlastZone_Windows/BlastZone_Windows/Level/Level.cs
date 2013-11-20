@@ -252,7 +252,6 @@ namespace BlastZone_Windows.Level
                     {
                         players[i].IsDead = true;
                         //Spawn effect of player dying
-                        break;
                     }
                         
                     //Get item player standing on
@@ -274,7 +273,7 @@ namespace BlastZone_Windows.Level
             //If game not over check if it's won
             if (gameOver == false)
             {
-                if (playersAlive == 1)
+                if (playersAlive < 2)
                 {
                     checkWinState.UnPause();
                     gameOver = true;

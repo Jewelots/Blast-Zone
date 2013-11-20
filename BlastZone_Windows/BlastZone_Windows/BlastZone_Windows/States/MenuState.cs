@@ -32,6 +32,8 @@ namespace BlastZone_Windows.States
         TiledTexture bgtex;
         Texture2D menuTextTex;
 
+        SpriteFont menuFont;
+
         int menuBeginPosY;
         int menuOffset;
 
@@ -85,7 +87,7 @@ namespace BlastZone_Windows.States
             oldState = Keyboard.GetState();
 
             //menuBeginPosY = 250;
-            menuBeginPosY = 300;
+            menuBeginPosY = 250;
             menuOffset = 100;
 
             oldGamepadStates = new GamePadState[4];
@@ -108,6 +110,8 @@ namespace BlastZone_Windows.States
             bgtex.SetTexture(Content.Load<Texture2D>("Images/Menu/bg"));
 
             menuTextTex = Content.Load<Texture2D>("Images/Menu/text");
+
+            menuFont = Content.Load<SpriteFont>("Fonts/Badaboom");
         }
 
         public override void Update(GameTime gameTime)
@@ -129,7 +133,16 @@ namespace BlastZone_Windows.States
                 float rotInRad = (float)Math.PI * fallingBombRotation[i] / 180.0f;
                 Vector2 fireOffset = new Vector2(60, -80);
                 fireOffset = Vector2.Transform(fireOffset, Matrix.CreateRotationZ(rotInRad));
-                Managers.ParticleManager.Emit("Fire", fallingBombPos[i] + fireOffset);
+                //Managers.ParticleManager.Emit("Fire", fallingBombPos[i] + fireOffset);
+
+                if (GlobalGameData.LowQualityParticles)
+                {
+                    Managers.ParticleManager.AddEmissionPoint("FireFast", fallingBombPos[i] + fireOffset);
+                }
+                else
+                {
+                    Managers.ParticleManager.AddEmissionPoint("Fire", fallingBombPos[i] + fireOffset);
+                }
             }
 
             KeyboardState newState = Keyboard.GetState();
@@ -156,12 +169,12 @@ namespace BlastZone_Windows.States
                     gamepadPressedA = true;
                 }
 
-                if ((gps.IsButtonDown(Buttons.DPadUp) && ogps.IsButtonUp(Buttons.DPadUp)) || (gps.ThumbSticks.Left.Y > 0 && ogps.ThumbSticks.Left.Y == 0))
+                if ((gps.IsButtonDown(Buttons.DPadUp) && ogps.IsButtonUp(Buttons.DPadUp)) || (gps.ThumbSticks.Left.Y > 0.25 && Math.Abs(ogps.ThumbSticks.Left.Y) < 0.25))
                 {
                     gamepadPressedUp = true;
                 }
 
-                if ((gps.IsButtonDown(Buttons.DPadDown) && ogps.IsButtonUp(Buttons.DPadDown)) || (gps.ThumbSticks.Left.Y < 0 && ogps.ThumbSticks.Left.Y == 0))
+                if ((gps.IsButtonDown(Buttons.DPadDown) && ogps.IsButtonUp(Buttons.DPadDown)) || (gps.ThumbSticks.Left.Y < -0.25 && Math.Abs(ogps.ThumbSticks.Left.Y) < 0.25))
                 {
                     gamepadPressedDown = true;
                 }
@@ -174,10 +187,13 @@ namespace BlastZone_Windows.States
                     case 0: //Lobby button
                         OnSelectStartGame();
                         break;
-                    case 1: //Options button
+                    case 1: //Controls button
+                        OnSelectControls();
+                        break;
+                    case 2: //Options button
                         OnSelectOptions();
                         break;
-                    case 2: //Quit Button
+                    case 3: //Quit Button
                         manager.QuitGame();
                         break;
                     default:
@@ -185,11 +201,11 @@ namespace BlastZone_Windows.States
                 }
             }
 
-            if (newState.IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down) || gamepadPressedDown) curSelected += 1;
-            if (newState.IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up) || gamepadPressedUp) curSelected -= 1;
+            if ((newState.IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up)) || (newState.IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W)) || gamepadPressedUp) curSelected -= 1;
+            if ((newState.IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down)) || (newState.IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S)) || gamepadPressedDown) curSelected += 1;
 
-            curSelected %= 3;
-            if (curSelected < 0) curSelected = 2;
+            curSelected %= 4;
+            if (curSelected < 0) curSelected = 3;
 
             oldState = newState;
 
@@ -229,20 +245,19 @@ namespace BlastZone_Windows.States
                 spriteBatch.Draw(Blast[i + 1], newBlastPos, null, Color.White, 0f, new Vector2(30, 0), 5f, SpriteEffects.None, 1f);
             }
 
-            Rectangle sourceRec;
             int viewW = GlobalGameData.windowWidth;
 
             //Lobby
-            sourceRec = new Rectangle(0, (curSelected == 0) ? 37 : 0, 168, 36);
-            spriteBatch.Draw(menuTextTex, new Vector2(viewW / 2, menuBeginPosY), sourceRec, Color.White, 0f, new Vector2(sourceRec.Width / 2, sourceRec.Height / 2), 1f, SpriteEffects.None, 1f);
+            DrawTextExtension.DrawTextOutline(spriteBatch, menuFont, "Lobby", Color.Black, (curSelected == 0) ? Color.Yellow : Color.White, new Vector2(viewW / 2, menuBeginPosY), 3f, HorizontalAlign.AlignCenter);
+
+            //Controls
+            DrawTextExtension.DrawTextOutline(spriteBatch, menuFont, "Controls", Color.Black, (curSelected == 1) ? Color.Yellow : Color.White, new Vector2(viewW / 2, menuBeginPosY + menuOffset), 3f, HorizontalAlign.AlignCenter);
 
             //Options
-            sourceRec = new Rectangle(169, (curSelected == 1) ? 37 : 0, 218, 36);
-            spriteBatch.Draw(menuTextTex, new Vector2(viewW / 2, menuBeginPosY + menuOffset), sourceRec, Color.White, 0f, new Vector2(sourceRec.Width / 2, sourceRec.Height / 2), 1f, SpriteEffects.None, 1f);
+            DrawTextExtension.DrawTextOutline(spriteBatch, menuFont, "Options", Color.Black, (curSelected == 2) ? Color.Yellow : Color.White, new Vector2(viewW / 2, menuBeginPosY + menuOffset * 2), 3f, HorizontalAlign.AlignCenter);
 
             //Quit
-            sourceRec = new Rectangle(388, (curSelected == 2) ? 37 : 0, 126, 36);
-            spriteBatch.Draw(menuTextTex, new Vector2(viewW / 2, menuBeginPosY + menuOffset * 2), sourceRec, Color.White, 0f, new Vector2(sourceRec.Width / 2, sourceRec.Height / 2), 1f, SpriteEffects.None, 1f);
+            DrawTextExtension.DrawTextOutline(spriteBatch, menuFont, "Quit", Color.Black, (curSelected == 3) ? Color.Yellow : Color.White, new Vector2(viewW / 2, menuBeginPosY + menuOffset * 3), 3f, HorizontalAlign.AlignCenter);
 
             spriteBatch.End();
         }
@@ -252,9 +267,14 @@ namespace BlastZone_Windows.States
             manager.SwapStateWithTransition(StateType.LOBBY);
         }
 
+        void OnSelectControls()
+        {
+            manager.SwapStateWithTransition(StateType.CONTROLS);
+        }
+
         void OnSelectOptions()
         {
-            manager.SwapStateWithTransition(StateType.CONTROLS); //Change to options
+            manager.SwapStateWithTransition(StateType.OPTIONS);
         }
     }
 }

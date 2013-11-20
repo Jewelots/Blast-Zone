@@ -84,22 +84,22 @@ namespace BlastZone_Windows
         {
             if (useKey) return;
 
-            if (g.DPad.Up == ButtonState.Pressed || g.ThumbSticks.Left.Y > 0)
+            if (g.DPad.Up == ButtonState.Pressed || g.ThumbSticks.Left.Y > 0.25)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_UP));
             }
 
-            if (g.DPad.Down == ButtonState.Pressed || g.ThumbSticks.Left.Y < 0)
+            if (g.DPad.Down == ButtonState.Pressed || g.ThumbSticks.Left.Y < -0.25)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_DOWN));
             }
 
-            if (g.DPad.Left == ButtonState.Pressed || g.ThumbSticks.Left.X < 0)
+            if (g.DPad.Left == ButtonState.Pressed || g.ThumbSticks.Left.X < -0.25)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_LEFT));
             }
 
-            if (g.DPad.Right == ButtonState.Pressed || g.ThumbSticks.Left.X > 0)
+            if (g.DPad.Right == ButtonState.Pressed || g.ThumbSticks.Left.X > 0.25)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_RIGHT));
             }

@@ -64,9 +64,12 @@ namespace BlastZone_Windows
 
             //load particles
             Managers.ParticleManager.AddAndLoad(Content, "BombSmoke");
+
             Managers.ParticleManager.AddAndLoad(Content, "Explosion");
-            Managers.ParticleManager.AddAndLoad(Content, "ExplosionFast");
             Managers.ParticleManager.AddAndLoad(Content, "Fire");
+
+            Managers.ParticleManager.AddAndLoad(Content, "ExplosionFast");
+            Managers.ParticleManager.AddAndLoad(Content, "FireFast");
 
             gameStateManager.LoadContent(Content);
         }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BlastZone_Windows")]
-[assembly: AssemblyProduct("BlastZone_Windows")]
+[assembly: AssemblyTitle("Blast Zone")]
+[assembly: AssemblyProduct("Blast Zone")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCompany("XYZZY")]
+[assembly: AssemblyCopyright("Copyright © XYZZY 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

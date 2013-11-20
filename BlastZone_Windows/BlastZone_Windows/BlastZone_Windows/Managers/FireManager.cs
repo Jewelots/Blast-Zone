@@ -104,7 +104,15 @@ namespace BlastZone_Windows
             Vector2 emitPos = levelOffsetPos + new Vector2(gx, gy) * GlobalGameData.tileSize * GlobalGameData.drawRatio;
             emitPos.X += (GlobalGameData.tileSize * GlobalGameData.drawRatio) / 2;
             emitPos.Y += (GlobalGameData.tileSize * GlobalGameData.drawRatio) / 2;
-            Managers.ParticleManager.Emit("ExplosionFast", emitPos);
+
+            if (GlobalGameData.LowQualityParticles)
+            {
+                Managers.ParticleManager.Emit("ExplosionFast", emitPos);
+            }
+            else
+            {
+                Managers.ParticleManager.Emit("Explosion", emitPos);
+            }
 
             return true;
         }

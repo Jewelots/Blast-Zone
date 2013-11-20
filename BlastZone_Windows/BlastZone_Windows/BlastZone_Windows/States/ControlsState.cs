@@ -44,6 +44,7 @@ namespace BlastZone_Windows.States
         {
             //Check if quit
             bool gamePadPressedBack = false;
+            bool gamePadPressedA = false;
             for (int i = 0; i < 4; ++i)
             {
                 GamePadState gps = GamePad.GetState((PlayerIndex)i);
@@ -54,9 +55,14 @@ namespace BlastZone_Windows.States
                 {
                     gamePadPressedBack = true;
                 }
+
+                if (gps.IsButtonDown(Buttons.A))
+                {
+                    gamePadPressedA = true;
+                }
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || gamePadPressedBack)
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.Enter) || gamePadPressedBack || gamePadPressedA)
             {
                 manager.SwapStateWithTransition(StateType.MENU);
             }

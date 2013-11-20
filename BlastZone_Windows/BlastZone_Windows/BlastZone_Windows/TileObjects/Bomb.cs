@@ -39,7 +39,8 @@ namespace BlastZone_Windows
             lifeTimer.Update(gameTime);
 
             Vector2 levelOffset = new Vector2(GlobalGameData.windowWidth / 2 - GlobalGameData.levelSizeX / 2, GlobalGameData.windowHeight / 2 - GlobalGameData.levelSizeY / 2);
-            Managers.ParticleManager.Emit("BombSmoke", levelOffset + DrawPosition + new Vector2(48, 2));
+            //Managers.ParticleManager.Emit("BombSmoke", levelOffset + DrawPosition + new Vector2(48, 2));
+            Managers.ParticleManager.AddEmissionPoint("BombSmoke", levelOffset + DrawPosition + new Vector2(48, 2));
         }
 
         void Explode()

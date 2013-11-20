@@ -28,6 +28,14 @@ namespace BlastZone_Windows
         public const int levelSizeX = GlobalGameData.gridSizeX * GlobalGameData.tileSize * GlobalGameData.drawRatio;
         public const int levelSizeY = GlobalGameData.gridSizeY * GlobalGameData.tileSize * GlobalGameData.drawRatio;
 
+        //Low quality particle toggle
+        public static bool LowQualityParticles = true;
+
+        //Volume levels
+        //Add loading from file?
+        public static float SFXVolume = 1f;
+        public static float MusicVolume = 1f;
+
         public static bool IsInBounds(int gx, int gy)
         {
             return (gx >= 0 && gy >= 0 && gx < gridSizeX && gy < gridSizeY);

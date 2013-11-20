@@ -130,6 +130,7 @@
     <Compile Include="MainGame.cs" />
     <Compile Include="ScoreRenderer.cs" />
     <Compile Include="States\ControlsState.cs" />
+    <Compile Include="States\OptionsState.cs" />
     <Compile Include="States\TieScreenState.cs" />
     <Compile Include="States\WinScreenState.cs" />
     <Compile Include="States\GameplayState.cs" />
