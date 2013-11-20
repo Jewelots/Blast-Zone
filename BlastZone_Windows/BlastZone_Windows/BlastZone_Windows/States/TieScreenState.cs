@@ -21,7 +21,7 @@ namespace BlastZone_Windows.States
         //Player count and player input types to pass back to game state
         int playerCount, p1, p2, p3, p4;
 
-        int winningPlayerIndex;
+        //int winningPlayerIndex;
 
         public void SetLevelData(int playerCount, int p1, int p2, int p3, int p4)
         {
