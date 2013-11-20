@@ -222,5 +222,15 @@ namespace BlastZone_Windows.Managers
             return pos + offset;
         }
 
+        /// <summary>
+        /// Clear all particles
+        /// </summary>
+        static public void ClearAll()
+        {
+            foreach (MultiEmitter emitter in multiEmitterRegistry.Values)
+            {
+                emitter.ClearAllParticles();
+            }
+        }
     }
 }

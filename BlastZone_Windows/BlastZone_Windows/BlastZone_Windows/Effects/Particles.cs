@@ -320,6 +320,17 @@ namespace Particles
         }
 
         /// <summary>
+        /// Clear particles
+        /// </summary>
+        public void ClearAllParticles()
+        {
+            foreach (Emitter emitter in EmitterList)
+            {
+                emitter.ClearAllParticles();
+            }
+        }
+
+        /// <summary>
         /// unload the emitter data
         /// </summary>
         /// <returns>error code, 0 is no error</returns>
@@ -774,6 +785,14 @@ namespace Particles
             updateParticles.Set();
 
             return diff;
+        }
+
+        /// <summary>
+        /// Clear particles
+        /// </summary>
+        public void ClearAllParticles()
+        {
+            particles.Clear();
         }
 
         /// <summary>

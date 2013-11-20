@@ -79,6 +79,8 @@ namespace BlastZone_Windows.States
                 currentState.Exit();
             }
 
+            Managers.ParticleManager.ClearAll();
+
             currentState = gameStates[state];
 
             currentState.Enter();
