@@ -75,9 +75,13 @@ namespace BlastZone_Windows.States
             bgtex.Draw(spriteBatch);
 
             spriteBatch.Begin();
+            #if XBOX
+            spriteBatch.Draw(gamepadImage, new Vector2(GlobalGameData.windowWidth / 2 - gamepadImage.Width / 2, GlobalGameData.windowHeight - gamepadImage.Height / 2), Color.White);
+            #else
             spriteBatch.Draw(keyboardImage, new Vector2(GlobalGameData.windowWidth / 2 - keyboardImage.Width / 2, GlobalGameData.windowHeight / 4 - keyboardImage.Height / 2), Color.White);
             spriteBatch.Draw(gamepadImage, new Vector2(GlobalGameData.windowWidth / 2 - gamepadImage.Width / 2, GlobalGameData.windowHeight - GlobalGameData.windowHeight / 4 - gamepadImage.Height / 2), Color.White);
             spriteBatch.End();
+            #endif
         }
     }
 }
