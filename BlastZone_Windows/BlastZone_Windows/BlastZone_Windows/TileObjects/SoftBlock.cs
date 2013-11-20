@@ -14,8 +14,9 @@ namespace BlastZone_Windows
     class SoftBlock : TileObject
     {
         Texture2D blockTex;
+        Rectangle sourceRect;
 
-        public SoftBlock(TileObjectManager manager, int tilePosX, int tilePosY, Texture2D tex)
+        public SoftBlock(TileObjectManager manager, int tilePosX, int tilePosY, Texture2D tex, int type)
             : base(manager, tilePosX, tilePosY)
         {
             blockTex = tex;
@@ -23,6 +24,8 @@ namespace BlastZone_Windows
 
             //Hook to destroy when burnt
             OnFireSpread += Destroy;
+
+            sourceRect = new Rectangle(0, type * GlobalGameData.tileSize, GlobalGameData.tileSize, GlobalGameData.tileSize);
         }
 
         public override void Update(GameTime gameTime)
@@ -49,7 +52,7 @@ namespace BlastZone_Windows
             spriteBatch.Draw(
                 blockTex, //Texture
                 drawPos, //Position
-                null, //Source Rect
+                sourceRect, //Source Rect
                 Color.White, //Color
                 0, //Rotation
                 new Vector2(GlobalGameData.tileSize / 2, GlobalGameData.tileSize / 2), //Offset

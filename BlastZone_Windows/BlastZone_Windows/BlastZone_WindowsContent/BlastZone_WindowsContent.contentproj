@@ -291,13 +291,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Images\Game\softblock.png">
-      <Name>softblock</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Effects\Fire.xml">
       <Name>Fire</Name>
       <Importer>XmlImporter</Importer>

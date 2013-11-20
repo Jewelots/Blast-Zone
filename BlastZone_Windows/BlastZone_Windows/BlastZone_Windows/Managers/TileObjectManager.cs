@@ -47,6 +47,7 @@ namespace BlastZone_Windows
 
         public void Reset()
         {
+            int levelType = GlobalGameData.rand.Next(4);
             //Clear grid and spawn soft blocks
             for (int y = 0; y < gridSizeY; ++y)
             {
@@ -59,7 +60,7 @@ namespace BlastZone_Windows
                     {
                         if (x % 2 != y % 2)
                         {
-                            tileObjectGrid[x, y] = tileObjectFactory.CreateSoftBlock(this, x, y);
+                            tileObjectGrid[x, y] = tileObjectFactory.CreateSoftBlock(this, x, y, levelType);
                         }
                     }
 

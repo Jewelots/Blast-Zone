@@ -25,7 +25,7 @@ namespace BlastZone_Windows
         public void LoadContent(ContentManager Content)
         {
             bombTex = Content.Load<Texture2D>("Images/Game/bomb");
-            blockTex = Content.Load<Texture2D>("Images/Game/softblock");
+            blockTex = Content.Load<Texture2D>("Images/Game/softblocks");
             loaded = true;
 
             powerupTex = new Texture2D[3];
@@ -42,11 +42,11 @@ namespace BlastZone_Windows
             return new Bomb(manager, tilePosX, tilePosY, bombTex, power);
         }
 
-        public SoftBlock CreateSoftBlock(TileObjectManager manager, int tilePosX, int tilePosY)
+        public SoftBlock CreateSoftBlock(TileObjectManager manager, int tilePosX, int tilePosY, int softblockType)
         {
             if (!loaded) return null;
 
-            return new SoftBlock(manager, tilePosX, tilePosY, blockTex);
+            return new SoftBlock(manager, tilePosX, tilePosY, blockTex, softblockType);
         }
 
         public Powerup CreatePowerup(TileObjectManager manager, int tilePosX, int tilePosY, PowerupType pType)
