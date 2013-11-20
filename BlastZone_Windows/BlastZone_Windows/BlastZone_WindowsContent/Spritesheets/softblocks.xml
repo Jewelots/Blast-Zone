@@ -14,7 +14,7 @@
 			<Frame x="3" y="0"/>
 			<Frame x="4" y="0"/>
 			<Frame x="5" y="0"/>
-			<End return="Block2"/>
+			<End return=""/>
 		</Block1>
 		<Block2>
 			<Frame x="0" y="1"/>
@@ -23,7 +23,7 @@
 			<Frame x="3" y="1"/>
 			<Frame x="4" y="1"/>
 			<Frame x="5" y="1"/>
-			<End return="Block1"/>
+			<End return=""/>
 		</Block2>
 		<Block3>
 			<Frame x="0" y="2"/>
@@ -41,7 +41,7 @@
 			<Frame x="3" y="3"/>
 			<Frame x="4" y="3"/>
 			<Frame x="5" y="3"/>
-			<End return="Block4"/>
+			<End return=""/>
 		</Block4>
 	</Animations>
 </Spritesheet>

@@ -71,6 +71,7 @@
     <Compile Include="Effects\Particles.cs" />
     <Compile Include="Effects\VectorGraphs.cs" />
     <Compile Include="EventTimer.cs" />
+    <Compile Include="Managers\FloatingAnimationManager.cs" />
     <Compile Include="GlobalGameData.cs" />
     <Compile Include="Managers\FireManager.cs" />
     <Compile Include="Managers\MouseManager.cs" />

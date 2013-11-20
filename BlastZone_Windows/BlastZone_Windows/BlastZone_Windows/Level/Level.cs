@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
 using BlastZone_Windows.MovementGrid;
+using SpritesheetAnimation;
 
 namespace BlastZone_Windows.Level
 {
@@ -26,11 +27,13 @@ namespace BlastZone_Windows.Level
 
         TileObjectManager tileObjectManager;
         public FireManager fireManager;
+        public FloatingAnimationManager floatingAnimationManager;
 
         LevelAesthetics aesthetics;
 
+        AnimatedSprite playerDeathAnimation;
+
         GridNodeMap gridNodeMap;
-        //GridNodeMover gridNodeMover;
 
         Player[] players;
         PlayerInputController[] playerInputControllers;
@@ -74,6 +77,8 @@ namespace BlastZone_Windows.Level
             {
                 playerInputControllers[i] = new PlayerInputController(players[i]);
             }
+
+            floatingAnimationManager = new FloatingAnimationManager();
         }
 
         public void Reset(int playerCount, int p1ControlType, int p2ControlType, int p3ControlType, int p4ControlType)
@@ -122,6 +127,10 @@ namespace BlastZone_Windows.Level
             aesthetics.GenerateTiles(solidArea);
 
             tileObjectManager.LoadContent(Content);
+
+            AnimationSheet playerDeathAnimationSheet = new AnimationSheet();
+            playerDeathAnimationSheet.Load(Content, "Spritesheets\\deathsprite");
+            playerDeathAnimation = new AnimatedSprite(playerDeathAnimationSheet, "Death");
 
             for (int i = 0; i < 4; ++i)
             {
@@ -251,7 +260,11 @@ namespace BlastZone_Windows.Level
                     if (fireManager.IsOnFire(gx, gy))
                     {
                         players[i].IsDead = true;
-                        //Spawn effect of player dying
+
+                        AnimatedSprite newAnim = playerDeathAnimation;
+                        newAnim.SetTexture("player" + (i + 1) + "Death");
+
+                        floatingAnimationManager.Add(newAnim, players[i].GetPosition());
                     }
                         
                     //Get item player standing on
@@ -333,6 +346,8 @@ namespace BlastZone_Windows.Level
             {
                 players[i].Draw(spriteBatch, gameTime);
             }
+
+            floatingAnimationManager.Draw(spriteBatch, gameTime);
 
             spriteBatch.End();
         }

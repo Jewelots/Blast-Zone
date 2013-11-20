@@ -92,6 +92,11 @@ namespace BlastZone_Windows
             movement.GetGridPosition(out gx, out gy);
         }
 
+        public Vector2 GetPosition()
+        {
+            return movement.GetPosition();
+        }
+
         public void PlaceBomb()
         {
             //Don't place bomb if dead

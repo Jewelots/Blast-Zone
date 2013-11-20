@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using SpritesheetAnimation;
+
 namespace BlastZone_Windows
 {
     /// <summary>
@@ -19,6 +21,8 @@ namespace BlastZone_Windows
         Texture2D bombTex, blockTex;
 
         Texture2D[] powerupTex;
+
+        AnimatedSprite destroySoftblockAnimation;
 
         bool loaded = false;
 
@@ -33,6 +37,10 @@ namespace BlastZone_Windows
             powerupTex[0] = Content.Load<Texture2D>("Images/Game/bombup");
             powerupTex[1] = Content.Load<Texture2D>("Images/Game/fireup");
             powerupTex[2] = Content.Load<Texture2D>("Images/Game/speedup");
+
+            AnimationSheet destroySoftblockAnimationSheet = new AnimationSheet();
+            destroySoftblockAnimationSheet.Load(Content, "Spritesheets\\softblocks");
+            destroySoftblockAnimation = new AnimatedSprite(destroySoftblockAnimationSheet, "Block1");
         }
 
         public Bomb CreateBomb(TileObjectManager manager, int tilePosX, int tilePosY, int power)
@@ -46,7 +54,7 @@ namespace BlastZone_Windows
         {
             if (!loaded) return null;
 
-            return new SoftBlock(manager, tilePosX, tilePosY, blockTex, softblockType);
+            return new SoftBlock(manager, tilePosX, tilePosY, blockTex, destroySoftblockAnimation, softblockType);
         }
 
         public Powerup CreatePowerup(TileObjectManager manager, int tilePosX, int tilePosY, PowerupType pType)

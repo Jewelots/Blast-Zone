@@ -237,6 +237,7 @@ namespace SpritesheetAnimation
         public float frameRate;
 
         private Texture2D currentTexture;
+        private AnimatedSprite destroyAnimation;
 
         public Animation? Animation { get { return currentAnimation; } }
 
@@ -271,6 +272,20 @@ namespace SpritesheetAnimation
             frameRate = animationSheet.defaultFrameRate;
 
             currentTexture = animationSheet.textures.First().Value;
+        }
+
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="sprite">AnimatedSprite to copy</param>
+        public AnimatedSprite(AnimatedSprite sprite) : this()
+        {
+            animationSheet = sprite.animationSheet;
+            currentAnimation = sprite.currentAnimation;
+            currentTexture = sprite.currentTexture;
+
+            scale = sprite.animationSheet.defaultScale;
+            frameRate = sprite.animationSheet.defaultFrameRate;
         }
 
         /// <summary>

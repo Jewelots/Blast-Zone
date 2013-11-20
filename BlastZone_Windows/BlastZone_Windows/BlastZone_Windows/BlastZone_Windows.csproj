@@ -116,6 +116,7 @@
     <Compile Include="EventTimer.cs" />
     <Compile Include="GlobalGameData.cs" />
     <Compile Include="Managers\FireManager.cs" />
+    <Compile Include="Managers\FloatingAnimationManager.cs" />
     <Compile Include="Managers\MouseManager.cs" />
     <Compile Include="Managers\ParticleManager.cs" />
     <Compile Include="Managers\TileObjectManager.cs" />
