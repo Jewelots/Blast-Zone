@@ -29,7 +29,11 @@ namespace BlastZone_Windows
         public const int levelSizeY = GlobalGameData.gridSizeY * GlobalGameData.tileSize * GlobalGameData.drawRatio;
 
         //Low quality particle toggle
+        #if XBOX360
         public static bool LowQualityParticles = true;
+        #else
+        public static bool LowQualityParticles = false;
+        #endif
 
         //Volume levels
         //Add loading from file?

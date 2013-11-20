@@ -267,9 +267,11 @@ namespace BlastZone_Windows.States
             spriteBatch.Begin();
             DrawTextExtension.DrawTextOutline(spriteBatch, optionsFont, "SFX Volume", Color.Black, (curSelected == 0) ? Color.Yellow : Color.White, new Vector2(GlobalGameData.windowWidth / 2, option1Height), 3f, HorizontalAlign.AlignCenter);
             DrawTextExtension.DrawTextOutline(spriteBatch, optionsFont, "Music Volume", Color.Black, (curSelected == 1) ? Color.Yellow : Color.White, new Vector2(GlobalGameData.windowWidth / 2, option2Height), 3f, HorizontalAlign.AlignCenter);
-            DrawTextExtension.DrawTextOutline(spriteBatch, optionsFont, lowQPartText, Color.Black, (curSelected == 2) ? Color.Yellow : Color.White, lowQPartTextPos, 3f);
             
+            #if WINDOWS
+            DrawTextExtension.DrawTextOutline(spriteBatch, optionsFont, lowQPartText, Color.Black, (curSelected == 2) ? Color.Yellow : Color.White, lowQPartTextPos, 3f);
             spriteBatch.Draw(checkboxTex, checkboxPos, checkboxSrcRect, Color.White);
+            #endif
 
             spriteBatch.End();
 
