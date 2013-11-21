@@ -147,10 +147,18 @@ namespace BlastZone_Windows
             }
         }
 
-        public void CreateBomb(int playerIndex, int gx, int gy, int power)
+        /// <summary>
+        /// Create a bomb at a tile, with a power
+        /// </summary>
+        /// <param name="playerIndex">Player who owns the bomb</param>
+        /// <param name="gx">X Position in terms of tiles</param>
+        /// <param name="gy">Y Position in terms of tiles</param>
+        /// <param name="power">Power of bomb (tiles of explosion radius)</param>
+        /// <returns></returns>
+        public bool CreateBomb(int playerIndex, int gx, int gy, int power)
         {
-            if (!GlobalGameData.IsInBounds(gx, gy)) return;
-            if (tileObjectGrid[gx, gy] != null) return; //Spot already occupied, can't place bomb here
+            if (!GlobalGameData.IsInBounds(gx, gy)) return false;
+            if (tileObjectGrid[gx, gy] != null) return false; //Spot already occupied, can't place bomb here
 
             if (activeBombs[playerIndex] < level.getMaxBombs(playerIndex))
             {
@@ -163,7 +171,11 @@ namespace BlastZone_Windows
 
                 //Add bomb to tile object grid
                 tileObjectGrid[gx, gy] = b;
+
+                return true;
             }
+
+            return false;
         }
 
         public void CreateBomb(int playerIndex, int gx, int gy)

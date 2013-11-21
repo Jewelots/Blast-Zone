@@ -174,5 +174,10 @@ namespace BlastZone_Windows.States
         {
             mainGame.Exit();
         }
+
+        public bool IsTransitioning()
+        {
+            return transitioning;
+        }
     }
 }

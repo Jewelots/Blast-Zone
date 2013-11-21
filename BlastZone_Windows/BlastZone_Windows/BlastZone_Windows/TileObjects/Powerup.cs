@@ -22,12 +22,15 @@ namespace BlastZone_Windows
     {
         Texture2D powerupTex;
         PowerupType pType;
+        SoundEffectInstance powerupSoundInstance;
 
-        public Powerup(TileObjectManager manager, int tilePosX, int tilePosY, PowerupType pType, Texture2D tex)
+        public Powerup(TileObjectManager manager, int tilePosX, int tilePosY, PowerupType pType, Texture2D tex, SoundEffectInstance powerupSound)
             : base(manager, tilePosX, tilePosY)
         {
             this.pType = pType;
-            powerupTex = tex;
+            this.powerupTex = tex;
+            this.powerupSoundInstance = powerupSound;
+
             Solid = false;
 
             //Hook to destroy when burnt
@@ -64,6 +67,8 @@ namespace BlastZone_Windows
                     p.SpeedUp();
                     break;
             }
+
+            powerupSoundInstance.Play();
 
             RemoveThis();
         }

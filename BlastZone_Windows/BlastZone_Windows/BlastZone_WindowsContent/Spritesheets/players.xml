@@ -7,7 +7,7 @@
     <Texture name="player4"/>
   </Textures>
   <Mesh x="4" y="2"/>
-	<Framerate default="4.0"/>
+	<Framerate default="8.0"/>
   <Scale default="4.0"/>
 	<Animations>
 		<StandDown>

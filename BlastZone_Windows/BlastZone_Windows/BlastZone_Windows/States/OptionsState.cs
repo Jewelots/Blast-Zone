@@ -24,11 +24,15 @@ namespace BlastZone_Windows.States
         KeyboardState oldState;
         GamePadState[] oldGamepadStates;
 
+        SoundEffect itemSwitchSound;
+        SoundEffectInstance itemSwitchSoundInstance;
+
         int curSelected;
 
         public override void Enter()
         {
             curSelected = 0;
+            itemSwitchSoundInstance.Volume = GlobalGameData.SFXVolume;
         }
         public override void Exit()
         {
@@ -50,6 +54,9 @@ namespace BlastZone_Windows.States
             bgtex.SetTexture(Content.Load<Texture2D>("Images/Menu/bg"));
             sliderTex = Content.Load<Texture2D>("Images/Options/slider");
             checkboxTex = Content.Load<Texture2D>("Images/Options/checkbox");
+
+            itemSwitchSound = Content.Load<SoundEffect>("SFX/menuitemchange");
+            itemSwitchSoundInstance = itemSwitchSound.CreateInstance();
         }
 
         public override void Update(GameTime gameTime)
@@ -139,6 +146,7 @@ namespace BlastZone_Windows.States
                         break;
                     case 2: //Toggle Low Quality Particles
                         GlobalGameData.LowQualityParticles = !GlobalGameData.LowQualityParticles;
+                        itemSwitchSoundInstance.Play();
                         break;
                     default:
                         break;
@@ -155,6 +163,9 @@ namespace BlastZone_Windows.States
                         {
                             GlobalGameData.SFXVolume = 0;
                         }
+
+                        itemSwitchSoundInstance.Volume = GlobalGameData.SFXVolume;
+                        itemSwitchSoundInstance.Play();
                         break;
                     case 1: //Music volume
                         GlobalGameData.MusicVolume -= 0.3f * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -181,6 +192,9 @@ namespace BlastZone_Windows.States
                         {
                             GlobalGameData.SFXVolume = 1;
                         }
+
+                        itemSwitchSoundInstance.Volume = GlobalGameData.SFXVolume;
+                        itemSwitchSoundInstance.Play();
                         break;
                     case 1: //Music volume
                         GlobalGameData.MusicVolume += 0.3f * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -213,6 +227,9 @@ namespace BlastZone_Windows.States
                         {
                             GlobalGameData.SFXVolume = 1;
                         }
+
+                        itemSwitchSoundInstance.Volume = GlobalGameData.SFXVolume;
+                        itemSwitchSoundInstance.Play();
                         break;
                     case 1: //Music volume
                         GlobalGameData.MusicVolume -= 0.6f * -mostJoyAmount * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -233,8 +250,16 @@ namespace BlastZone_Windows.States
                 }
             }
 
-            if ((newState.IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up)) || (newState.IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W)) || gamepadPressedUp) curSelected -= 1;
-            if ((newState.IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down)) || (newState.IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S)) || gamepadPressedDown) curSelected += 1;
+            if ((newState.IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up)) || (newState.IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W)) || gamepadPressedUp)
+            {
+                itemSwitchSoundInstance.Play();
+                curSelected -= 1;
+            }
+            if ((newState.IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down)) || (newState.IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S)) || gamepadPressedDown)
+            {
+                itemSwitchSoundInstance.Play();
+                curSelected += 1;
+            }
 
             curSelected %= 3;
             if (curSelected < 0) curSelected = 2;

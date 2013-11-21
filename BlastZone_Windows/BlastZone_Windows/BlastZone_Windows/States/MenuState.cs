@@ -33,6 +33,8 @@ namespace BlastZone_Windows.States
         Texture2D menuTextTex;
 
         Song menuSong;
+        SoundEffect itemSwitchSound, itemSelectSound;
+        SoundEffectInstance itemSwitchSoundInstance, itemSelectSoundInstance;
 
         SpriteFont menuFont;
 
@@ -43,10 +45,12 @@ namespace BlastZone_Windows.States
         GamePadState[] oldGamepadStates;
 
         int curSelected;
+        bool selectedMenuOption;
 
         public override void Enter()
         {
             curSelected = 0;
+            selectedMenuOption = false;
 
             Random r = GlobalGameData.rand;
 
@@ -68,6 +72,9 @@ namespace BlastZone_Windows.States
                 MediaPlayer.Play(menuSong);
                 MediaPlayer.IsRepeating = true;
             }
+
+            itemSelectSoundInstance.Volume = GlobalGameData.SFXVolume;
+            itemSwitchSoundInstance.Volume = GlobalGameData.SFXVolume;
         }
 
         void InitBomb(Random r, int bombIndex)
@@ -126,6 +133,13 @@ namespace BlastZone_Windows.States
 
             //Load music
             menuSong = Content.Load<Song>("Music/title");
+
+            //Load SFX
+            itemSwitchSound = Content.Load<SoundEffect>("SFX/menuitemchange");
+            itemSelectSound = Content.Load<SoundEffect>("SFX/menuitemselect");
+
+            itemSwitchSoundInstance = itemSwitchSound.CreateInstance();
+            itemSelectSoundInstance = itemSelectSound.CreateInstance();
         }
 
         public override void Update(GameTime gameTime)
@@ -194,8 +208,11 @@ namespace BlastZone_Windows.States
                 }
             }
 
-            if (newState.IsKeyDown(Keys.Enter) || newState.IsKeyDown(Keys.Space) || gamepadPressedA)
+            if ((newState.IsKeyDown(Keys.Enter) || newState.IsKeyDown(Keys.Space) || gamepadPressedA) && !manager.IsTransitioning() && !selectedMenuOption)
             {
+                itemSelectSoundInstance.Play();
+
+                selectedMenuOption = true;
                 switch (curSelected)
                 {
                     case 0: //Lobby button
@@ -215,8 +232,16 @@ namespace BlastZone_Windows.States
                 }
             }
 
-            if ((newState.IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up)) || (newState.IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W)) || gamepadPressedUp) curSelected -= 1;
-            if ((newState.IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down)) || (newState.IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S)) || gamepadPressedDown) curSelected += 1;
+            if ((newState.IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up)) || (newState.IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W)) || gamepadPressedUp)
+            {
+                itemSwitchSoundInstance.Play();
+                curSelected -= 1;
+            }
+            if ((newState.IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down)) || (newState.IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S)) || gamepadPressedDown)
+            {
+                itemSwitchSoundInstance.Play();
+                curSelected += 1;
+            }
 
             curSelected %= 4;
             if (curSelected < 0) curSelected = 3;

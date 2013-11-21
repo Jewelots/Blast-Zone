@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 
 using SpritesheetAnimation;
+using Microsoft.Xna.Framework.Audio;
 
 namespace BlastZone_Windows
 {
@@ -17,7 +18,7 @@ namespace BlastZone_Windows
         GridNodeMover movement;
         AnimatedSprite playerAnimations;
 
-        Action<int, int, int, int> placeBombFunc;
+        Func<int, int, int, int, bool> placeBombFunc;
 
         int power;
         int playerIndex;
@@ -25,7 +26,10 @@ namespace BlastZone_Windows
 
         public bool IsDead;
 
-        public Player(GridNodeMap map, int playerIndex, Action<int, int, int, int> placeBombFunc)
+        SoundEffect footstepSound, bombPlaceSound;
+        SoundEffectInstance footstepSoundInstance;
+
+        public Player(GridNodeMap map, int playerIndex, Func<int, int, int, int, bool> placeBombFunc)
         {
             movement = new GridNodeMover(map);
             this.placeBombFunc = placeBombFunc;
@@ -39,6 +43,9 @@ namespace BlastZone_Windows
             bombCount = 1;
             power = 1;
             IsDead = false;
+            footstepSoundInstance = footstepSound.CreateInstance();
+            footstepSoundInstance.Volume = GlobalGameData.SFXVolume * 0.25f; //Quiet enough to not annoy hopefully
+            footstepSoundInstance.IsLooped = true;
         }
 
         public void Move(MoveEvent moveEvent)
@@ -46,7 +53,11 @@ namespace BlastZone_Windows
             //Don't move if dead
             if (IsDead) return;
 
+            //Play footstep sound
+            footstepSoundInstance.Play();
+
             movement.QueueEvent(moveEvent);
+
             switch (moveEvent.moveEvent)
             {
                 case MoveEvent.MoveEventType.MOVE_UP:
@@ -64,12 +75,20 @@ namespace BlastZone_Windows
             }
         }
 
+        public void StopMove()
+        {
+            footstepSoundInstance.Stop();
+        }
+
         public void LoadContent(ContentManager Content)
         {
             AnimationSheet playerSheet = new AnimationSheet();
             playerSheet.Load(Content, "Spritesheets\\players");
             playerAnimations = new AnimatedSprite(playerSheet, "StandDown");
             playerAnimations.SetTexture("player" + (playerIndex + 1));
+
+            footstepSound = Content.Load<SoundEffect>("SFX/footsteps");
+            bombPlaceSound = Content.Load<SoundEffect>("SFX/bombplace");
         }
 
         public void Update(GameTime gameTime)
@@ -106,7 +125,12 @@ namespace BlastZone_Windows
 
             movement.GetGridPosition(out gx, out gy);
 
-            placeBombFunc(playerIndex, gx, gy, this.power); //x, y, power
+            if (placeBombFunc(playerIndex, gx, gy, this.power))
+            {
+                SoundEffectInstance bombSoundInstance = bombPlaceSound.CreateInstance();
+                bombSoundInstance.Volume = GlobalGameData.SFXVolume * 0.6f;
+                bombSoundInstance.Play();
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)

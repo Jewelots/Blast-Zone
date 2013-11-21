@@ -47,24 +47,30 @@ namespace BlastZone_Windows
 
             if (keyIdentifiers == null) return; //No keys set
 
+            bool hasMoved = false;
+
             if (k.IsKeyDown(keyIdentifiers["up"]))
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_UP));
+                hasMoved = true;
             }
 
             if (k.IsKeyDown(keyIdentifiers["down"]))
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_DOWN));
+                hasMoved = true;
             }
 
             if (k.IsKeyDown(keyIdentifiers["left"]))
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_LEFT));
+                hasMoved = true;
             }
 
             if (k.IsKeyDown(keyIdentifiers["right"]))
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_RIGHT));
+                hasMoved = true;
             }
 
             if (KeyJustPressed(keyIdentifiers["bomb"], k))
@@ -73,6 +79,12 @@ namespace BlastZone_Windows
             }
 
             lastKeyState = k;
+
+            //Player didn't move this frame
+            if (!hasMoved)
+            {
+                controlling.StopMove();
+            }
         }
 
         public bool KeyJustPressed(Keys key, KeyboardState k)

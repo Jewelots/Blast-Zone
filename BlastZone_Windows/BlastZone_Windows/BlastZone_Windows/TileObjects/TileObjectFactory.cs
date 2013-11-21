@@ -24,6 +24,9 @@ namespace BlastZone_Windows
 
         AnimatedSprite destroySoftblockAnimation;
 
+        SoundEffect powerupSound, bombExplosionSound;
+        SoundEffectInstance powerupSoundInstance, bombExplosionSoundInstance;
+
         bool loaded = false;
 
         public void LoadContent(ContentManager Content)
@@ -41,13 +44,22 @@ namespace BlastZone_Windows
             AnimationSheet destroySoftblockAnimationSheet = new AnimationSheet();
             destroySoftblockAnimationSheet.Load(Content, "Spritesheets\\softblocks");
             destroySoftblockAnimation = new AnimatedSprite(destroySoftblockAnimationSheet, "Block1");
+
+            powerupSound = Content.Load<SoundEffect>("SFX/powerup");
+            bombExplosionSound = Content.Load<SoundEffect>("SFX/bombexplode");
+
+            powerupSoundInstance = powerupSound.CreateInstance();
+            bombExplosionSoundInstance = bombExplosionSound.CreateInstance();
+
+            powerupSoundInstance.Volume = GlobalGameData.SFXVolume * 0.6f;
+            bombExplosionSoundInstance.Volume = GlobalGameData.SFXVolume;
         }
 
         public Bomb CreateBomb(TileObjectManager manager, int tilePosX, int tilePosY, int power)
         {
             if (!loaded) return null;
 
-            return new Bomb(manager, tilePosX, tilePosY, bombTex, power);
+            return new Bomb(manager, tilePosX, tilePosY, bombTex, power, bombExplosionSoundInstance);
         }
 
         public SoftBlock CreateSoftBlock(TileObjectManager manager, int tilePosX, int tilePosY, int softblockType)
@@ -79,7 +91,7 @@ namespace BlastZone_Windows
                     break;
             }
 
-            return new Powerup(manager, tilePosX, tilePosY, pType, pTex);
+            return new Powerup(manager, tilePosX, tilePosY, pType, pTex, powerupSoundInstance);
         }
     }
 }

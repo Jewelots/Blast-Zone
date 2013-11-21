@@ -16,14 +16,17 @@ namespace BlastZone_Windows
         Texture2D bombTex;
 
         EventTimer lifeTimer;
+        SoundEffectInstance explodeSoundInstance;
 
         int power;
 
-        public Bomb(TileObjectManager manager, int tilePosX, int tilePosY, Texture2D tex, int power)
+        public Bomb(TileObjectManager manager, int tilePosX, int tilePosY, Texture2D tex, int power, SoundEffectInstance explodeSound)
             : base(manager, tilePosX, tilePosY)
         {
             bombTex = tex;
             Solid = true;
+
+            this.explodeSoundInstance = explodeSound;
 
             lifeTimer = new EventTimer(0, 4);
 
@@ -45,6 +48,7 @@ namespace BlastZone_Windows
 
         void Explode()
         {
+            explodeSoundInstance.Play();
             RemoveThis();
             manager.level.fireManager.ExplodeFrom(tilePositionX, tilePositionY, power);
         }

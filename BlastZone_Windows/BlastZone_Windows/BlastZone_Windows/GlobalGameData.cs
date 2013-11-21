@@ -37,8 +37,8 @@ namespace BlastZone_Windows
 
         //Volume levels
         //Add loading from file?
-        public static float SFXVolume = 1f;
-        public static float MusicVolume = 1f;
+        public static float SFXVolume = 0.8f;
+        public static float MusicVolume = 0.8f;
 
         public static bool IsInBounds(int gx, int gy)
         {
