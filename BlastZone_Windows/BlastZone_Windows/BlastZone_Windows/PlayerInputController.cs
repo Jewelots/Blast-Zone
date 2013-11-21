@@ -100,25 +100,25 @@ namespace BlastZone_Windows
 
             if (g.DPad.Up == ButtonState.Pressed || g.ThumbSticks.Left.Y > 0.25)
             {
-                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_UP));
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_UP, Math.Abs(g.ThumbSticks.Left.Y * 150)));
                 hasMoved = true;
             }
 
             if (g.DPad.Down == ButtonState.Pressed || g.ThumbSticks.Left.Y < -0.25)
             {
-                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_DOWN));
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_DOWN, Math.Abs(g.ThumbSticks.Left.Y * 150)));
                 hasMoved = true;
             }
 
             if (g.DPad.Left == ButtonState.Pressed || g.ThumbSticks.Left.X < -0.25)
             {
-                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_LEFT));
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_LEFT, Math.Abs(g.ThumbSticks.Left.X * 150)));
                 hasMoved = true;
             }
 
             if (g.DPad.Right == ButtonState.Pressed || g.ThumbSticks.Left.X > 0.25)
             {
-                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_RIGHT));
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_RIGHT, Math.Abs(g.ThumbSticks.Left.X * 150)));
                 hasMoved = true;
             }
 
