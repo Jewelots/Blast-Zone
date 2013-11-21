@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<MultiEmitter>
+  <Textures>
+    <Smoke texture="SmokeTex"/>
+  </Textures>
+  <Graphs>
+    <Base type="Bezier">
+      <Point x="0.0" y="0.0"/>
+      <Point x="1.0" y="2.0"/>
+      <Point x="1.0" y="0.0"/>
+    </Base>
+    <Smoke type="Bezier">
+      <Point x="0.0" y="0.0"/>
+      <Point x="0.25" y="1.0"/>
+      <Point x="1.0" y="0.5"/>
+    </Smoke>
+    <FireTweak type="Bezier">
+      <Point x="0" y="0.0"/>
+      <Point x="0.5" y="2"/>
+      <Point x="1.0" y="1"/>
+    </FireTweak>
+  </Graphs>
+  <Particles>
+    <Red>
+      <Texture texture="Smoke"/>
+      <Life length="1"/>
+      <Size scale="64.0" graph="FireTweak"/>
+      <Colour r="255" g="0" b="0" a="63" graph="Base"/>
+      <Rotation angle="0.0" graph=""/>
+      <Acceleration x="0.0" y="-49.0"/>
+      <Decay x="0.0" y="0.0"/>
+    </Red>
+    <Green>
+      <Texture texture="Smoke"/>
+      <Life length="1"/>
+      <Size scale="64.0" graph="FireTweak"/>
+      <Colour r="0" g="255" b="0" a="63" graph="Base"/>
+      <Rotation angle="0.0" graph=""/>
+      <Acceleration x="0.0" y="-49.0"/>
+      <Decay x="0.0" y="0.0"/>
+    </Green>
+    <Blue>
+      <Texture texture="Smoke"/>
+      <Life length="1"/>
+      <Size scale="64.0" graph="FireTweak"/>
+      <Colour r="0" g="0" b="255" a="63" graph="Base"/>
+      <Rotation angle="0.0" graph=""/>
+      <Acceleration x="0.0" y="-49.0"/>
+      <Decay x="0.0" y="0.0"/>
+    </Blue>
+    <Smoke>
+      <Texture texture="Smoke"/>
+      <Life length="1.5"/>
+      <Size scale="100.0" graph="FireTweak"/>
+      <Colour r="94" g="73" b="51" a="128" graph="Smoke"/>
+      <Rotation angle="0.0" graph=""/>
+      <Acceleration x="0.0" y="-49.0"/>
+      <Decay x="0.0" y="0.0"/>
+    </Smoke>
+    <Spark>
+      <Texture texture="Smoke"/>
+      <Life length="1.0"/>
+      <Size scale="5.0" graph=""/>
+      <Colour r="255" g="200" b="200" a="255" graph="Base"/>
+      <Rotation angle="0.0" graph=""/>
+      <Acceleration x="0.0" y="49.0"/>
+      <Decay x="1.0" y="1.0"/>
+    </Spark>
+  </Particles>
+  <Emitters>
+    <Smoke>
+      <Origin x="0.0" y="0.0" depth="0.5"/>
+      <Power x="80.0" y="80.0"/>
+      <Rate rate ="0.0" count ="10"/>
+      <BlendStates>
+        <State state="NonPremultiplied"/>
+      </BlendStates>
+    </Smoke>
+    <Red>
+      <Origin x="0.0" y="0.0" depth="0.0"/>
+      <Power x="60.0" y="60.0"/>
+      <Rate rate ="0.0" count ="12"/>
+      <BlendStates>
+        <State state="NonPremultiplied"/>
+        <State state="Additive"/>
+      </BlendStates>
+    </Red>
+    <Green>
+      <Origin x="0.0" y="0.0" depth="0.0"/>
+      <Power x="60.0" y="60.0"/>
+      <Rate rate ="0.0" count ="10"/>
+      <BlendStates>
+        <State state="NonPremultiplied"/>
+        <State state="Additive"/>
+      </BlendStates>
+    </Green>
+    <Blue>
+      <Origin x="0.0" y="0.0" depth="0.0"/>
+      <Power x="60.0" y="60.0"/>
+      <Rate rate ="0.0" count ="8"/>
+      <BlendStates>
+        <State state="NonPremultiplied"/>
+        <State state="Additive"/>
+      </BlendStates>
+    </Blue>
+    <Spark>
+      <Origin x="0.0" y="0.0" depth="0.0"/>
+      <Power x="240.0" y="160.0"/>
+      <Rate rate ="0.0" count ="10"/>
+      <BlendStates>
+        <State state="AlphaBlend"/>
+        <State state="Additive"/>
+      </BlendStates>
+    </Spark>
+  </Emitters>
+</MultiEmitter>
