@@ -96,24 +96,30 @@ namespace BlastZone_Windows
         {
             if (useKey) return;
 
+            bool hasMoved = false;
+
             if (g.DPad.Up == ButtonState.Pressed || g.ThumbSticks.Left.Y > 0.25)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_UP));
+                hasMoved = true;
             }
 
             if (g.DPad.Down == ButtonState.Pressed || g.ThumbSticks.Left.Y < -0.25)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_DOWN));
+                hasMoved = true;
             }
 
             if (g.DPad.Left == ButtonState.Pressed || g.ThumbSticks.Left.X < -0.25)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_LEFT));
+                hasMoved = true;
             }
 
             if (g.DPad.Right == ButtonState.Pressed || g.ThumbSticks.Left.X > 0.25)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_RIGHT));
+                hasMoved = true;
             }
 
             if (ButtonJustPressed(Buttons.A, g))
@@ -122,6 +128,12 @@ namespace BlastZone_Windows
             }
 
             lastPadState = g;
+
+            //Player didn't move this frame
+            if (!hasMoved)
+            {
+                controlling.StopMove();
+            }
         }
 
         public bool ButtonJustPressed(Buttons button, GamePadState g)
