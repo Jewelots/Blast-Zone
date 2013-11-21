@@ -126,7 +126,7 @@ namespace BlastZone_Windows.States
                 GameplayState gps = manager.GetState(StateType.GAME) as GameplayState;
                 gps.SetLevelData(playerCount, controller[0], controller[1], controller[2], controller[3]);
 
-                manager.SwapStateWithTransition(StateType.GAME);
+                manager.SwapStateWithTransitionMusic(StateType.GAME);
             }
 
             //Set last states

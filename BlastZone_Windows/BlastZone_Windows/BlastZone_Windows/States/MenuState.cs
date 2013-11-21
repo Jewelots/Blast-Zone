@@ -32,6 +32,8 @@ namespace BlastZone_Windows.States
         TiledTexture bgtex;
         Texture2D menuTextTex;
 
+        Song menuSong;
+
         SpriteFont menuFont;
 
         int menuBeginPosY;
@@ -56,6 +58,15 @@ namespace BlastZone_Windows.States
             for (int i = 0; i < fallingBombCount; ++i)
             {
                 InitBomb(r, i);
+            }
+
+            MediaQueue mediaQueue = MediaPlayer.Queue;
+
+            //Play music if not playing
+            if (mediaQueue.ActiveSong == null || mediaQueue.ActiveSong != menuSong)
+            {
+                MediaPlayer.Play(menuSong);
+                MediaPlayer.IsRepeating = true;
             }
         }
 
@@ -112,6 +123,9 @@ namespace BlastZone_Windows.States
             menuTextTex = Content.Load<Texture2D>("Images/Menu/text");
 
             menuFont = Content.Load<SpriteFont>("Fonts/Badaboom");
+
+            //Load music
+            menuSong = Content.Load<Song>("Music/title");
         }
 
         public override void Update(GameTime gameTime)

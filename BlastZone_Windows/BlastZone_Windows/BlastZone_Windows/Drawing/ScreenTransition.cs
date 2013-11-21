@@ -120,6 +120,11 @@ namespace BlastZone_Windows.Drawing
                 }
             }
         }
+
+        public float Ratio()
+        {
+            return (float)timer.GetRatio();
+        }
     }
 
     /// <summary>
@@ -225,6 +230,18 @@ namespace BlastZone_Windows.Drawing
         public void Draw(SpriteBatch spriteBatch)
         {
             currentTransition.Draw(spriteBatch);
+        }
+
+        public float FadeAmount()
+        {
+            if (currentTransition == stIn)
+            {
+                return 1 - stIn.Ratio();
+            }
+            else
+            {
+                return stOut.Ratio();
+            }
         }
     }
 }

@@ -162,6 +162,7 @@ namespace BlastZone_Windows.States
                         {
                             GlobalGameData.MusicVolume = 0;
                         }
+                        MediaPlayer.Volume = GlobalGameData.MusicVolume;
                         break;
                     case 2: //Toggle Low Quality Particles
                         break;
@@ -187,6 +188,7 @@ namespace BlastZone_Windows.States
                         {
                             GlobalGameData.MusicVolume = 1;
                         }
+                        MediaPlayer.Volume = GlobalGameData.MusicVolume;
                         break;
                     case 2: //Toggle Low Quality Particles
                         break;

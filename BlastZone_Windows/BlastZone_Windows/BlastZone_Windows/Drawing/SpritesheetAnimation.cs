@@ -237,7 +237,6 @@ namespace SpritesheetAnimation
         public float frameRate;
 
         private Texture2D currentTexture;
-        private AnimatedSprite destroyAnimation;
 
         public Animation? Animation { get { return currentAnimation; } }
 

@@ -21,7 +21,7 @@ namespace BlastZone_Windows.States
         //Player count and player input types to pass back to game state
         int playerCount, p1, p2, p3, p4;
 
-        //int winningPlayerIndex;
+        Song tieSong;
 
         public void SetLevelData(int playerCount, int p1, int p2, int p3, int p4)
         {
@@ -34,6 +34,8 @@ namespace BlastZone_Windows.States
 
         public override void Enter()
         {
+            MediaPlayer.Play(tieSong);
+            MediaPlayer.IsRepeating = true;
         }
 
         public override void Exit()
@@ -50,6 +52,8 @@ namespace BlastZone_Windows.States
         {
             bgtex.SetTexture(Content.Load<Texture2D>("Images/Menu/bg"));
             tieTextFont = Content.Load<SpriteFont>("Fonts/Badaboom");
+
+            tieSong = Content.Load<Song>("Music/tie");
         }
 
         public override void Update(GameTime gameTime)
@@ -76,7 +80,7 @@ namespace BlastZone_Windows.States
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) || gamePadPressedBack)
             {
-                manager.SwapStateWithTransition(StateType.MENU);
+                manager.SwapStateWithTransitionMusic(StateType.MENU);
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.Enter) || gamePadPressedGo)
@@ -84,7 +88,7 @@ namespace BlastZone_Windows.States
                 GameplayState gps = manager.GetState(StateType.GAME) as GameplayState;
                 gps.SetLevelData(playerCount, p1, p2, p3, p4);
 
-                manager.SwapStateWithTransition(StateType.GAME);
+                manager.SwapStateWithTransitionMusic(StateType.GAME);
             }
 
             bgtex.ShiftOffset(new Vector2(50f * (float)gameTime.ElapsedGameTime.TotalSeconds, 50f * (float)gameTime.ElapsedGameTime.TotalSeconds));

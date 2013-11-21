@@ -25,6 +25,8 @@ namespace BlastZone_Windows.States
 
         int winningPlayerIndex;
 
+        Song winSong;
+
         public void SetLevelData(int playerCount, int p1, int p2, int p3, int p4)
         {
             this.playerCount = playerCount;
@@ -43,6 +45,8 @@ namespace BlastZone_Windows.States
 
         public override void Enter()
         {
+            MediaPlayer.Play(winSong);
+            MediaPlayer.IsRepeating = false;
         }
 
         public override void Exit()
@@ -66,6 +70,8 @@ namespace BlastZone_Windows.States
             playerWinAnimation = new AnimatedSprite(winSheet, "Win");
             playerWinAnimation.position = new Vector2(GlobalGameData.windowWidth / 2, GlobalGameData.windowHeight / 2);
             playerWinAnimation.frameRate = 2;
+
+            winSong = Content.Load<Song>("Music/victory");
         }
 
         public override void Update(GameTime gameTime)
@@ -92,7 +98,7 @@ namespace BlastZone_Windows.States
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) || gamePadPressedBack)
             {
-                manager.SwapStateWithTransition(StateType.MENU);
+                manager.SwapStateWithTransitionMusic(StateType.MENU);
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.Enter) || gamePadPressedGo)
@@ -100,7 +106,7 @@ namespace BlastZone_Windows.States
                 GameplayState gps = manager.GetState(StateType.GAME) as GameplayState;
                 gps.SetLevelData(playerCount, p1, p2, p3, p4);
 
-                manager.SwapStateWithTransition(StateType.GAME);
+                manager.SwapStateWithTransitionMusic(StateType.GAME);
             }
 
             bgtex.ShiftOffset(new Vector2(50f * (float)gameTime.ElapsedGameTime.TotalSeconds, 50f * (float)gameTime.ElapsedGameTime.TotalSeconds));

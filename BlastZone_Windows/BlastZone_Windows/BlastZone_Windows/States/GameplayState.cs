@@ -36,6 +36,11 @@ namespace BlastZone_Windows.States
         /// </summary>
         GraphicsDevice graphicsDevice;
 
+        /// <summary>
+        /// Array of songs
+        /// </summary>
+        Song[] songList;
+
         int playerCount = 1;
         int[] playerInputTypes;
 
@@ -46,6 +51,8 @@ namespace BlastZone_Windows.States
             startTime = -1;
 
             level.Reset(playerCount, playerInputTypes[0], playerInputTypes[1], playerInputTypes[2], playerInputTypes[3]);
+
+            PlayRandomSong();
         }
 
         public override void Exit()
@@ -65,6 +72,7 @@ namespace BlastZone_Windows.States
             this.graphicsDevice = graphicsDevice;
 
             playerInputTypes = new int[4];
+            songList = new Song[5];
         }
 
         void MoveToWinState(int winningPlayerIndex)
@@ -75,7 +83,7 @@ namespace BlastZone_Windows.States
             wss.SetLevelData(playerCount, playerInputTypes[0], playerInputTypes[1], playerInputTypes[2], playerInputTypes[3]);
             wss.SetWinData(winningPlayerIndex);
 
-            manager.SwapStateWithTransition(StateType.WINSCREEN);
+            manager.SwapStateWithTransitionMusic(StateType.WINSCREEN);
         }
 
         void MoveToTieState()
@@ -83,7 +91,7 @@ namespace BlastZone_Windows.States
             TieScreenState tss = manager.GetState(StateType.TIESCREEN) as TieScreenState;
             tss.SetLevelData(playerCount, playerInputTypes[0], playerInputTypes[1], playerInputTypes[2], playerInputTypes[3]);
 
-            manager.SwapStateWithTransition(StateType.TIESCREEN);
+            manager.SwapStateWithTransitionMusic(StateType.TIESCREEN);
         }
 
         public override void LoadContent(ContentManager Content)
@@ -93,6 +101,12 @@ namespace BlastZone_Windows.States
 
             gameBackground = Content.Load<Texture2D>("Images/Game/game_background");
             rectFillTex = Content.Load<Texture2D>("Images/1px");
+
+            songList[0] = Content.Load<Song>("Music/song1-forestzone");
+            songList[1] = Content.Load<Song>("Music/song2-boss");
+            songList[2] = Content.Load<Song>("Music/song3-finalzone");
+            songList[3] = Content.Load<Song>("Music/song4-arenazone");
+            songList[4] = Content.Load<Song>("Music/song5-arrowzone");
         }
 
         public override void Update(GameTime gameTime)
@@ -118,7 +132,7 @@ namespace BlastZone_Windows.States
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) || gamePadPressedBack)
             {
-                manager.SwapStateWithTransition(StateType.MENU);
+                manager.SwapStateWithTransitionMusic(StateType.MENU);
             }
 
             level.Update(gameTime);
@@ -166,6 +180,13 @@ namespace BlastZone_Windows.States
             this.playerInputTypes[1] = p2ControlType;
             this.playerInputTypes[2] = p3ControlType;
             this.playerInputTypes[3] = p4ControlType;
+        }
+
+        public void PlayRandomSong()
+        {
+            int randIndex = GlobalGameData.rand.Next(5);
+            MediaPlayer.Play(songList[randIndex]);
+            MediaPlayer.IsRepeating = true;
         }
     }
 }

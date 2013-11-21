@@ -18,6 +18,7 @@
 			<Frame x="1" y="0"/>
 			<Frame x="0"  y="0"/>
 			<Frame x="1" y="0" flip="H"/>
+      <Frame x="0"  y="0"/>
 			<End return="StandDown"/>
 		</WalkDown>
 		<StandLeft>
@@ -27,7 +28,8 @@
 		<WalkLeft>
 			<Frame x="1" y="1"/>
 			<Frame x="0"  y="1"/>
-			<Frame x="1" y="1"/>
+			<Frame x="2" y="1"/>
+      <Frame x="0"  y="1"/>
 			<End return="StandLeft"/>
 		</WalkLeft>
 		<StandRight>
@@ -35,9 +37,10 @@
 			<End return="StandRight"/>
 		</StandRight>
 		<WalkRight>
-			<Frame x="1" y="1" flip="H"/>
-			<Frame x="0"  y="1" flip="H"/>
-			<Frame x="2" y="1" flip="H"/>
+      <Frame x="1" y="1" flip="H"/>
+      <Frame x="0"  y="1" flip="H"/>
+      <Frame x="2" y="1" flip="H"/>
+      <Frame x="0"  y="1" flip="H"/>
 			<End return="StandRight"/>
 		</WalkRight>
 		<StandUp>
@@ -48,6 +51,7 @@
 			<Frame x="3" y="0"/>
 			<Frame x="2" y="0"/>
 			<Frame x="3" y="0" flip="H"/>
+      <Frame x="2" y="0"/>
 			<End return="StandUp"/>
 		</WalkUp>
 	</Animations>

@@ -43,6 +43,7 @@ namespace BlastZone_Windows.States
         MainGame mainGame;
 
         bool transitioning = false;
+        bool transitionMusic = false;
 
         public GameStateManager(MainGame mainGame, GraphicsDevice graphicsDevice)
         {
@@ -55,7 +56,7 @@ namespace BlastZone_Windows.States
             gameStates[StateType.TIESCREEN] = new TieScreenState(this);
             gameStates[StateType.GAME] = new GameplayState(this, graphicsDevice);
 
-            SwapState(StateType.MENU);
+            currentState = gameStates[StateType.MENU];
 
             screenTransition = new Drawing.ScreenTransitionInOut();
 
@@ -70,6 +71,9 @@ namespace BlastZone_Windows.States
             }
 
             screenTransition.LoadContent(Content);
+
+            //Only enter after loaded content to be sure
+            currentState.Enter();
         }
 
         public void SwapState(StateType state)
@@ -109,6 +113,22 @@ namespace BlastZone_Windows.States
                 screenTransition.SetEventArgs(new StateEventArgs(state));
 
                 transitioning = true;
+                transitionMusic = false;
+            }
+        }
+
+        public void SwapStateWithTransitionMusic(StateType state)
+        {
+            if (!transitioning)
+            {
+                screenTransition.Reset();
+
+                screenTransition.OnTransition += SwapState;
+                screenTransition.OnTransitionFinished += StopTransition;
+                screenTransition.SetEventArgs(new StateEventArgs(state));
+
+                transitioning = true;
+                transitionMusic = true;
             }
         }
 
@@ -121,6 +141,11 @@ namespace BlastZone_Windows.States
             if (transitioning)
             {
                 screenTransition.Update(gameTime);
+
+                if (transitionMusic)
+                {
+                    MediaPlayer.Volume = screenTransition.FadeAmount() * GlobalGameData.MusicVolume;
+                }
             }
         }
 
