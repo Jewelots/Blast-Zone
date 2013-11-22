@@ -82,10 +82,15 @@ namespace BlastZone_Windows
         {
             // TODO: Unload any non ContentManager content here
 
-            MediaPlayer.Stop();
-
             //unload particle system
             Managers.ParticleManager.UnloadAll();
+        }
+
+        protected override void OnExiting(Object sender, EventArgs args)
+        {
+            MediaPlayer.Stop();
+
+            base.OnExiting(sender, args);
         }
 
         /// <summary>

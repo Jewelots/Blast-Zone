@@ -95,6 +95,11 @@ namespace BlastZone_Windows.States
             manager.SwapStateWithTransitionMusic(StateType.TIESCREEN);
         }
 
+        void QuitToMenu()
+        {
+            manager.SwapStateWithTransitionMusic(StateType.MENU);
+        }
+
         public override void LoadContent(ContentManager Content)
         {
             level.LoadContent(Content);
@@ -118,22 +123,26 @@ namespace BlastZone_Windows.States
             }
 
             //Check if quit
-            bool gamePadPressedBack = false;
-            for (int i = 0; i < 4; ++i)
+            for (int i = 0; i < playerCount; ++i)
             {
-                GamePadState gps = GamePad.GetState((PlayerIndex)i);
-
-                if (!gps.IsConnected) continue;
-
-                if (gps.IsButtonDown(Buttons.Back))
+                if (playerInputTypes[i] == -1)
                 {
-                    gamePadPressedBack = true;
+                    if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    {
+                        QuitToMenu();
+                    }
                 }
-            }
+                else
+                {
+                    GamePadState gps = GamePad.GetState((PlayerIndex)playerInputTypes[i]);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || gamePadPressedBack)
-            {
-                manager.SwapStateWithTransitionMusic(StateType.MENU);
+                    if (!gps.IsConnected) continue;
+
+                    if (gps.IsButtonDown(Buttons.Back))
+                    {
+                        QuitToMenu();
+                    }
+                }
             }
 
             level.Update(gameTime);

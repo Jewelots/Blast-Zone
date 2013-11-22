@@ -15,6 +15,8 @@ using System.Threading;
 
 using VectorGraphs;
 
+using BlastZone_Windows;
+
 /// <summary>
 /// a basic particle system
 /// made by Paul Hancock
@@ -461,7 +463,7 @@ namespace Particles
         //public BlendState blendState = BlendState.AlphaBlend;
         public List<BlendState> blendStates;
 
-        private Random random = new Random();
+        private Random random = GlobalGameData.rand;
 
         //threading, one thread per emitter
         //private ManualResetEvent particlesUpdated;
@@ -602,6 +604,7 @@ namespace Particles
 
             //overburden check
             foreach (Particle particle in particles)
+            {
                 if (particle.timeToAdd >= 1.0f)
                 {
                     //particles.Remove(pair.Key);
@@ -610,10 +613,9 @@ namespace Particles
                     particles.Clear();
                     break;
                 }
-
-            //add to update 
-            foreach(Particle particle in particles)
+                //add to update 
                 particle.timeToAdd += time;
+            }
 
             //trigger the thread to update
             updateCall.Set();

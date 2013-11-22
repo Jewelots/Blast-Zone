@@ -33,8 +33,13 @@ namespace BlastZone_Windows.States
 
         int keyboardCount;
 
+        bool swappingState;
+
         KeyboardState lastKeyboardState;
         GamePadState[] lastGamepadState;
+
+        SoundEffect itemSwitchSound, itemSelectSound;
+        SoundEffectInstance itemSwitchSoundInstance, itemSelectSoundInstance;
 
         public override void Enter()
         {
@@ -45,6 +50,8 @@ namespace BlastZone_Windows.States
             }
 
             keyboardCount = 0;
+
+            swappingState = false;
         }
 
         public override void Exit()
@@ -84,6 +91,13 @@ namespace BlastZone_Windows.States
 
             lobbyFont = Content.Load<SpriteFont>("Fonts/Badaboom");
             lobbyFontSmall = Content.Load<SpriteFont>("Fonts/BadaboomSmall");
+
+            //Load SFX
+            itemSwitchSound = Content.Load<SoundEffect>("SFX/menuitemchange");
+            itemSelectSound = Content.Load<SoundEffect>("SFX/menuitemselect");
+
+            itemSwitchSoundInstance = itemSwitchSound.CreateInstance();
+            itemSelectSoundInstance = itemSelectSound.CreateInstance();
         }
 
         public override void Update(GameTime gameTime)
@@ -121,12 +135,15 @@ namespace BlastZone_Windows.States
                 }
             }
 
-            if (totalReady >= 2 && totalReady == playerCount)
+            if (!swappingState && totalReady >= 2 && totalReady == playerCount)
             {
                 GameplayState gps = manager.GetState(StateType.GAME) as GameplayState;
                 gps.SetLevelData(playerCount, controller[0], controller[1], controller[2], controller[3]);
 
+                itemSelectSoundInstance.Play();
                 manager.SwapStateWithTransitionMusic(StateType.GAME);
+
+                swappingState = true;
             }
 
             //Set last states
@@ -218,12 +235,16 @@ namespace BlastZone_Windows.States
 
                 if (gps.IsButtonDown(Buttons.B))
                 {
+                    itemSwitchSoundInstance.Play();
+
                     Enter(); //Reset
                 }
             }
 
             if (k.IsKeyDown(Keys.R) && lastKeyboardState.IsKeyUp(Keys.R))
             {
+                itemSwitchSoundInstance.Play();
+
                 Enter(); //Reset
             }
 
@@ -238,6 +259,8 @@ namespace BlastZone_Windows.States
             //If Enter pressed and one keyboard; add a second one
             if ((k.IsKeyDown(Keys.Space) && keyboardCount == 0) || (k.IsKeyDown(Keys.Enter) && keyboardCount == 1))
             {
+                itemSwitchSoundInstance.Play();
+
                 controller[playerCount] = -1;
                 playerCount += 1;
                 keyboardCount += 1;
@@ -265,6 +288,8 @@ namespace BlastZone_Windows.States
 
                     //If controller is found to already be a player, skip it
                     if (isFound) continue;
+
+                    itemSwitchSoundInstance.Play();
 
                     controller[playerCount] = i;
                     playerCount += 1;
@@ -294,6 +319,8 @@ namespace BlastZone_Windows.States
                     //Check if A just pressed
                     if (gps.IsButtonDown(Buttons.A) && lastGamepadState[controller[i]].IsButtonUp(Buttons.A))
                     {
+                        itemSwitchSoundInstance.Play();
+
                         //Ready controller
                         ready[i] = !ready[i];
                     }
@@ -304,6 +331,7 @@ namespace BlastZone_Windows.States
             {
                 if (k.IsKeyDown(Keys.Space) && lastKeyboardState.IsKeyUp(Keys.Space))
                 {
+                    itemSwitchSoundInstance.Play();
                     ready[keyboardIndices[0]] = !ready[keyboardIndices[0]];
                 }
             }
@@ -312,6 +340,7 @@ namespace BlastZone_Windows.States
             {
                 if (k.IsKeyDown(Keys.Enter) && lastKeyboardState.IsKeyUp(Keys.Enter))
                 {
+                    itemSwitchSoundInstance.Play();
                     ready[keyboardIndices[1]] = !ready[keyboardIndices[1]];
                 }
             }

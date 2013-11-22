@@ -20,7 +20,7 @@
       <Texture texture="Smoke"/>
       <Life length="2"/>
       <Size scale="35.0" graph="SmokeSize"/>
-      <Colour r="50" g="50" b="50" a="120" graph="SmokeColor"/>
+      <Colour r="50" g="50" b="50" a="255" graph="SmokeColor"/>
       <Rotation angle="0.0" graph=""/>
       <Acceleration x="20.0" y="-50.0"/>
       <Decay x="0.0" y="0.0"/>
@@ -30,7 +30,7 @@
 		<Smoke>
 			<Origin x="0.0" y="0.0" depth="0.5"/>
 			<Power x="10.0" y="10.0"/>
-			<Rate rate ="0.0" count ="1"/>
+			<Rate rate ="5.0" count ="2"/>
 			<BlendStates>
 				<State state="AlphaBlend"/>
 			</BlendStates>

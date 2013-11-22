@@ -48,6 +48,7 @@ namespace BlastZone_Windows.Level
         EventTimer checkWinState;
 
         SoundEffect playerDeathSound;
+        SoundEffectInstance[] playerDeathSoundInstance = new SoundEffectInstance[4]; //Array of soundEffectInstances so garbage collection won't collect them
 
         bool gameOver;
 
@@ -143,6 +144,12 @@ namespace BlastZone_Windows.Level
             playerDeathAnimation = new AnimatedSprite(playerDeathAnimationSheet, "Death");
 
             playerDeathSound = Content.Load<SoundEffect>("SFX/death");
+
+            for (int i = 0; i < 4; ++i)
+            {
+                playerDeathSoundInstance[i] = playerDeathSound.CreateInstance();
+                playerDeathSoundInstance[i].Volume = GlobalGameData.SFXVolume;
+            }
 
             for (int i = 0; i < 4; ++i)
             {
@@ -277,9 +284,7 @@ namespace BlastZone_Windows.Level
                         AnimatedSprite newAnim = playerDeathAnimation;
                         newAnim.SetTexture("player" + (i + 1) + "Death");
 
-                        SoundEffectInstance playerDeathSoundInstance = playerDeathSound.CreateInstance();
-                        playerDeathSoundInstance.Volume = GlobalGameData.SFXVolume;
-                        playerDeathSoundInstance.Play();
+                        playerDeathSoundInstance[i].Play();
 
                         floatingAnimationManager.Add(newAnim, players[i].GetPosition());
                     }

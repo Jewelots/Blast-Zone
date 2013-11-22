@@ -19,7 +19,8 @@ namespace BlastZone_Windows.States
         OPTIONS,
         WINSCREEN,
         TIESCREEN,
-        GAME
+        GAME,
+        NONE
     }
 
     class GameStateManager
@@ -45,6 +46,9 @@ namespace BlastZone_Windows.States
         bool transitioning = false;
         bool transitionMusic = false;
 
+        StateType toTransitionNext;
+        StateType stateTransitioningTo;
+
         public GameStateManager(MainGame mainGame, GraphicsDevice graphicsDevice)
         {
             gameStates = new Dictionary<StateType, GameState>();
@@ -59,6 +63,8 @@ namespace BlastZone_Windows.States
             currentState = gameStates[StateType.MENU];
 
             screenTransition = new Drawing.ScreenTransitionInOut();
+            toTransitionNext = StateType.NONE;
+            stateTransitioningTo = StateType.NONE;
 
             this.mainGame = mainGame;
         }
@@ -78,6 +84,9 @@ namespace BlastZone_Windows.States
 
         public void SwapState(StateType state)
         {
+            //Don't transition to nothing
+            if (state == StateType.NONE) return;
+
             if (currentState != null)
             {
                 currentState.Exit();
@@ -93,17 +102,24 @@ namespace BlastZone_Windows.States
         void SwapState(EventArgs e)
         {
             StateEventArgs stateEventArgs = e as StateEventArgs;
+
             SwapState(stateEventArgs.state);
         }
 
         void StopTransition(EventArgs e)
         {
+            stateTransitioningTo = StateType.NONE;
             transitioning = false;
             screenTransition.Reset();
         }
 
-        public void SwapStateWithTransition(StateType state)
+        public void SwapStateWithTransition(StateType state, bool transitionMusic)
         {
+            //Don't transition to nothing
+            if (state == StateType.NONE) return;
+
+            this.transitionMusic = transitionMusic;
+
             if (!transitioning)
             {
                 screenTransition.Reset();
@@ -113,23 +129,25 @@ namespace BlastZone_Windows.States
                 screenTransition.SetEventArgs(new StateEventArgs(state));
 
                 transitioning = true;
-                transitionMusic = false;
+                stateTransitioningTo = state;
             }
+            else
+            {
+                //Don't transition to something already transitioning to
+                if (stateTransitioningTo == state) return;
+
+                toTransitionNext = state;
+            }
+        }
+
+        public void SwapStateWithTransition(StateType state)
+        {
+            SwapStateWithTransition(state, false);
         }
 
         public void SwapStateWithTransitionMusic(StateType state)
         {
-            if (!transitioning)
-            {
-                screenTransition.Reset();
-
-                screenTransition.OnTransition += SwapState;
-                screenTransition.OnTransitionFinished += StopTransition;
-                screenTransition.SetEventArgs(new StateEventArgs(state));
-
-                transitioning = true;
-                transitionMusic = true;
-            }
+            SwapStateWithTransition(state, true);
         }
 
         public void Update(GameTime gameTime)
@@ -145,6 +163,14 @@ namespace BlastZone_Windows.States
                 if (transitionMusic)
                 {
                     MediaPlayer.Volume = screenTransition.FadeAmount() * GlobalGameData.MusicVolume;
+                }
+            }
+            else
+            {
+                if (toTransitionNext != StateType.NONE)
+                {
+                    SwapStateWithTransition(toTransitionNext, transitionMusic);
+                    toTransitionNext = StateType.NONE;
                 }
             }
         }

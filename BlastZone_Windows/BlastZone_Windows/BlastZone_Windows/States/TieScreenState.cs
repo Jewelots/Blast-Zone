@@ -19,17 +19,18 @@ namespace BlastZone_Windows.States
         TiledTexture bgtex;
 
         //Player count and player input types to pass back to game state
-        int playerCount, p1, p2, p3, p4;
+        int playerCount;
+        int[] playerInputTypes;
 
         Song tieSong;
 
         public void SetLevelData(int playerCount, int p1, int p2, int p3, int p4)
         {
             this.playerCount = playerCount;
-            this.p1 = p1;
-            this.p2 = p2;
-            this.p3 = p3;
-            this.p4 = p4;
+            playerInputTypes[0] = p1;
+            playerInputTypes[1] = p2;
+            playerInputTypes[2] = p3;
+            playerInputTypes[3] = p4;
         }
 
         public override void Enter()
@@ -46,6 +47,8 @@ namespace BlastZone_Windows.States
             : base(gameStateManager)
         {
             bgtex = new TiledTexture(new Rectangle(0, 0, GlobalGameData.windowWidth, GlobalGameData.windowHeight));
+
+            playerInputTypes = new int[4];
         }
 
         public override void LoadContent(ContentManager Content)
@@ -58,35 +61,51 @@ namespace BlastZone_Windows.States
 
         public override void Update(GameTime gameTime)
         {
-            //Check if quit
-            bool gamePadPressedBack = false;
-            bool gamePadPressedGo = false;
-            for (int i = 0; i < 4; ++i)
+            bool someonePressedBack = false;
+            bool someonePressedGo = false;
+
+            //Check if quit or continue
+            for (int i = 0; i < playerCount; ++i)
             {
-                GamePadState gps = GamePad.GetState((PlayerIndex)i);
-
-                if (!gps.IsConnected) continue;
-
-                if (gps.IsButtonDown(Buttons.Back))
+                if (playerInputTypes[i] == -1)
                 {
-                    gamePadPressedBack = true;
+                    if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    {
+                        someonePressedBack = true;
+                    }
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.Enter) || Keyboard.GetState().IsKeyDown(Keys.Space))
+                    {
+                        someonePressedGo = true;
+                    }
                 }
-
-                if (gps.IsButtonDown(Buttons.Start) || gps.IsButtonDown(Buttons.A))
+                else
                 {
-                    gamePadPressedGo = true;
+                    GamePadState gps = GamePad.GetState((PlayerIndex)playerInputTypes[i]);
+
+                    if (!gps.IsConnected) continue;
+
+                    if (gps.IsButtonDown(Buttons.Back))
+                    {
+                        someonePressedBack = true;
+                    }
+
+                    if (gps.IsButtonDown(Buttons.Start) || gps.IsButtonDown(Buttons.A))
+                    {
+                        someonePressedGo = true;
+                    }
                 }
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || gamePadPressedBack)
+            if (someonePressedBack)
             {
                 manager.SwapStateWithTransitionMusic(StateType.MENU);
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) || Keyboard.GetState().IsKeyDown(Keys.Enter) || gamePadPressedGo)
+            if (someonePressedGo)
             {
                 GameplayState gps = manager.GetState(StateType.GAME) as GameplayState;
-                gps.SetLevelData(playerCount, p1, p2, p3, p4);
+                gps.SetLevelData(playerCount, playerInputTypes[0], playerInputTypes[1], playerInputTypes[2], playerInputTypes[3]);
 
                 manager.SwapStateWithTransitionMusic(StateType.GAME);
             }
