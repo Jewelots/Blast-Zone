@@ -57,6 +57,7 @@ namespace BlastZone_Windows.States
 
         public override void Exit()
         {
+            level.StopPlayerSounds();
         }
 
         public GameplayState(GameStateManager gameStateManager, GraphicsDevice graphicsDevice)

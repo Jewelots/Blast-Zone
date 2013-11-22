@@ -83,6 +83,14 @@ namespace BlastZone_Windows.Level
             floatingAnimationManager = new FloatingAnimationManager();
         }
 
+        public void StopPlayerSounds()
+        {
+            for (int i = 0; i < playerCount; ++i)
+            {
+                players[i].StopMove();
+            }
+        }
+
         public void Reset(int playerCount, int p1ControlType, int p2ControlType, int p3ControlType, int p4ControlType)
         {
             this.playerCount = playerCount;
@@ -308,7 +316,6 @@ namespace BlastZone_Windows.Level
             int playersAlive = 0;
             for (int i = 0; i < playerCount; ++i)
             {
-                players[i].GameOver();
                 if (players[i].IsDead == false)
                 {
                     //Count how many players are alive

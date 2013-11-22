@@ -49,6 +49,8 @@ namespace BlastZone_Windows.States
 
         public override void Enter()
         {
+            GlobalGameData.LoadSettings();
+
             curSelected = 0;
             selectedMenuOption = false;
 
@@ -69,6 +71,7 @@ namespace BlastZone_Windows.States
             //Play music if not playing
             if (mediaQueue.ActiveSong == null || mediaQueue.ActiveSong != menuSong)
             {
+                MediaPlayer.Volume = GlobalGameData.MusicVolume;
                 MediaPlayer.Play(menuSong);
                 MediaPlayer.IsRepeating = true;
             }

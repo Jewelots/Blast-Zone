@@ -25,7 +25,6 @@ namespace BlastZone_Windows
         int bombCount;
 
         public bool IsDead;
-        bool gameIsOver;
 
         SoundEffect footstepSound, bombPlaceSound;
         SoundEffectInstance footstepSoundInstance;
@@ -44,7 +43,6 @@ namespace BlastZone_Windows
             bombCount = 1;
             power = 1;
             IsDead = false;
-            gameIsOver = false;
             footstepSoundInstance = footstepSound.CreateInstance();
             footstepSoundInstance.Volume = GlobalGameData.SFXVolume * 0.5f; //Quiet enough to not annoy hopefully
             footstepSoundInstance.IsLooped = true;
@@ -55,11 +53,8 @@ namespace BlastZone_Windows
             //Don't move if dead
             if (IsDead) return;
 
-            if (!gameIsOver)
-            {
-                //Play footstep sound
-                footstepSoundInstance.Play();
-            }
+            //Play footstep sound
+            footstepSoundInstance.Play();
 
             movement.QueueEvent(moveEvent);
 
@@ -82,12 +77,6 @@ namespace BlastZone_Windows
 
         public void StopMove()
         {
-            footstepSoundInstance.Stop();
-        }
-
-        public void GameOver()
-        {
-            gameIsOver = true;
             footstepSoundInstance.Stop();
         }
 

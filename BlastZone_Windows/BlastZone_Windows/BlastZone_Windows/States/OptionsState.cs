@@ -36,6 +36,7 @@ namespace BlastZone_Windows.States
         }
         public override void Exit()
         {
+            GlobalGameData.SaveSettings();
         }
 
         public OptionsState(GameStateManager gameStateManager)
@@ -242,6 +243,7 @@ namespace BlastZone_Windows.States
                         {
                             GlobalGameData.MusicVolume = 1;
                         }
+                        MediaPlayer.Volume = GlobalGameData.MusicVolume;
                         break;
                     case 2: //Toggle Low Quality Particles
                         break;

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using System.IO.IsolatedStorage;
+using System.IO;
+
 namespace BlastZone_Windows
 {
     /// <summary>
@@ -46,5 +49,60 @@ namespace BlastZone_Windows
         }
 
         public static Random rand = new Random();
+
+        public static void SaveSettings()
+        {
+            FileStream storageStream;
+
+#if XBOX360
+            IsolatedStorageFile isolatedFile = IsolatedStorageFile.GetUserStoreForApplication();
+
+            storageStream = new IsolatedStorageFileStream("blastzoneConfig", FileMode.Create, isolatedFile);
+#else
+            storageStream = new FileStream("blastzoneConfig", FileMode.Create);
+#endif
+            StreamWriter writer = new StreamWriter(storageStream);
+            writer.WriteLine(SFXVolume);
+            writer.WriteLine(MusicVolume);
+            writer.WriteLine(LowQualityParticles);
+            writer.Close();
+            writer.Dispose();
+        }
+
+        public static void LoadSettings()
+        {
+            FileStream storageStream;
+
+#if XBOX360
+            IsolatedStorageFile isolatedFile = IsolatedStorageFile.GetUserStoreForApplication();
+
+            try
+            {
+                storageStream = new IsolatedStorageFileStream("blastzoneConfig", FileMode.Open, isolatedFile);
+            }
+            catch (FileNotFoundException)
+            {
+                //No file found to load settings, return
+                return;
+            }
+
+#else
+            try
+            {
+            storageStream = new FileStream("blastzoneConfig", FileMode.Open);
+            }
+            catch (FileNotFoundException)
+            {
+                //No file found to load settings, return
+                return;
+            }
+#endif
+            StreamReader reader = new StreamReader(storageStream);
+            SFXVolume = Convert.ToSingle(reader.ReadLine());
+            MusicVolume = Convert.ToSingle(reader.ReadLine());
+            LowQualityParticles = Convert.ToBoolean(reader.ReadLine());
+            reader.Close();
+            reader.Dispose();
+        }
     }
 }
