@@ -122,7 +122,7 @@ namespace BlastZone_Windows
                 hasMoved = true;
             }
 
-            if (ButtonJustPressed(Buttons.A, g))
+            if (ButtonJustPressed(Buttons.A, g) || ButtonJustPressed(Buttons.B, g) || ButtonJustPressed(Buttons.LeftShoulder, g) || ButtonJustPressed(Buttons.RightShoulder, g) || ButtonJustPressed(Buttons.LeftTrigger, g) || ButtonJustPressed(Buttons.RightTrigger, g))
             {
                 controlling.PlaceBomb();
             }

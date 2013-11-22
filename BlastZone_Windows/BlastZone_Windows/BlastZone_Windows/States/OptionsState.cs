@@ -70,7 +70,7 @@ namespace BlastZone_Windows.States
 
                 if (!gps.IsConnected) continue;
 
-                if (gps.IsButtonDown(Buttons.Back))
+                if (gps.IsButtonDown(Buttons.Back) || gps.IsButtonDown(Buttons.B))
                 {
                     gamePadPressedBack = true;
                 }

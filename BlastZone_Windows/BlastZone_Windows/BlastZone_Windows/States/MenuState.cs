@@ -228,6 +228,7 @@ namespace BlastZone_Windows.States
                         OnSelectOptions();
                         break;
                     case 3: //Quit Button
+                        itemSelectSoundInstance.Stop();
                         MediaPlayer.Stop();
                         manager.QuitGame();
                         break;
