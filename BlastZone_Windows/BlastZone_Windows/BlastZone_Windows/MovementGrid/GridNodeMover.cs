@@ -360,7 +360,10 @@ namespace BlastZone_Windows.MovementGrid
 
         public void AddSpeed()
         {
-            speedModifier += 0.2f;
+            if (speedModifier < 3)
+            {
+                speedModifier += 0.2f;
+            }
         }
     }
 }

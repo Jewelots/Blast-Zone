@@ -51,7 +51,7 @@ namespace BlastZone_Windows
             powerupSoundInstance = powerupSound.CreateInstance();
             bombExplosionSoundInstance = bombExplosionSound.CreateInstance();
 
-            powerupSoundInstance.Volume = GlobalGameData.SFXVolume * 0.6f;
+            powerupSoundInstance.Volume = GlobalGameData.SFXVolume;
             bombExplosionSoundInstance.Volume = GlobalGameData.SFXVolume;
         }
 

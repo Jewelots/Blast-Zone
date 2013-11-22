@@ -263,6 +263,7 @@ namespace BlastZone_Windows.Level
 
                     if (fireManager.IsOnFire(gx, gy))
                     {
+                        players[i].StopMove();
                         players[i].IsDead = true;
 
                         AnimatedSprite newAnim = playerDeathAnimation;
@@ -307,6 +308,7 @@ namespace BlastZone_Windows.Level
             int playersAlive = 0;
             for (int i = 0; i < playerCount; ++i)
             {
+                players[i].GameOver();
                 if (players[i].IsDead == false)
                 {
                     //Count how many players are alive
