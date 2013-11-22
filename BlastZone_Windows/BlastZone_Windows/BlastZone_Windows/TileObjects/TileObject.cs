@@ -68,7 +68,8 @@ namespace BlastZone_Windows
 
         protected void RemoveThis()
         {
-            manager.RemoveAt(tilePositionX, tilePositionY);
+            manager.RemoveObject(this);
+            //manager.RemoveAt(tilePositionX, tilePositionY);
         }
 
         public abstract void Update(GameTime gameTime);

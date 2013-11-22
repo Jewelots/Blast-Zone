@@ -19,7 +19,7 @@ namespace BlastZone_Windows
         /// <summary>
         /// A grid of TileObject's
         /// </summary>
-        TileObject[,] tileObjectGrid;
+        List<TileObject>[,] tileObjectGrid;
 
         /// <summary>
         /// A factory to create TileObjects
@@ -38,7 +38,7 @@ namespace BlastZone_Windows
             this.gridSizeX = GlobalGameData.gridSizeX;
             this.gridSizeY = GlobalGameData.gridSizeY;
 
-            tileObjectGrid = new TileObject[gridSizeX, gridSizeY];
+            tileObjectGrid = new List<TileObject>[gridSizeX, gridSizeY];
 
             tileObjectFactory = new TileObjectFactory();
 
@@ -53,31 +53,31 @@ namespace BlastZone_Windows
             {
                 for (int x = 0; x < gridSizeX; ++x)
                 {
-                    tileObjectGrid[x, y] = null;
+                    tileObjectGrid[x, y] = new List<TileObject>();
 
                     //Spawn soft blocks in a checker pattern
                     if (x > 0 && x < GlobalGameData.gridSizeX - 1 && y > 0 && y < GlobalGameData.gridSizeY - 1)
                     {
                         if (x % 2 != y % 2)
                         {
-                            tileObjectGrid[x, y] = tileObjectFactory.CreateSoftBlock(this, x, y, levelType);
+                            tileObjectGrid[x, y].Add(tileObjectFactory.CreateSoftBlock(this, x, y, levelType));
                         }
                     }
-
-                    //Clear blocks near players
-                    tileObjectGrid[2, 1] = null;
-                    tileObjectGrid[1, 2] = null;
-
-                    tileObjectGrid[GlobalGameData.gridSizeX - 3, 1] = null;
-                    tileObjectGrid[GlobalGameData.gridSizeX - 2, 2] = null;
-
-                    tileObjectGrid[2, GlobalGameData.gridSizeY - 2] = null;
-                    tileObjectGrid[1, GlobalGameData.gridSizeY - 3] = null;
-
-                    tileObjectGrid[GlobalGameData.gridSizeX - 3, GlobalGameData.gridSizeY - 2] = null;
-                    tileObjectGrid[GlobalGameData.gridSizeX - 2, GlobalGameData.gridSizeY - 3] = null;
                 }
             }
+
+            //Clear blocks near players
+            tileObjectGrid[2, 1].Clear();
+            tileObjectGrid[1, 2].Clear();
+
+            tileObjectGrid[GlobalGameData.gridSizeX - 3, 1].Clear();
+            tileObjectGrid[GlobalGameData.gridSizeX - 2, 2].Clear();
+
+            tileObjectGrid[2, GlobalGameData.gridSizeY - 2].Clear();
+            tileObjectGrid[1, GlobalGameData.gridSizeY - 3].Clear();
+
+            tileObjectGrid[GlobalGameData.gridSizeX - 3, GlobalGameData.gridSizeY - 2].Clear();
+            tileObjectGrid[GlobalGameData.gridSizeX - 2, GlobalGameData.gridSizeY - 3].Clear();
 
             //Reset active bombs
             activeBombs = new int[4];
@@ -93,26 +93,35 @@ namespace BlastZone_Windows
         {
             if (!GlobalGameData.IsInBounds(x, y)) return;
 
-            TileObject obj = tileObjectGrid[x, y];
+            List<TileObject> objects = tileObjectGrid[x, y];
 
-            if (playerOwnedBombs.ContainsKey(obj))
+            foreach (TileObject obj in objects)
             {
-                activeBombs[playerOwnedBombs[obj]] -= 1;
-                playerOwnedBombs.Remove(obj);
+                if (playerOwnedBombs.ContainsKey(obj))
+                {
+                    activeBombs[playerOwnedBombs[obj]] -= 1;
+                    playerOwnedBombs.Remove(obj);
+                }
             }
 
-            tileObjectGrid[x, y] = null;
+            tileObjectGrid[x, y].Clear();
         }
 
-        public void RemoveObject(TileObject o)
+        public void RemoveObject(TileObject obj)
         {
             for (int y = 0; y < gridSizeY; ++y)
             {
                 for (int x = 0; x < gridSizeX; ++x)
                 {
-                    if (tileObjectGrid[x, y] == o)
+                    if (tileObjectGrid[x, y].Contains(obj))
                     {
-                        RemoveAt(x, y);
+                        if (playerOwnedBombs.ContainsKey(obj))
+                        {
+                            activeBombs[playerOwnedBombs[obj]] -= 1;
+                            playerOwnedBombs.Remove(obj);
+                        }
+
+                        tileObjectGrid[x, y].Remove(obj);
                         return;
                     }
                 }
@@ -125,10 +134,20 @@ namespace BlastZone_Windows
             {
                 for (int x = 0; x < gridSizeX; ++x)
                 {
-                    TileObject to = tileObjectGrid[x, y];
-                    if (to == null) continue;
+                    List<TileObject> checkedObjects = new List<TileObject>();
 
-                    to.Update(gameTime);
+                    int currentIndex = 0;
+
+                    while (currentIndex < tileObjectGrid[x, y].Count)
+                    {
+                        TileObject t = tileObjectGrid[x, y][currentIndex];
+                        t.Update(gameTime);
+                        checkedObjects.Add(t);
+                        if (tileObjectGrid[x, y].Contains(t))
+                        {
+                            currentIndex += 1;
+                        }
+                    }
                 }
             }
         }
@@ -139,10 +158,10 @@ namespace BlastZone_Windows
             {
                 for (int x = 0; x < gridSizeX; ++x)
                 {
-                    TileObject to = tileObjectGrid[x, y];
-                    if (to == null) continue;
-
-                    to.Draw(spriteBatch, gameTime);
+                    foreach (TileObject to in tileObjectGrid[x, y])
+                    {
+                        to.Draw(spriteBatch, gameTime);
+                    }
                 }
             }
         }
@@ -158,7 +177,7 @@ namespace BlastZone_Windows
         public bool CreateBomb(int playerIndex, int gx, int gy, int power)
         {
             if (!GlobalGameData.IsInBounds(gx, gy)) return false;
-            if (tileObjectGrid[gx, gy] != null) return false; //Spot already occupied, can't place bomb here
+            if (tileObjectGrid[gx, gy].Count > 0) return false; //Spot already occupied, can't place bomb here
 
             if (activeBombs[playerIndex] < level.getMaxBombs(playerIndex))
             {
@@ -170,7 +189,7 @@ namespace BlastZone_Windows
                 activeBombs[playerIndex] += 1;
 
                 //Add bomb to tile object grid
-                tileObjectGrid[gx, gy] = b;
+                tileObjectGrid[gx, gy].Add(b);
 
                 return true;
             }
@@ -180,48 +199,68 @@ namespace BlastZone_Windows
 
         public void CreateBomb(int playerIndex, int gx, int gy)
         {
-            if (!GlobalGameData.IsInBounds(gx, gy)) return;
-            if (tileObjectGrid[gx, gy] != null) return; //Spot already occupied, can't place bomb here
-
-            if (activeBombs[playerIndex] < level.getMaxBombs(playerIndex))
-            {
-                //Create bomb
-                Bomb b = tileObjectFactory.CreateBomb(this, gx, gy, 3);
-
-                //Add the bomb to be tracked
-                playerOwnedBombs[b] = playerIndex;
-                activeBombs[playerIndex] += 1;
-
-                //Add bomb to tile object grid
-                tileObjectGrid[gx, gy] = b;
-            }
+            CreateBomb(playerIndex, gx, gy, 3);
         }
 
         public bool SolidAt(int gx, int gy)
         {
             if (!GlobalGameData.IsInBounds(gx, gy)) return true;
 
-            TileObject t = tileObjectGrid[gx, gy];
+            bool solid = false;
+            foreach (TileObject t in tileObjectGrid[gx, gy])
+            {
+                if (t.Solid)
+                {
+                    solid = true;
+                }
+            }
 
-            if (t == null) return false;
-
-            return t.Solid;
+            return solid;
         }
 
         public void FireSpreadTo(int gx, int gy)
         {
             if (!GlobalGameData.IsInBounds(gx, gy)) return;
 
-            TileObject t = tileObjectGrid[gx, gy];
+            bool tileSolid = false;
+            foreach (TileObject t in tileObjectGrid[gx, gy])
+            {
+                if (t.Solid)
+                {
+                    tileSolid = true;
+                }
+            }
 
-            if (t == null) return;
+            List<TileObject> checkedObjects = new List<TileObject>();
 
-            t.FireSpread();
+            int currentIndex = 0;
+
+            while (currentIndex < tileObjectGrid[gx, gy].Count)
+            {
+                TileObject t = tileObjectGrid[gx, gy][currentIndex];
+                if (t.Solid == tileSolid)
+                {
+                    t.FireSpread();
+                }
+                checkedObjects.Add(t);
+                if (tileObjectGrid[gx, gy].Contains(t))
+                {
+                    currentIndex += 1;
+                }
+            }
         }
 
-        public TileObject ObjectAt(int gx, int gy)
+        public TileObject NonSolidObjectAt(int gx, int gy)
         {
-            return tileObjectGrid[gx, gy];
+            foreach (TileObject t in tileObjectGrid[gx, gy])
+            {
+                if (!t.Solid)
+                {
+                    return t;
+                }
+            }
+
+            return null;
         }
 
         public void SpawnPowerup(int tilePositionX, int tilePositionY)
@@ -233,7 +272,7 @@ namespace BlastZone_Windows
             int randNum = GlobalGameData.rand.Next(0, 3);
             pType = (PowerupType)randNum;
 
-            tileObjectGrid[tilePositionX, tilePositionY] = tileObjectFactory.CreatePowerup(this, tilePositionX, tilePositionY, pType);
+            tileObjectGrid[tilePositionX, tilePositionY].Add(tileObjectFactory.CreatePowerup(this, tilePositionX, tilePositionY, pType));
         }
     }
 }

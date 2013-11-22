@@ -240,6 +240,8 @@ namespace SpritesheetAnimation
 
         public Animation? Animation { get { return currentAnimation; } }
 
+        public delegate void endAnimationEvent();
+        public event endAnimationEvent OnAnimationEnd;
 
         private AnimatedSprite()
         {
@@ -305,6 +307,13 @@ namespace SpritesheetAnimation
                 {
                     //set to return
                     SetAnimation(currentAnimation.Value.returnAnimation);
+
+                    if (currentAnimation == null)
+                    {
+                        //Call Animation End event
+                        if (OnAnimationEnd != null)
+                            OnAnimationEnd();
+                    }
                 }
                 else
                 {

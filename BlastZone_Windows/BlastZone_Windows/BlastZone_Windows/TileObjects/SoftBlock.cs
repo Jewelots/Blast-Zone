@@ -21,12 +21,14 @@ namespace BlastZone_Windows
         AnimatedSprite destroyAnimation;
 
         int blockType;
+        bool isDead;
 
         public SoftBlock(TileObjectManager manager, int tilePosX, int tilePosY, Texture2D tex, AnimatedSprite destroyAnimation, int type)
             : base(manager, tilePosX, tilePosY)
         {
             blockTex = tex;
             Solid = true;
+            isDead = false;
 
             //Hook to destroy when burnt
             OnFireSpread += Destroy;
@@ -43,7 +45,7 @@ namespace BlastZone_Windows
 
         void Destroy()
         {
-            RemoveThis();
+            isDead = true;
             manager.SpawnPowerup(tilePositionX, tilePositionY);
 
             //Draw offset to center sprite
@@ -53,10 +55,15 @@ namespace BlastZone_Windows
             AnimatedSprite newAnim = new AnimatedSprite(destroyAnimation);
             newAnim.SetAnimation("Block" + (blockType + 1));
             manager.level.floatingAnimationManager.Add(newAnim, drawPos);
+
+            newAnim.OnAnimationEnd += RemoveThis;
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            //Don't draw if dead
+            if (isDead) return;
+
             //Draw offset to center sprite
             Vector2 drawOffset = new Vector2(GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio, GlobalGameData.tileSize / 2 * GlobalGameData.drawRatio);
             Vector2 drawPos = DrawPosition + drawOffset;

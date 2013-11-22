@@ -285,7 +285,7 @@ namespace BlastZone_Windows.Level
                     }
                         
                     //Get item player standing on
-                    TileObject obj = tileObjectManager.ObjectAt(gx, gy);
+                    TileObject obj = tileObjectManager.NonSolidObjectAt(gx, gy);
 
                     if (obj != null)
                     {
