@@ -26,13 +26,27 @@ namespace BlastZone_Windows
         /// </summary>
         TileObjectFactory tileObjectFactory;
 
+        /// <summary>
+        /// Array of active bombs per-player
+        /// </summary>
         int[] activeBombs;
+
+        /// <summary>
+        /// A dictionary of what player owns what bomb
+        /// </summary>
         Dictionary<TileObject, int> playerOwnedBombs;
 
+        /// <summary>
+        /// A reference to the level the manager is in
+        /// </summary>
         public Level.Level level;
 
         int gridSizeX, gridSizeY;
 
+        /// <summary>
+        /// Create a new TileObject manager
+        /// </summary>
+        /// <param name="level">The level in which to tie the manager to</param>
         public TileObjectManager(Level.Level level)
         {
             this.gridSizeX = GlobalGameData.gridSizeX;
@@ -45,6 +59,9 @@ namespace BlastZone_Windows
             this.level = level;
         }
 
+        /// <summary>
+        /// Reset the tile object manager and initialise
+        /// </summary>
         public void Reset()
         {
             int levelType = GlobalGameData.rand.Next(4);
@@ -89,38 +106,55 @@ namespace BlastZone_Windows
             tileObjectFactory.LoadContent(Content);
         }
 
+        /// <summary>
+        /// Remove any objects at (x, y)
+        /// </summary>
+        /// <param name="x">Grid position x</param>
+        /// <param name="y">Grid position y</param>
         public void RemoveAt(int x, int y)
         {
+            //If not in bounds, return
             if (!GlobalGameData.IsInBounds(x, y)) return;
 
+            //Get a list of all objects at (x, y)
             List<TileObject> objects = tileObjectGrid[x, y];
 
+            //Loop through all objects on tile
             foreach (TileObject obj in objects)
             {
+                //If the player owns the object on the tile
                 if (playerOwnedBombs.ContainsKey(obj))
                 {
+                    //Decrease the player's active bomb count and remove the object
                     activeBombs[playerOwnedBombs[obj]] -= 1;
                     playerOwnedBombs.Remove(obj);
                 }
             }
 
+            //Clear the tile
             tileObjectGrid[x, y].Clear();
         }
 
+        //Remove a specific object
         public void RemoveObject(TileObject obj)
         {
+            //Loop through the grid to find the object
             for (int y = 0; y < gridSizeY; ++y)
             {
                 for (int x = 0; x < gridSizeX; ++x)
                 {
+                    //Check if the tile contains the object
                     if (tileObjectGrid[x, y].Contains(obj))
                     {
+                        //If the player owns the object
                         if (playerOwnedBombs.ContainsKey(obj))
                         {
+                            //Decrease the player's active bomb count and remove the object
                             activeBombs[playerOwnedBombs[obj]] -= 1;
                             playerOwnedBombs.Remove(obj);
                         }
 
+                        //Remove the object from the tile
                         tileObjectGrid[x, y].Remove(obj);
                         return;
                     }
@@ -128,16 +162,23 @@ namespace BlastZone_Windows
             }
         }
 
+        /// <summary>
+        /// Update all TileObjects
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
+            //Loop through the grid
             for (int y = 0; y < gridSizeY; ++y)
             {
                 for (int x = 0; x < gridSizeX; ++x)
                 {
+                    //Get a list of all checked objcts on the tile
                     List<TileObject> checkedObjects = new List<TileObject>();
 
                     int currentIndex = 0;
-
+                    
+                    //A fairly hacky method to loop through and update them without breaking when an object removes itself mid-update
                     while (currentIndex < tileObjectGrid[x, y].Count)
                     {
                         TileObject t = tileObjectGrid[x, y][currentIndex];
@@ -197,16 +238,30 @@ namespace BlastZone_Windows
             return false;
         }
 
+        /// <summary>
+        /// Create a bomb at a tile, with power 3
+        /// </summary>
+        /// <param name="playerIndex">Player who owns the bomb</param>
+        /// <param name="gx">X Position in terms of tiles</param>
+        /// <param name="gy">Y Position in terms of tiles</param>
         public void CreateBomb(int playerIndex, int gx, int gy)
         {
             CreateBomb(playerIndex, gx, gy, 3);
         }
 
+        /// <summary>
+        /// Get if there's a solid object on tile (gx, gy)
+        /// </summary>
+        /// <param name="gx">X Position in terms of tiles</param>
+        /// <param name="gy">Y Position in terms of tiles</param>
         public bool SolidAt(int gx, int gy)
         {
+            //Return solid if out of bounds
             if (!GlobalGameData.IsInBounds(gx, gy)) return true;
 
             bool solid = false;
+
+            //Loop through each object on the tile, if one of them's solid, return solid
             foreach (TileObject t in tileObjectGrid[gx, gy])
             {
                 if (t.Solid)
@@ -218,8 +273,14 @@ namespace BlastZone_Windows
             return solid;
         }
 
+        /// <summary>
+        /// Spread fire to a tile and tell all the objects on that tile
+        /// </summary>
+        /// <param name="gx">X position in terms of tiles</param>
+        /// <param name="gy">Y position in terms of tiles</param>
         public void FireSpreadTo(int gx, int gy)
         {
+            //Return if out of bounds
             if (!GlobalGameData.IsInBounds(gx, gy)) return;
 
             bool tileSolid = false;

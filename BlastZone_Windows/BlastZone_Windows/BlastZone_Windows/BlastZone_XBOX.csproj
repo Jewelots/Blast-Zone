@@ -74,7 +74,6 @@
     <Compile Include="Managers\FloatingAnimationManager.cs" />
     <Compile Include="GlobalGameData.cs" />
     <Compile Include="Managers\FireManager.cs" />
-    <Compile Include="Managers\MouseManager.cs" />
     <Compile Include="Managers\ParticleManager.cs" />
     <Compile Include="Managers\TileObjectManager.cs" />
     <Compile Include="MovementGrid\GridNodeMap.cs" />

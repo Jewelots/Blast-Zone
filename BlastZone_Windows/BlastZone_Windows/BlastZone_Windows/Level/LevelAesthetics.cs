@@ -16,7 +16,14 @@ namespace BlastZone_Windows.Level
     /// </summary>
     class LevelAesthetics
     {
+        /// <summary>
+        /// Spritemap for the tiles
+        /// </summary>
         Texture2D tileTexture;
+
+        /// <summary>
+        /// Sprite for the hard blocks
+        /// </summary>
         Texture2D hardBlockTexture;
 
         int gridSizeX, gridSizeY;
@@ -83,6 +90,10 @@ namespace BlastZone_Windows.Level
             return (x > 0 && x < gridSizeX - 1 && y > 0 && y < gridSizeY - 1);
         }
 
+        /// <summary>
+        /// Generates tiles
+        /// </summary>
+        /// <param name="solidArea">A reference array that will be filled with the solid tiles</param>
         public void GenerateTiles(bool[,] solidArea)
         {
             for (int y = 0; y < gridSizeY; ++y)
@@ -147,17 +158,23 @@ namespace BlastZone_Windows.Level
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            //Loop through tiles
             for (int y = 0; y < gridSizeY; ++y)
             {
                 for (int x = 0; x < gridSizeX; ++x)
                 {
+                    //Get the tile at x, y
                     TextureTile t = textureTileGrid[x, y];
+
+                    //If the tile has no texture, don't draw it
                     if (t.tex == null) continue;
 
+                    //Get the draw position
                     Vector2 drawPos = new Vector2();
                     drawPos.X = x * GlobalGameData.tileSize * GlobalGameData.drawRatio;
                     drawPos.Y = y * GlobalGameData.tileSize * GlobalGameData.drawRatio;
 
+                    //Draw it
                     spriteBatch.Draw(
                         t.tex, //Texture
                         drawPos, //Position
