@@ -7,12 +7,18 @@ using Microsoft.Xna.Framework;
 
 namespace BlastZone_Windows.MovementGrid
 {
+    /// <summary>
+    /// A map of gridnode's for the player to move on
+    /// </summary>
     class GridNodeMap
     {
         int gridSizeX;
         int gridSizeY;
         public int nodeSize;
         
+        /// <summary>
+        /// Holds contents of a tile (position, and solid?)
+        /// </summary>
         public class TileContents 
         {
             public Vector2 position;
@@ -31,8 +37,14 @@ namespace BlastZone_Windows.MovementGrid
             }
         }
 
+        /// <summary>
+        /// Array of nodes
+        /// </summary>
         TileContents[,] nodeArray;
 
+        /// <summary>
+        /// Create a new GridNode map
+        /// </summary>
         public GridNodeMap()
         {
             this.gridSizeX = GlobalGameData.gridSizeX;
@@ -54,9 +66,16 @@ namespace BlastZone_Windows.MovementGrid
             }
         }
 
+        /// <summary>
+        /// Get the node at (x, y)
+        /// </summary>
+        /// <param name="x">Tile position x</param>
+        /// <param name="y">Tile position y</param>
+        /// <returns>Contents of the tile</returns>
         public TileContents GetNode(int x, int y)
         {
-            if (x < 0 || x >= gridSizeX || y < 0 || y >= gridSizeY) //Requested position outside grid
+            //Check if in bounds
+            if (x < 0 || x >= gridSizeX || y < 0 || y >= gridSizeY)
             {
                 return null;
             }
@@ -64,6 +83,10 @@ namespace BlastZone_Windows.MovementGrid
             return nodeArray[x, y];
         }
 
+        /// <summary>
+        /// Set the solidity of all tiles based on an array
+        /// </summary>
+        /// <param name="solidArray">An array of bool representing solid (true) or unsolid (false)</param>
         public void SetSolid(bool[,] solidArray)
         {
             for (int y = 0; y < gridSizeY; ++y)
@@ -75,6 +98,12 @@ namespace BlastZone_Windows.MovementGrid
             }
         }
 
+        /// <summary>
+        /// Returns if a node is solid at (x, y)
+        /// </summary>
+        /// <param name="x">Tile position x</param>
+        /// <param name="y">Tile position y</param>
+        /// <returns>If the node is solid orn ot</returns>
         public bool IsNodeSolid(int x, int y)
         {
             return GetNode(x, y).solid;
