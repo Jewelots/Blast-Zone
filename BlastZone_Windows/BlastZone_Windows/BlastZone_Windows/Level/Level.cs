@@ -29,6 +29,9 @@ namespace BlastZone_Windows.Level
         public FireManager fireManager;
         public FloatingAnimationManager floatingAnimationManager;
 
+        /// <summary>
+        /// The aesthetics (non-interactable level tiles)
+        /// </summary>
         LevelAesthetics aesthetics;
 
         AnimatedSprite playerDeathAnimation;
@@ -52,6 +55,11 @@ namespace BlastZone_Windows.Level
 
         bool gameOver;
 
+        /// <summary>
+        /// Initialise a level
+        /// </summary>
+        /// <param name="onWin">Function to call when a player wins (parameter is winning player index)</param>
+        /// <param name="onTie">Function to call when there's a tie</param>
         public Level(Action<int> onWin, Action onTie)
         {
             this.onWin = onWin;
@@ -70,12 +78,15 @@ namespace BlastZone_Windows.Level
 
             players = new Player[4];
 
+            //Initialise players to the gridnodemap, with their index, and the bomb create function
             for (int i = 0; i < 4; ++i)
             {
                 players[i] = new Player(gridNodeMap, i, tileObjectManager.CreateBomb);
             }
 
             playerInputControllers = new PlayerInputController[4];
+
+            //Initialise player input controllers to the players
             for (int i = 0; i < 4; ++i)
             {
                 playerInputControllers[i] = new PlayerInputController(players[i]);
@@ -83,7 +94,10 @@ namespace BlastZone_Windows.Level
 
             floatingAnimationManager = new FloatingAnimationManager();
         }
-
+        
+        /// <summary>
+        /// Stop player movement sounds
+        /// </summary>
         public void StopPlayerSounds()
         {
             for (int i = 0; i < playerCount; ++i)
@@ -92,6 +106,14 @@ namespace BlastZone_Windows.Level
             }
         }
 
+        /// <summary>
+        /// Reset the level
+        /// </summary>
+        /// <param name="playerCount">Number of players</param>
+        /// <param name="p1ControlType">Control type index for player 1</param>
+        /// <param name="p2ControlType">Control type index for player 2</param>
+        /// <param name="p3ControlType">Control type index for player 3</param>
+        /// <param name="p4ControlType">Control type index for player 4</param>
         public void Reset(int playerCount, int p1ControlType, int p2ControlType, int p3ControlType, int p4ControlType)
         {
             this.playerCount = playerCount;
@@ -159,6 +181,11 @@ namespace BlastZone_Windows.Level
             fireManager.SetSolidArea(solidArea);
         }
 
+        /// <summary>
+        /// Set keyboard types for player index based on current keyboard player count
+        /// </summary>
+        /// <param name="playerIndex">Index of player</param>
+        /// <param name="currentKeyboards">Reference to number of keyboards</param>
         void InitialisePlayerToKeyboard(int playerIndex, ref int currentKeyboards)
         {
             playerToController[playerIndex] = -1;
@@ -195,48 +222,56 @@ namespace BlastZone_Windows.Level
             playerInputControllers[playerIndex].SetJoyIdentifiers();
         }
 
+        /// <summary>
+        /// Set all player control identifiers
+        /// </summary>
+        /// <param name="playerCount">Number of players</param>
+        /// <param name="p1">Control type index for player 1</param>
+        /// <param name="p2">Control type index for player 2</param>
+        /// <param name="p3">Control type index for player 3</param>
+        /// <param name="p4">Control type index for player 4</param>
         public void SetPlayerControlIdentifiers(int playerCount, int p1, int p2, int p3, int p4)
         {
             int currentKeyboards = 0;
 
-            if (p1 == -1)
+            if (p1 == -1) //Keyboard
             {
                 InitialisePlayerToKeyboard(0, ref currentKeyboards);
             }
-            else
+            else //Gamepad
             {
                 InitialisePlayerToJoystick(0, p1);
             }
 
             if (playerCount < 2) return;
 
-            if (p2 == -1)
-            {
+            if (p2 == -1) //Keyboard
+            { 
                 InitialisePlayerToKeyboard(1, ref currentKeyboards);
             }
-            else
+            else //Gamepad
             {
                 InitialisePlayerToJoystick(1, p2);
             }
 
             if (playerCount < 3) return;
 
-            if (p3 == -1)
+            if (p3 == -1) //Keyboard
             {
                 InitialisePlayerToKeyboard(2, ref currentKeyboards);
             }
-            else
+            else //Gamepad
             {
                 InitialisePlayerToJoystick(2, p3);
             }
 
             if (playerCount < 4) return;
 
-            if (p4 == -1)
+            if (p4 == -1) //Keyboard
             {
                 InitialisePlayerToKeyboard(3, ref currentKeyboards);
             }
-            else
+            else //Gamepad
             {
                 InitialisePlayerToJoystick(4, p4);
             }
@@ -276,24 +311,31 @@ namespace BlastZone_Windows.Level
                     int gx, gy;
                     players[i].GetGridPosition(out gx, out gy);
 
+                    //If the tile is on fire that the player is standing on
                     if (fireManager.IsOnFire(gx, gy))
                     {
+                        //Kill the player
                         players[i].StopMove();
                         players[i].IsDead = true;
 
+                        //Play the player death sound
+                        playerDeathSoundInstance[i].Play();
+
+                        //Create a death animation effect
                         AnimatedSprite newAnim = playerDeathAnimation;
                         newAnim.SetTexture("player" + (i + 1) + "Death");
 
-                        playerDeathSoundInstance[i].Play();
-
+                        //Add it to the floating animation manager
                         floatingAnimationManager.Add(newAnim, players[i].GetPosition());
                     }
                         
                     //Get item player standing on
                     TileObject obj = tileObjectManager.NonSolidObjectAt(gx, gy);
 
+                    //If object exists
                     if (obj != null)
                     {
+                        //Collide with it
                         obj.PlayerCollision(players[i]);
                     }
 
@@ -316,6 +358,9 @@ namespace BlastZone_Windows.Level
             }
         }
 
+        /// <summary>
+        /// Check what game end state it is and move to corresponding screen
+        /// </summary>
         private void checkIfWinOrTie()
         {
             int playersAlive = 0;
@@ -374,11 +419,20 @@ namespace BlastZone_Windows.Level
             spriteBatch.End();
         }
 
+        /// <summary>
+        /// Get the max bombs for a player
+        /// </summary>
+        /// <param name="playerIndex">Index of player to get max bombs from</param>
+        /// <returns>Max bombs for player</returns>
         public int getMaxBombs(int playerIndex)
         {
             return players[playerIndex].GetMaxBombs();
         }
 
+        /// <summary>
+        /// Get the player count
+        /// </summary>
+        /// <returns>Player count</returns>
         public int GetPlayerCount()
         {
             return playerCount;

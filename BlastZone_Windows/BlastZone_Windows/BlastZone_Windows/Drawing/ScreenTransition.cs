@@ -17,14 +17,34 @@ namespace BlastZone_Windows.Drawing
     /// </summary>
     class ScreenTransition
     {
+        /// <summary>
+        /// A 1px wide texture to draw the transition with
+        /// </summary>
         Texture2D rectTex;
+
+        /// <summary>
+        /// Number of tiles in X and Y dimensions to transition with
+        /// </summary>
         Vector2 tileCount;
+
+        /// <summary>
+        /// Size of each tile to transition with
+        /// </summary>
         Vector2 tileSize;
 
+        /// <summary>
+        /// A timer to keep track of the transition, and call an event
+        /// </summary>
         EventTimer timer;
 
+        /// <summary>
+        /// Reverse the transition from in to out
+        /// </summary>
         bool reverse;
 
+        /// <summary>
+        /// Args to get passed to the TransitionEnd event handler
+        /// </summary>
         EventArgs args;
 
         public delegate void TransitionEndHandler(EventArgs e);
@@ -53,24 +73,25 @@ namespace BlastZone_Windows.Drawing
             args = EventArgs.Empty;
         }
 
-        public ScreenTransition()
+        /// <summary>
+        /// Create a Screen Transition with 13x8 tiles, no reversing, and 1 second to transition
+        /// </summary>
+        public ScreenTransition() : this(13, 8, false, 1)
         {
-            tileCount = new Vector2(13, 8);
-            tileSize = new Vector2(GlobalGameData.windowWidth / tileCount.X, GlobalGameData.windowHeight / tileCount.Y);
-
-            reverse = false;
-
-            timer = new EventTimer(0, 1);
-            timer.OnEnd += TransitionEnd;
-
-            args = EventArgs.Empty;
         }
 
+        /// <summary>
+        /// Set the arguments to be passed into the OnTransitionEnd event
+        /// </summary>
+        /// <param name="e">Arguments</param>
         public void SetEventArgs(EventArgs e)
         {
             args = e;
         }
 
+        /// <summary>
+        /// Reset the transition
+        /// </summary>
         public void Reset()
         {
             timer.Reset();
@@ -78,49 +99,76 @@ namespace BlastZone_Windows.Drawing
             OnTransitionEnd = null;
         }
 
+        /// <summary>
+        /// Load the images needed
+        /// </summary>
+        /// <param name="Content"></param>
         public void LoadContent(ContentManager Content)
         {
             rectTex = Content.Load<Texture2D>("Images/1px");
         }
 
+        /// <summary>
+        /// Fires the OnTransitionEnd event
+        /// </summary>
         void TransitionEnd()
         {
             if (OnTransitionEnd != null)
                 OnTransitionEnd(args);
         }
 
+        /// <summary>
+        /// Update's the transition
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
             timer.Update(gameTime);
         }
 
+        /// <summary>
+        /// Draws the transition
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
+            //Return if transition over
             if (timer.IsFinished()) return;
 
+            //Get the percent complete
             float percentDone = (float)timer.GetRatio();
 
+            //Loop through the tiles to draw
             for (int y = 0; y < tileCount.Y; ++y)
             {
                 for (int x = 0; x < tileCount.X; ++x)
                 {
+                    //Create their position
                     Vector2 tilePos = new Vector2(x * tileSize.X + tileSize.X / 2f, y * tileSize.Y + tileSize.Y / 2f);
 
+                    //Create their size
                     float ratio = ((tileCount.X - (x + 1)) + (y + 1)) / (tileCount.X + tileCount.Y) - 1;
                     ratio += percentDone * 2;
                     ratio = Math.Max(Math.Min(ratio, 1), 0);
 
+                    //Reverse it if neccesary
                     if (reverse)
                         ratio = 1 - ratio;
 
+                    //Don't draw if they're under 0 in size
                     if (ratio <= 0) continue;
-
+                    
+                    //Create the destination rectangle and draw the square
                     Rectangle destRect = new Rectangle((int)tilePos.X, (int)tilePos.Y, (int)Math.Round(tileSize.X * ratio) + 1, (int)Math.Round(tileSize.Y * ratio) + 1);
                     spriteBatch.Draw(rectTex, destRect, null, Color.Black, 0f, new Vector2(0.5f, 0.5f), SpriteEffects.None, 1f);
                 }
             }
         }
 
+        /// <summary>
+        /// Get the ratio/percent complete
+        /// </summary>
+        /// <returns>Percent complete</returns>
         public float Ratio()
         {
             return (float)timer.GetRatio();
@@ -165,14 +213,16 @@ namespace BlastZone_Windows.Drawing
             Init();
         }
 
-        public ScreenTransitionInOut()
+        /// <summary>
+        /// Create a two way Screen Transition with 13x8 tiles, and 0.75s transition time
+        /// </summary>
+        public ScreenTransitionInOut() : this(13, 8, 0.75f)
         {
-            stIn = new ScreenTransition(13, 8, false, 0.75f);
-            stOut = new ScreenTransition(13, 8, true, 0.75f);
-
-            Init();
         }
 
+        /// <summary>
+        /// Initialise the transitions and hook functions
+        /// </summary>
         void Init()
         {
             stIn.OnTransitionEnd += SwapTransition;
@@ -181,36 +231,59 @@ namespace BlastZone_Windows.Drawing
             currentTransition = stIn;
         }
 
+        /// <summary>
+        /// Set the arguments to call when transition finished
+        /// </summary>
+        /// <param name="e"></param>
         public void SetEventArgs(EventArgs e)
         {
             stIn.SetEventArgs(e);
             stOut.SetEventArgs(e);
         }
 
+        /// <summary>
+        /// Load the content
+        /// </summary>
+        /// <param name="Content"></param>
         public void LoadContent(ContentManager Content)
         {
             stIn.LoadContent(Content);
             stOut.LoadContent(Content);
         }
 
+        /// <summary>
+        /// Swap the transition from in to out (hooked onto OnTransitionEnd of the inward transition)
+        /// </summary>
+        /// <param name="e"></param>
         void SwapTransition(EventArgs e)
         {
             TransitionChange(e);
             currentTransition = stOut;
         }
 
+        /// <summary>
+        /// Fire OnTransition event when the transition is halfway through (screen completely black)
+        /// </summary>
+        /// <param name="e"></param>
         void TransitionChange(EventArgs e)
         {
             if (OnTransition != null)
                 OnTransition(e);
         }
 
+        /// <summary>
+        /// Fire OnTransitionFinished event when the transition is completely done (screen completely uncovered)
+        /// </summary>
+        /// <param name="e"></param>
         void TransitionsFinished(EventArgs e)
         {
             if (OnTransitionFinished != null)
                 OnTransitionFinished(e);
         }
 
+        /// <summary>
+        /// Reset the transition
+        /// </summary>
         public void Reset()
         {
             stIn.Reset();
@@ -222,16 +295,28 @@ namespace BlastZone_Windows.Drawing
             Init();
         }
 
+        /// <summary>
+        /// Update the transition
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
             currentTransition.Update(gameTime);
         }
 
+        /// <summary>
+        /// Draw the transition
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public void Draw(SpriteBatch spriteBatch)
         {
             currentTransition.Draw(spriteBatch);
         }
 
+        /// <summary>
+        /// Get the current amount of fade on the screen
+        /// </summary>
+        /// <returns>Current amount of fade</returns>
         public float FadeAmount()
         {
             if (currentTransition == stIn)
