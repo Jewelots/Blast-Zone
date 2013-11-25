@@ -137,7 +137,7 @@ namespace BlastZone_Windows.States
                 }
             }
 
-            if ((newState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter)) || (newState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space)) || gamepadPressedA)
+            if ((newState.IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter)) || (newState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space)))
             {
                 switch (curSelected)
                 {
@@ -263,8 +263,13 @@ namespace BlastZone_Windows.States
                 curSelected += 1;
             }
 
+#if XBOX360
+            curSelected %= 2;
+            if (curSelected < 0) curSelected = 1;
+#else
             curSelected %= 3;
             if (curSelected < 0) curSelected = 2;
+#endif
 
             oldState = newState;
 

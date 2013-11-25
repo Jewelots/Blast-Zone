@@ -80,7 +80,7 @@ namespace BlastZone_Windows
             {
                 storageStream = new IsolatedStorageFileStream("blastzoneConfig", FileMode.Open, isolatedFile);
             }
-            catch (FileNotFoundException)
+            catch (Exception ex)
             {
                 //No file found to load settings, return
                 return;
@@ -100,7 +100,12 @@ namespace BlastZone_Windows
             StreamReader reader = new StreamReader(storageStream);
             SFXVolume = Convert.ToSingle(reader.ReadLine());
             MusicVolume = Convert.ToSingle(reader.ReadLine());
+
+#if XBOX360
+            LowQualityParticles = true;
+#else
             LowQualityParticles = Convert.ToBoolean(reader.ReadLine());
+#endif
             reader.Close();
             reader.Dispose();
         }
