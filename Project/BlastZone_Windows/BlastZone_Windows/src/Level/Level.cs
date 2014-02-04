@@ -273,7 +273,7 @@ namespace BlastZone_Windows.Level
             }
             else //Gamepad
             {
-                InitialisePlayerToJoystick(4, p4);
+                InitialisePlayerToJoystick(3, p4);
             }
         }
 

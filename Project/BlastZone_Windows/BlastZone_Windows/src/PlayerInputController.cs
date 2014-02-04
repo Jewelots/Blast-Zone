@@ -98,25 +98,49 @@ namespace BlastZone_Windows
 
             bool hasMoved = false;
 
-            if (g.DPad.Up == ButtonState.Pressed || g.ThumbSticks.Left.Y > 0.25)
+            if (g.DPad.Up == ButtonState.Pressed)
+            {
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_UP, Math.Abs(150)));
+                hasMoved = true;
+            }
+
+            if (g.DPad.Down == ButtonState.Pressed)
+            {
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_DOWN, Math.Abs(150)));
+                hasMoved = true;
+            }
+
+            if (g.DPad.Left == ButtonState.Pressed)
+            {
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_LEFT, Math.Abs(150)));
+                hasMoved = true;
+            }
+
+            if (g.DPad.Right == ButtonState.Pressed)
+            {
+                controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_RIGHT, Math.Abs(150)));
+                hasMoved = true;
+            }
+
+            if (g.ThumbSticks.Left.Y > 0.25)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_UP, Math.Abs(g.ThumbSticks.Left.Y * 150)));
                 hasMoved = true;
             }
 
-            if (g.DPad.Down == ButtonState.Pressed || g.ThumbSticks.Left.Y < -0.25)
+            if (g.ThumbSticks.Left.Y < -0.25)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_DOWN, Math.Abs(g.ThumbSticks.Left.Y * 150)));
                 hasMoved = true;
             }
 
-            if (g.DPad.Left == ButtonState.Pressed || g.ThumbSticks.Left.X < -0.25)
+            if (g.ThumbSticks.Left.X < -0.25)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_LEFT, Math.Abs(g.ThumbSticks.Left.X * 150)));
                 hasMoved = true;
             }
 
-            if (g.DPad.Right == ButtonState.Pressed || g.ThumbSticks.Left.X > 0.25)
+            if (g.ThumbSticks.Left.X > 0.25)
             {
                 controlling.Move(MoveEvent.MakeEvent(MoveEvent.MoveEventType.MOVE_RIGHT, Math.Abs(g.ThumbSticks.Left.X * 150)));
                 hasMoved = true;
