@@ -13,7 +13,7 @@ A post-mortem can be found at [POSTMORTEM.md](POSTMORTEM.md) and contains though
 
 # What is it?
 
-Blast Zone was a gamedev project for a school assignment. The assignment was to create a completely functional 2D game using a cross-platform toolkit. The assignment was in teams of two programmers, but contacting outside artist help was allowed.
+Blast Zone was a gamedev project for a school assignment. The assignment was to create a completely functional 2D game using a cross-platform toolkit in only four weeks. The assignment was in teams of two programmers, but contacting outside artist help was allowed.
 
 ## How we settled on the idea
 
