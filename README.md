@@ -5,6 +5,8 @@ This product is not meant for commercial use and all resources are used entirely
 
 An in depth design document can be found at [DESIGNDOC.md](DESIGNDOC.md) and cointains description for each of the classes contained within the code.
 
+A post-mortem can be found at [POSTMORTEM.md](POSTMORTEM.md) and contains thoughts on the project after completion.
+
 ![Menu](/wiki-images/menu.png)
 
 ![Example](/wiki-images/examplestart.png)
