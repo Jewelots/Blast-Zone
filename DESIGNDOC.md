@@ -10,28 +10,28 @@ There are additional documents for the [SpritesheetAnimation](SPRITESHEETANIMATI
 The base design of the game is separated into many modules for simplicity and simple code modification with little need to modify other modules.
 
 Core:
-	The core workings of the game are managed in a Gamestate manager system, of which the root XNA game class runs this, as the user navigates between the game menus and actual gameplay, this is all stored inside the gamestate manager, each state of the game is defined by separate classes, which the gamestate manager will switch between accordingly.
+ * The core workings of the game are managed in a Gamestate manager system, of which the root XNA game class runs this, as the user navigates between the game menus and actual gameplay, this is all stored inside the gamestate manager, each state of the game is defined by separate classes, which the gamestate manager will switch between accordingly.
 
 Drawing:
-	There are many different components for drawing the components of the game on-screen, a DrawTextExtension class defines functions for drawing fonts on the screen with special effects, a ScreenTransition class defines screen transition systems to nicely switch between game states, a SpritesheetAnimation system is used for animated sprites on a single spritesheet, this is documented seperately, a TiledTexture class is used for rendering rectangles of a moving set of texture tiles, this is used for the backgrounds in the menus.
+ * There are many different components for drawing the components of the game on-screen, a DrawTextExtension class defines functions for drawing fonts on the screen with special effects, a ScreenTransition class defines screen transition systems to nicely switch between game states, a SpritesheetAnimation system is used for animated sprites on a single spritesheet, this is documented seperately, a TiledTexture class is used for rendering rectangles of a moving set of texture tiles, this is used for the backgrounds in the menus.
 
 Effects:
-	A Particle system was developed alongside the main project to be attached towards the completion of the game, this is documented separately, this is used to add particle effects to the game.
+ * A Particle system was developed alongside the main project to be attached towards the completion of the game, this is documented separately, this is used to add particle effects to the game.
 
 Level:
-	The game consists of a basic 2D level of tiles, of which a main level system manages and a LevelAesthetics class handles the drawing of the level components, this Level system makes use of the manager classes to run the needed components of the gameplay.
+ * The game consists of a basic 2D level of tiles, of which a main level system manages and a LevelAesthetics class handles the drawing of the level components, this Level system makes use of the manager classes to run the needed components of the gameplay.
 
 Managers:
-	The manager classes will manage specific components of the game system, a FireManager manages the fire that is spawned upon a bomb explosion, this fire is intended to trigger immediate explosion of bombs in range and death of players in range, a FloatingAnimationManager manages animations for breaking SoftBlocks, a ParticleManager provides a static interface for emitting particles at positions on the screen, a TileObjectManager manages the tileObjects in the level such as bombs.
+ * The manager classes will manage specific components of the game system, a FireManager manages the fire that is spawned upon a bomb explosion, this fire is intended to trigger immediate explosion of bombs in range and death of players in range, a FloatingAnimationManager manages animations for breaking SoftBlocks, a ParticleManager provides a static interface for emitting particles at positions on the screen, a TileObjectManager manages the tileObjects in the level such as bombs.
 
 MovementGrid:
-	With the simple 2D level and the nature of the gameplay comes the need for a way to manage movement across the grid, a GridNodeMap contains the grid with info for nodes to know what tiles are traversable or not and a GridNodeMover class is used as a common interface node for entities to use to navigate the grid.
+ * With the simple 2D level and the nature of the gameplay comes the need for a way to manage movement across the grid, a GridNodeMap contains the grid with info for nodes to know what tiles are traversable or not and a GridNodeMover class is used as a common interface node for entities to use to navigate the grid.
 
 States:
-	As already mentioned, the core part of the game code uses a state system, each gameplay state is defined as a separate class, a MenuState class is defined and used at the opening of the game that allows the user to go to other states, a LobbyState class is defined to set up the players for the actual gameplay, a GameplayState class is defined to run the actual gameplay after the lobby state has finished, all of these states are managed in a single GameStateManager class based on a GameState abstract class.
+ * As already mentioned, the core part of the game code uses a state system, each gameplay state is defined as a separate class, a MenuState class is defined and used at the opening of the game that allows the user to go to other states, a LobbyState class is defined to set up the players for the actual gameplay, a GameplayState class is defined to run the actual gameplay after the lobby state has finished, all of these states are managed in a single GameStateManager class based on a GameState abstract class.
 
 TileObjects:
-	As this game uses a simple 2D level of tiles, entities such as bombs use an abstract class, TileObject, of which all instances of TileObjects in the game are created by a TileObjectFactory and managed by the TileObjectManager manager class noted above.
+ * As this game uses a simple 2D level of tiles, entities such as bombs use an abstract class, TileObject, of which all instances of TileObjects in the game are created by a TileObjectFactory and managed by the TileObjectManager manager class noted above.
 
 # Components
 
@@ -99,11 +99,11 @@ Drawing:
 Effects:
  * Particles
     * Contains Particle, Emitter and MultiEmitter classes for particle effects on floating points on the screen.
-    * Refer to (Particles Docs)(PARTICLEDOCS.md) for more details
+    * Refer to [Particles Docs](PARTICLEDOCS.md) for more details
 
  * VectorGraphs
     * Contains a VectorGraph template along with EmptyVectorGraph, BasicVectorGraph and BezierVectorGraph implementations for use with the particle system or otherwise making a 2D graph for various uses.
-    * Refer to (Particles Docs)(PARTICLEDOCS.md) for more details
+    * Refer to [Particles Docs](PARTICLEDOCS.md) for more details
 
 Level:
  * Level
@@ -177,25 +177,25 @@ TileObjects:
     * Creates TileObjects by call and contains common values for simplicity
 
 EventTimer:
-    * A timer class used by many components in the game code
+ * A timer class used by many components in the game code
 
 GlobalGameData:
-    * A container class for the global game variables such as screen width and height
+ * A container class for the global game variables such as screen width and height
 
 MainGame:
-    * The master game code class, this is defined by XNA 
+ * The master game code class, this is defined by XNA 
 
 Player:
-    * The visual representation of the player
+ * The visual representation of the player
 
 PlayerInputController:
-    * The input system to control the player
+ * The input system to control the player
 
 Program:
-    * The root code class defined by XNA and runs the MainGame class components
+ * The root code class defined by XNA and runs the MainGame class components
 
 ScoreRenderer:
-    * The render system for the player scores in-game
+ * The render system for the player scores in-game
 
 # Level Details
 

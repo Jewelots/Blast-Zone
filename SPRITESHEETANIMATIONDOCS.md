@@ -5,7 +5,7 @@ This document details how to correctly use the SpritesheetAnimation system.
 
 # Base function calls
 
-Initialise;
+Initialise
  * Create AnimationSheet
 
 Load
